@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Filter, ChevronDown, Info } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import { fetchArticleBodies } from '../services/dataSource'
 import { useData } from '../context/DataContext'
 import { useTranslation } from '../context/LanguageContext'
 import type { Article } from '../types'
@@ -10,6 +12,12 @@ import { DetailPanel } from '../components/DetailPanel'
 export const Trendmap: React.FC = () => {
   const data = useData()
   const { t, language } = useTranslation()
+
+  // Load the full body texts on-demand for matching
+  const { data: bodies, isLoading: isBodiesLoading } = useQuery({
+    queryKey: ['articleBodies'],
+    queryFn: fetchArticleBodies,
+  })
 
   // Helper to retrieve keyword candidates for a specific category
   const getCandidateWords = (cat: string): string[] => {
@@ -57,7 +65,8 @@ export const Trendmap: React.FC = () => {
     .filter(a => a.category === selectedCat)
     .map(a => {
       const { bucket, sortVal } = getYearHalf(a.date)
-      const fullSearchText = `${a.title} ${a.description} ${a.bodyText}`.toLowerCase()
+      const bodyText = bodies?.[a.id] || ""
+      const fullSearchText = `${a.title} ${a.description} ${bodyText}`.toLowerCase()
       return {
         ...a,
         bucket,
@@ -214,7 +223,12 @@ export const Trendmap: React.FC = () => {
 
       {/* Heatmap Grid Wrapper */}
       <div className="flex-grow flex flex-col min-h-0 select-none bg-[#121212]">
-        {topDisplayKeys.length === 0 ? (
+        {isBodiesLoading ? (
+          <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-4">
+            <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+            <span className="text-sm font-semibold tracking-wider uppercase text-gray-500 animate-pulse">Analyzing Trendmap Keywords...</span>
+          </div>
+        ) : topDisplayKeys.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-2">
             <Info className="w-8 h-8 text-gray-600" />
             <span>{t('noWords')}</span>

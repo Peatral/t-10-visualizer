@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { fetchArticleDetail } from '../services/dataSource'
 import { 
   MoveVertical, 
   Maximize2, 
@@ -38,6 +40,13 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
   const [leftColWidth, setLeftColWidth] = useState(35) // percentage
   const [viewMode, setViewMode] = useState<'list' | 'mini-timeline'>(defaultView)
   const { t } = useTranslation()
+
+  // On-demand body text loading
+  const { data: detailData, isLoading: isDetailLoading } = useQuery({
+    queryKey: ['articleDetail', selectedArticle?.id],
+    queryFn: () => fetchArticleDetail(selectedArticle!.id),
+    enabled: !!selectedArticle?.id,
+  })
   
   const panelRef = useRef<HTMLDivElement>(null)
   const verticalDragRef = useRef<HTMLDivElement>(null)
@@ -303,7 +312,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
                   </div>
                 </div>
 
-                <div className="text-gray-300 text-sm leading-relaxed max-w-4xl bg-[#181818] p-4">
+                <div className="text-gray-300 text-sm leading-relaxed max-w-4xl">
                   {selectedArticle.description}
                 </div>
 
@@ -319,14 +328,21 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
                   </a>
                 </div>
 
-                {selectedArticle.bodyText && (
-                  <div className="border-t border-[#333] pt-4 mt-6">
-                    <h4 className="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-3">{t('fullContent')}</h4>
-                    <div className="text-gray-400 text-sm leading-relaxed whitespace-pre-wrap font-sans">
-                      {selectedArticle.bodyText}
+                <div className="border-t border-[#333] pt-4 mt-6">
+                  <h4 className="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-3">{t('fullContent')}</h4>
+                  {isDetailLoading ? (
+                    <div className="flex items-center gap-2 text-xs text-gray-500 font-sans">
+                      <div className="w-3.5 h-3.5 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+                      <span>Loading full text...</span>
                     </div>
-                  </div>
-                )}
+                  ) : detailData?.bodyText ? (
+                    <div className="text-gray-400 text-sm leading-relaxed whitespace-pre-wrap font-sans">
+                      {detailData.bodyText}
+                    </div>
+                  ) : (
+                    <div className="text-gray-500 text-xs italic font-sans">No full content text available.</div>
+                  )}
+                </div>
               </div>
             ) : (
               <div className="h-full flex items-center justify-center text-gray-500 italic text-sm font-sans">
