@@ -3,7 +3,7 @@ import { useTranslation } from '../context/LanguageContext'
 
 interface HeatmapTableProps {
   topWords: string[]
-  croppedTimeScale: { bucket: string; sortVal: number }[]
+  croppedTimeScale: { bucket: string; sortVal: number; isGap?: boolean; gapStart?: string; gapEnd?: string; spanCount?: number }[]
   grid: Record<string, Record<string, number>>
   displayGrid?: Record<string, Record<string, string | number>> // optional formatted string or relative fraction
   weightGrid?: Record<string, Record<string, number>> // raw weights for relative mode color density styling
@@ -39,6 +39,22 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
               {t('heatmapLabel')}
             </th>
             {croppedTimeScale.map(col => {
+              if (col.isGap) {
+                return (
+                  <th
+                    key={col.bucket}
+                    className="border border-[#2e2e2e] text-center px-1 py-2 text-[9px] font-medium tracking-wide text-gray-500 bg-[#171717] min-w-[60px] max-w-[80px] font-mono leading-tight select-none"
+                    title={`Gap of ${col.spanCount} empty slots`}
+                  >
+                    <div className="flex flex-col items-center">
+                      <span>{col.gapStart}</span>
+                      <span className="text-[8px] text-gray-650 opacity-60">...</span>
+                      <span>{col.gapEnd}</span>
+                    </div>
+                  </th>
+                )
+              }
+
               // Count total articles in this column to see if it's clickable
               let colTotal = 0
               topWords.forEach(word => {
@@ -72,7 +88,9 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
 
             let wordTotal = 0
             croppedTimeScale.forEach(col => {
-              wordTotal += grid[word]?.[col.bucket] || 0
+              if (!col.isGap) {
+                wordTotal += grid[word]?.[col.bucket] || 0
+              }
             })
 
             return (
@@ -89,6 +107,18 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
                   {displayLabel}
                 </td>
                 {croppedTimeScale.map(col => {
+                  if (col.isGap) {
+                    return (
+                      <td
+                        key={col.bucket}
+                        className="border border-[#2e2e2e] select-none"
+                        style={{
+                          background: 'repeating-linear-gradient(45deg, #171717, #171717 6px, #262626 6px, #262626 12px)'
+                        }}
+                      />
+                    )
+                  }
+
                   const count = grid[word]?.[col.bucket] || 0
                   const hasCount = count > 0
                   

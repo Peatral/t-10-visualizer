@@ -256,9 +256,63 @@ export const Trendmap: React.FC = () => {
         }
       })
 
-      const croppedTimeScale = lastActiveIdx >= firstActiveIdx 
+      const croppedTimeScaleRaw = lastActiveIdx >= firstActiveIdx 
         ? timeScale.slice(firstActiveIdx, lastActiveIdx + 1)
         : timeScale
+
+      // Compress gaps of > 3 years (which translates to > 6 half-year buckets in sequence)
+      // where every single bucket has absolutely zero matches.
+      const croppedTimeScale: Array<any> = []
+      let zeroMatchStreak: Array<any> = []
+
+      const checkColumnHasMatches = (bucketName: string) => {
+        return topDisplayKeys.some(key => (grid[key]?.[bucketName] || 0) > 0)
+      }
+
+      croppedTimeScaleRaw.forEach((col) => {
+        const hasMatches = checkColumnHasMatches(col.bucket)
+        
+        if (!hasMatches) {
+          zeroMatchStreak.push(col)
+        } else {
+          // If we had a streak of > 6 empty buckets, collapse it into a single gap column
+          if (zeroMatchStreak.length > 6) {
+            const startYear = zeroMatchStreak[0].bucket
+            const endYear = zeroMatchStreak[zeroMatchStreak.length - 1].bucket
+            croppedTimeScale.push({
+              bucket: `gap-${startYear}-${endYear}`,
+              sortVal: zeroMatchStreak[0].sortVal,
+              isGap: true,
+              gapStart: startYear,
+              gapEnd: endYear,
+              spanCount: zeroMatchStreak.length
+            })
+          } else {
+            // Keep normal empty columns if the gap is short
+            zeroMatchStreak.forEach(c => croppedTimeScale.push(c))
+          }
+          zeroMatchStreak = []
+          croppedTimeScale.push(col)
+        }
+      })
+
+      // Flush remaining streak if any
+      if (zeroMatchStreak.length > 0) {
+        if (zeroMatchStreak.length > 6) {
+          const startYear = zeroMatchStreak[0].bucket
+          const endYear = zeroMatchStreak[zeroMatchStreak.length - 1].bucket
+          croppedTimeScale.push({
+            bucket: `gap-${startYear}-${endYear}`,
+            sortVal: zeroMatchStreak[0].sortVal,
+            isGap: true,
+            gapStart: startYear,
+            gapEnd: endYear,
+            spanCount: zeroMatchStreak.length
+          })
+        } else {
+          zeroMatchStreak.forEach(c => croppedTimeScale.push(c))
+        }
+      }
 
       setCalcResult({
         labelToDisplay,
