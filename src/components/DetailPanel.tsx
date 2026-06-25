@@ -142,6 +142,13 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
 
     const sorted = [...articlesList].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
+    interface VisTimelineItem {
+      id: number
+      content: string
+      start: string
+      rawArticle: Article
+    }
+
     const visItems = sorted.map((art, idx) => ({
       id: idx,
       content: art.title,
@@ -149,7 +156,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
       rawArticle: art
     }))
 
-    const items = new DataSet(visItems)
+    const items = new DataSet<VisTimelineItem>(visItems)
     const options = {
       width: '100%',
       height: '100%',
@@ -168,8 +175,8 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
 
     timeline.on('select', (properties) => {
       if (properties.items.length > 0) {
-        const selectedId = properties.items[0]
-        const item = items.get(selectedId) as any
+        const selectedId = properties.items[0] as number
+        const item = items.get(selectedId)
         if (item && item.rawArticle) {
           onSelectArticle(item.rawArticle)
         }

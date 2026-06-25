@@ -46,6 +46,14 @@ export const Timeline: React.FC = () => {
     const timer = setTimeout(() => {
       if (!timelineRef.current) return
 
+      interface VisTimelineItem {
+        id: number
+        content: string
+        start: string
+        rawIndex: number
+        rawArticle: Article
+      }
+
       // Map articles to Vis DataSet items
       const visItems = activeArticles.map((art, index) => ({
         id: index,
@@ -56,7 +64,7 @@ export const Timeline: React.FC = () => {
         rawArticle: art
       }))
 
-      const items = new DataSet(visItems)
+      const items = new DataSet<VisTimelineItem>(visItems)
 
       // Optimize options for maximum drag performance (point render type, throttled redraws)
       const options = {
@@ -82,8 +90,8 @@ export const Timeline: React.FC = () => {
       // Add selection handler
       timeline.on('select', (properties) => {
         if (properties.items.length > 0) {
-          const selectedId = properties.items[0]
-          const item = items.get(selectedId) as any
+          const selectedId = properties.items[0] as number
+          const item = items.get(selectedId)
           if (item && item.rawArticle) {
             setSelectedArticle(item.rawArticle)
             setPanelOpen(true)

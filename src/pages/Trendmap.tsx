@@ -9,10 +9,16 @@ import { getYearHalf, checkKeywordMatchBilingual } from '../utils/matching'
 import { HeatmapTable } from '../components/HeatmapTable'
 import { DetailPanel } from '../components/DetailPanel'
 
+export interface ArticleWithSearchText extends Article {
+  fullSearchText: string
+  bucket: string
+  sortVal: number
+}
+
 interface CalculationResult {
   labelToDisplay: Map<string, string>
-  categoryArticles: any[]
-  croppedTimeScale: any[]
+  categoryArticles: ArticleWithSearchText[]
+  croppedTimeScale: Array<{ bucket: string; sortVal: number; isGap?: boolean; gapStart?: string; gapEnd?: string; spanCount?: number }>
   topDisplayKeys: string[]
   grid: Record<string, Record<string, number>>
   cellMatches: Record<string, Record<string, Article[]>>
@@ -88,7 +94,7 @@ export const Trendmap: React.FC = () => {
       const uniqueDisplayKeys = Array.from(labelToGermanWords.keys())
 
       // Filter articles by category and map date sorting
-      const categoryArticles = data.articles
+      const categoryArticles: ArticleWithSearchText[] = data.articles
         .filter(a => a.category === selectedCat)
         .map(a => {
           const { bucket, sortVal } = getYearHalf(a.date)
@@ -262,8 +268,16 @@ export const Trendmap: React.FC = () => {
 
       // Compress gaps of > 3 years (which translates to > 6 half-year buckets in sequence)
       // where every single bucket has absolutely zero matches.
-      const croppedTimeScale: Array<any> = []
-      let zeroMatchStreak: Array<any> = []
+      interface CroppedTimeScaleItem {
+        bucket: string
+        sortVal: number
+        isGap?: boolean
+        gapStart?: string
+        gapEnd?: string
+        spanCount?: number
+      }
+      const croppedTimeScale: CroppedTimeScaleItem[] = []
+      let zeroMatchStreak: Array<{ bucket: string; sortVal: number }> = []
 
       const checkColumnHasMatches = (bucketName: string) => {
         return topDisplayKeys.some(key => (grid[key]?.[bucketName] || 0) > 0)
