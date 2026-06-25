@@ -10,11 +10,20 @@ export function getYearHalf(dateStr: string): { bucket: string; sortVal: number 
   }
 }
 
+// Global cache for compiled regular expressions to avoid recompilation inside hot loops
+const regexCache = new Map<string, RegExp>()
+
 // Check if a word matches text using unicode-aware boundaries
 export function checkSingleMatch(text: string, keyword: string): boolean {
   const lowerWord = keyword.toLowerCase()
-  const escaped = lowerWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  const regex = new RegExp(`(?<![a-zA-Z0-9äöüÄÖÜß])${escaped}(?![a-zA-Z0-9äöüÄÖÜß])`, "i")
+  let regex = regexCache.get(lowerWord)
+  
+  if (!regex) {
+    const escaped = lowerWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    regex = new RegExp(`(?<![a-zA-Z0-9äöüÄÖÜß])${escaped}(?![a-zA-Z0-9äöüÄÖÜß])`, "i")
+    regexCache.set(lowerWord, regex)
+  }
+  
   return regex.test(text)
 }
 

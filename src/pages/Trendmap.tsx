@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useTransition } from 'react'
 import { Filter, ChevronDown, Info } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { fetchArticleBodies } from '../services/dataSource'
@@ -12,6 +12,7 @@ import { DetailPanel } from '../components/DetailPanel'
 export const Trendmap: React.FC = () => {
   const data = useData()
   const { t, language } = useTranslation()
+  const [isPending, startTransition] = useTransition()
 
   // Load the full body texts on-demand for matching
   const { data: bodies, isLoading: isBodiesLoading } = useQuery({
@@ -258,7 +259,10 @@ export const Trendmap: React.FC = () => {
             <select 
               value={selectedCat} 
               onChange={(e) => {
-                setSelectedCat(e.target.value)
+                const value = e.target.value
+                startTransition(() => {
+                  setSelectedCat(value)
+                })
                 setPanelOpen(false)
               }}
               className="bg-[#2a2a2a] text-white px-3 py-1.5 pr-8 text-sm font-medium focus:outline-none appearance-none cursor-pointer font-sans"
@@ -278,10 +282,12 @@ export const Trendmap: React.FC = () => {
 
       {/* Heatmap Grid Wrapper */}
       <div className="flex-grow flex flex-col min-h-0 select-none bg-[#121212]">
-        {isBodiesLoading ? (
+        {(isBodiesLoading || isPending) ? (
           <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-4">
             <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
-            <span className="text-sm font-semibold tracking-wider uppercase text-gray-500 animate-pulse">Analyzing Trendmap Keywords...</span>
+            <span className="text-sm font-semibold tracking-wider uppercase text-gray-500 animate-pulse">
+              {isPending ? "Switching Categories..." : "Analyzing Trendmap Keywords..."}
+            </span>
           </div>
         ) : topDisplayKeys.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-2">

@@ -3,7 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { RouterProvider } from '@tanstack/react-router'
 import { DataContext } from './context/DataContext'
 import { LanguageProvider } from './context/LanguageContext'
-import { fetchDataPayload } from './services/dataSource'
+import { fetchDataPayload, fetchArticleBodies } from './services/dataSource'
 import { router } from './routes'
 
 const queryClient = new QueryClient({
@@ -19,6 +19,14 @@ function VisualizerApp() {
   const { data, error, isLoading } = useQuery({
     queryKey: ['dataPayload'],
     queryFn: fetchDataPayload,
+  })
+
+  // Prefetch large article bodies payload in the background as soon as app metadata resolves
+  useQuery({
+    queryKey: ['articleBodies'],
+    queryFn: fetchArticleBodies,
+    enabled: !!data,
+    staleTime: Infinity, // Static asset, cache indefinitely
   })
 
   if (error) {
