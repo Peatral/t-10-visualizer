@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useTransition } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Filter, ChevronDown, Info } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { fetchArticleBodies } from '../services/dataSource'
@@ -9,10 +9,19 @@ import { getYearHalf, checkKeywordMatchBilingual } from '../utils/matching'
 import { HeatmapTable } from '../components/HeatmapTable'
 import { DetailPanel } from '../components/DetailPanel'
 
+interface CalculationResult {
+  labelToDisplay: Map<string, string>
+  categoryArticles: any[]
+  croppedTimeScale: any[]
+  topDisplayKeys: string[]
+  grid: Record<string, Record<string, number>>
+  cellMatches: Record<string, Record<string, Article[]>>
+  maxCellCount: number
+}
+
 export const Trendmap: React.FC = () => {
   const data = useData()
   const { t, language } = useTranslation()
-  const [isPending, startTransition] = useTransition()
 
   // Load the full body texts on-demand for matching
   const { data: bodies, isLoading: isBodiesLoading } = useQuery({
@@ -44,158 +53,164 @@ export const Trendmap: React.FC = () => {
   const [matchingArticles, setMatchingArticles] = useState<Article[]>([])
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null)
 
-  // Memoize all expensive grid and search computations
-  const {
-    labelToDisplay,
-    categoryArticles,
-    croppedTimeScale,
-    topDisplayKeys,
-    grid,
-    cellMatches,
-    maxCellCount
-  } = useMemo(() => {
-    const candidates = getCandidateWords(selectedCat)
+  // Calculations deferred state to avoid blocking the main rendering thread
+  const [isCalculating, setIsCalculating] = useState(true)
+  const [calcResult, setCalcResult] = useState<CalculationResult | null>(null)
 
-    // Map German keyword candidates to localized display labels to merge duplicates
-    const labelToDisplay = new Map<string, string>()
-    const labelToGermanWords = new Map<string, string[]>()
-    
-    candidates.forEach(word => {
-      const translation = data.translations[word] || ""
-      const display = (language === 'en' && translation) ? translation : word
-      const key = display.toLowerCase()
+  useEffect(() => {
+    if (isBodiesLoading) return
+
+    setIsCalculating(true)
+
+    // Defer computation by a short delay to let the loading view commit and spin instantly
+    const timer = setTimeout(() => {
+      const candidates = getCandidateWords(selectedCat)
+
+      // Map German keyword candidates to localized display labels to merge duplicates
+      const labelToDisplay = new Map<string, string>()
+      const labelToGermanWords = new Map<string, string[]>()
       
-      labelToDisplay.set(key, display)
-      const list = labelToGermanWords.get(key) || []
-      if (!list.includes(word)) list.push(word)
-      labelToGermanWords.set(key, list)
-    })
-
-    const uniqueDisplayKeys = Array.from(labelToGermanWords.keys())
-
-    // Filter articles by category and map date sorting
-    const categoryArticles = data.articles
-      .filter(a => a.category === selectedCat)
-      .map(a => {
-        const { bucket, sortVal } = getYearHalf(a.date)
-        const bodyText = bodies?.[a.id] || ""
-        const fullSearchText = `${a.title} ${a.description} ${bodyText}`.toLowerCase()
-        return {
-          ...a,
-          bucket,
-          sortVal,
-          fullSearchText
-        }
+      candidates.forEach(word => {
+        const translation = data.translations[word] || ""
+        const display = (language === 'en' && translation) ? translation : word
+        const key = display.toLowerCase()
+        
+        labelToDisplay.set(key, display)
+        const list = labelToGermanWords.get(key) || []
+        if (!list.includes(word)) list.push(word)
+        labelToGermanWords.set(key, list)
       })
 
-    // Get min/max sort value to generate columns
-    let minSort = Infinity
-    let maxSort = -Infinity
-    categoryArticles.forEach(a => {
-      if (a.sortVal < minSort) minSort = a.sortVal
-      if (a.sortVal > maxSort) maxSort = a.sortVal
-    })
+      const uniqueDisplayKeys = Array.from(labelToGermanWords.keys())
 
-    // Generate complete time scale
-    const timeScale: { bucket: string; sortVal: number }[] = []
-    if (minSort !== Infinity && maxSort !== -Infinity) {
-      for (let s = minSort; s <= maxSort; s++) {
-        const year = Math.floor(s / 2)
-        const half = s % 2 === 0 ? "H1" : "H2"
-        timeScale.push({
-          bucket: `${year}-${half}`,
-          sortVal: s
-        })
-      }
-    }
-
-    // Count match occurrences grouped by localized display label
-    const matchCounts: Record<string, number> = {}
-    uniqueDisplayKeys.forEach(key => {
-      const germanWords = labelToGermanWords.get(key) || []
-      let count = 0
-      categoryArticles.forEach(art => {
-        const isMatch = germanWords.some(word => {
-          const translation = data.translations[word] || ""
-          return checkKeywordMatchBilingual(art.fullSearchText, word, translation)
-        })
-        if (isMatch) count++
-      })
-      if (count > 0) {
-        matchCounts[key] = count
-      }
-    })
-
-    // Select top 30 unique display labels
-    const topDisplayKeys = Object.entries(matchCounts)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 30)
-      .map(entry => entry[0])
-
-    // Build grid counts and mapping
-    const grid: Record<string, Record<string, number>> = {}
-    const cellMatches: Record<string, Record<string, Article[]>> = {}
-    let maxCellCount = 0
-
-    topDisplayKeys.forEach(key => {
-      grid[key] = {}
-      cellMatches[key] = {}
-      timeScale.forEach(t => {
-        grid[key][t.bucket] = 0
-        cellMatches[key][t.bucket] = []
-      })
-    })
-
-    categoryArticles.forEach(art => {
-      topDisplayKeys.forEach(key => {
-        const germanWords = labelToGermanWords.get(key) || []
-        const isMatch = germanWords.some(word => {
-          const translation = data.translations[word] || ""
-          return checkKeywordMatchBilingual(art.fullSearchText, word, translation)
-        })
-
-        if (isMatch) {
-          grid[key][art.bucket]++
-          cellMatches[key][art.bucket].push(art)
-          if (grid[key][art.bucket] > maxCellCount) {
-            maxCellCount = grid[key][art.bucket]
+      // Filter articles by category and map date sorting
+      const categoryArticles = data.articles
+        .filter(a => a.category === selectedCat)
+        .map(a => {
+          const { bucket, sortVal } = getYearHalf(a.date)
+          const bodyText = bodies?.[a.id] || ""
+          const fullSearchText = `${a.title} ${a.description} ${bodyText}`.toLowerCase()
+          return {
+            ...a,
+            bucket,
+            sortVal,
+            fullSearchText
           }
+        })
+
+      // Get min/max sort value to generate columns
+      let minSort = Infinity
+      let maxSort = -Infinity
+      categoryArticles.forEach(a => {
+        if (a.sortVal < minSort) minSort = a.sortVal
+        if (a.sortVal > maxSort) maxSort = a.sortVal
+      })
+
+      // Generate complete time scale
+      const timeScale: { bucket: string; sortVal: number }[] = []
+      if (minSort !== Infinity && maxSort !== -Infinity) {
+        for (let s = minSort; s <= maxSort; s++) {
+          const year = Math.floor(s / 2)
+          const half = s % 2 === 0 ? "H1" : "H2"
+          timeScale.push({
+            bucket: `${year}-${half}`,
+            sortVal: s
+          })
+        }
+      }
+
+      // Count match occurrences grouped by localized display label
+      const matchCounts: Record<string, number> = {}
+      uniqueDisplayKeys.forEach(key => {
+        const germanWords = labelToGermanWords.get(key) || []
+        let count = 0
+        categoryArticles.forEach(art => {
+          const isMatch = germanWords.some(word => {
+            const translation = data.translations[word] || ""
+            return checkKeywordMatchBilingual(art.fullSearchText, word, translation)
+          })
+          if (isMatch) count++
+        })
+        if (count > 0) {
+          matchCounts[key] = count
         }
       })
-    })
 
-    // Exclude empty time columns at the borders (Cropping)
-    let firstActiveIdx = timeScale.length
-    let lastActiveIdx = -1
+      // Select top 30 unique display labels
+      const topDisplayKeys = Object.entries(matchCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 30)
+        .map(entry => entry[0])
 
-    timeScale.forEach((col, idx) => {
-      let hasMatch = false
+      // Build grid counts and mapping
+      const grid: Record<string, Record<string, number>> = {}
+      const cellMatches: Record<string, Record<string, Article[]>> = {}
+      let maxCellCount = 0
+
       topDisplayKeys.forEach(key => {
-        if (grid[key][col.bucket] > 0) hasMatch = true
+        grid[key] = {}
+        cellMatches[key] = {}
+        timeScale.forEach(t => {
+          grid[key][t.bucket] = 0
+          cellMatches[key][t.bucket] = []
+        })
       })
-      if (hasMatch) {
-        if (idx < firstActiveIdx) firstActiveIdx = idx
-        if (idx > lastActiveIdx) lastActiveIdx = idx
-      }
-    })
 
-    const croppedTimeScale = lastActiveIdx >= firstActiveIdx 
-      ? timeScale.slice(firstActiveIdx, lastActiveIdx + 1)
-      : timeScale
+      categoryArticles.forEach(art => {
+        topDisplayKeys.forEach(key => {
+          const germanWords = labelToGermanWords.get(key) || []
+          const isMatch = germanWords.some(word => {
+            const translation = data.translations[word] || ""
+            return checkKeywordMatchBilingual(art.fullSearchText, word, translation)
+          })
 
-    return {
-      labelToDisplay,
-      categoryArticles,
-      croppedTimeScale,
-      topDisplayKeys,
-      grid,
-      cellMatches,
-      maxCellCount
-    }
-  }, [selectedCat, data.articles, data.translations, bodies, language])
+          if (isMatch) {
+            grid[key][art.bucket]++
+            cellMatches[key][art.bucket].push(art)
+            if (grid[key][art.bucket] > maxCellCount) {
+              maxCellCount = grid[key][art.bucket]
+            }
+          }
+        })
+      })
+
+      // Exclude empty time columns at the borders (Cropping)
+      let firstActiveIdx = timeScale.length
+      let lastActiveIdx = -1
+
+      timeScale.forEach((col, idx) => {
+        let hasMatch = false
+        topDisplayKeys.forEach(key => {
+          if (grid[key][col.bucket] > 0) hasMatch = true
+        })
+        if (hasMatch) {
+          if (idx < firstActiveIdx) firstActiveIdx = idx
+          if (idx > lastActiveIdx) lastActiveIdx = idx
+        }
+      })
+
+      const croppedTimeScale = lastActiveIdx >= firstActiveIdx 
+        ? timeScale.slice(firstActiveIdx, lastActiveIdx + 1)
+        : timeScale
+
+      setCalcResult({
+        labelToDisplay,
+        categoryArticles,
+        croppedTimeScale,
+        topDisplayKeys,
+        grid,
+        cellMatches,
+        maxCellCount
+      })
+      setIsCalculating(false)
+    }, 40)
+
+    return () => clearTimeout(timer)
+  }, [selectedCat, data.articles, data.translations, bodies, language, isBodiesLoading])
 
   const handleCellClick = (displayKey: string, displayLabel: string, bucket: string) => {
-    const matches = (cellMatches[displayKey] && cellMatches[displayKey][bucket]) || []
+    if (!calcResult) return
+    const matches = (calcResult.cellMatches[displayKey] && calcResult.cellMatches[displayKey][bucket]) || []
     if (matches.length === 0) return
     
     // Sort matching list by date descending (newest first)
@@ -208,9 +223,10 @@ export const Trendmap: React.FC = () => {
   }
 
   const handleRowClick = (displayKey: string, displayLabel: string) => {
+    if (!calcResult) return
     // Gather all matching articles in this row across all time buckets
     const matches: Article[] = []
-    const bucketRecords = cellMatches[displayKey] || {}
+    const bucketRecords = calcResult.cellMatches[displayKey] || {}
     Object.values(bucketRecords).forEach(articles => {
       matches.push(...articles)
     })
@@ -227,8 +243,9 @@ export const Trendmap: React.FC = () => {
   }
 
   const handleColumnClick = (bucket: string) => {
+    if (!calcResult) return
     // Show all articles in category matching the time-bucket
-    const matches = categoryArticles.filter(art => art.bucket === bucket)
+    const matches = calcResult.categoryArticles.filter(art => art.bucket === bucket)
     if (matches.length === 0) return
 
     // Sort matching list by date descending (newest first)
@@ -242,9 +259,13 @@ export const Trendmap: React.FC = () => {
 
   // Convert localized display keys back to display labels for table headers
   const gridTranslations: Record<string, string> = {}
-  topDisplayKeys.forEach(key => {
-    gridTranslations[key] = labelToDisplay.get(key) || key
-  })
+  if (calcResult) {
+    calcResult.topDisplayKeys.forEach(key => {
+      gridTranslations[key] = calcResult.labelToDisplay.get(key) || key
+    })
+  }
+
+  const showLoading = isBodiesLoading || isCalculating || !calcResult
 
   return (
     <div className="h-full flex flex-col relative bg-[#121212] font-sans">
@@ -259,10 +280,7 @@ export const Trendmap: React.FC = () => {
             <select 
               value={selectedCat} 
               onChange={(e) => {
-                const value = e.target.value
-                startTransition(() => {
-                  setSelectedCat(value)
-                })
+                setSelectedCat(e.target.value)
                 setPanelOpen(false)
               }}
               className="bg-[#2a2a2a] text-white px-3 py-1.5 pr-8 text-sm font-medium focus:outline-none appearance-none cursor-pointer font-sans"
@@ -276,31 +294,31 @@ export const Trendmap: React.FC = () => {
         </div>
 
         <div className="text-xs text-gray-500 font-medium">
-          {t('heatmapHelp', { count: topDisplayKeys.length })}
+          {t('heatmapHelp', { count: calcResult?.topDisplayKeys.length || 0 })}
         </div>
       </div>
 
       {/* Heatmap Grid Wrapper */}
       <div className="flex-grow flex flex-col min-h-0 select-none bg-[#121212]">
-        {(isBodiesLoading || isPending) ? (
+        {showLoading ? (
           <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-4">
             <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
             <span className="text-sm font-semibold tracking-wider uppercase text-gray-500 animate-pulse">
-              {isPending ? "Switching Categories..." : "Analyzing Trendmap Keywords..."}
+              {isBodiesLoading ? "Loading Search Corpus..." : "Analyzing Trendmap Keywords..."}
             </span>
           </div>
-        ) : topDisplayKeys.length === 0 ? (
+        ) : calcResult.topDisplayKeys.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-2">
             <Info className="w-8 h-8 text-gray-600" />
             <span>{t('noWords')}</span>
           </div>
         ) : (
           <HeatmapTable 
-            topWords={topDisplayKeys} 
-            croppedTimeScale={croppedTimeScale} 
-            grid={grid} 
+            topWords={calcResult.topDisplayKeys} 
+            croppedTimeScale={calcResult.croppedTimeScale} 
+            grid={calcResult.grid} 
             translations={gridTranslations} 
-            maxCellCount={maxCellCount} 
+            maxCellCount={calcResult.maxCellCount} 
             handleCellClick={handleCellClick} 
             handleRowClick={handleRowClick}
             handleColumnClick={handleColumnClick}
