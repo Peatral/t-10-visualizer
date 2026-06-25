@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { Filter, ChevronDown, Info } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { fetchArticleBodies } from '../services/dataSource'
@@ -30,8 +30,10 @@ export const Trendmap: React.FC = () => {
   }
 
   // Filter categories to only those containing keywords in the vocabulary sheet
-  const categories = Array.from(new Set(data.articles.map(a => a.category)))
-    .filter(cat => getCandidateWords(cat).length > 0)
+  const categories = useMemo(() => {
+    return Array.from(new Set(data.articles.map(a => a.category)))
+      .filter(cat => getCandidateWords(cat).length > 0)
+  }, [data.articles, data.themenwolkeWords])
 
   const [selectedCat, setSelectedCat] = useState(categories[0] || '')
   
@@ -41,135 +43,155 @@ export const Trendmap: React.FC = () => {
   const [matchingArticles, setMatchingArticles] = useState<Article[]>([])
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null)
 
-  const candidates = getCandidateWords(selectedCat)
+  // Memoize all expensive grid and search computations
+  const {
+    labelToDisplay,
+    categoryArticles,
+    croppedTimeScale,
+    topDisplayKeys,
+    grid,
+    cellMatches,
+    maxCellCount
+  } = useMemo(() => {
+    const candidates = getCandidateWords(selectedCat)
 
-  // Map German keyword candidates to localized display labels to merge duplicates (e.g. English "car")
-  const labelToDisplay = new Map<string, string>()
-  const labelToGermanWords = new Map<string, string[]>()
-  
-  candidates.forEach(word => {
-    const translation = data.translations[word] || ""
-    const display = (language === 'en' && translation) ? translation : word
-    const key = display.toLowerCase()
+    // Map German keyword candidates to localized display labels to merge duplicates
+    const labelToDisplay = new Map<string, string>()
+    const labelToGermanWords = new Map<string, string[]>()
     
-    labelToDisplay.set(key, display)
-    const list = labelToGermanWords.get(key) || []
-    if (!list.includes(word)) list.push(word)
-    labelToGermanWords.set(key, list)
-  })
-
-  const uniqueDisplayKeys = Array.from(labelToGermanWords.keys())
-
-  // Filter articles by category and map date sorting
-  const categoryArticles = data.articles
-    .filter(a => a.category === selectedCat)
-    .map(a => {
-      const { bucket, sortVal } = getYearHalf(a.date)
-      const bodyText = bodies?.[a.id] || ""
-      const fullSearchText = `${a.title} ${a.description} ${bodyText}`.toLowerCase()
-      return {
-        ...a,
-        bucket,
-        sortVal,
-        fullSearchText
-      }
+    candidates.forEach(word => {
+      const translation = data.translations[word] || ""
+      const display = (language === 'en' && translation) ? translation : word
+      const key = display.toLowerCase()
+      
+      labelToDisplay.set(key, display)
+      const list = labelToGermanWords.get(key) || []
+      if (!list.includes(word)) list.push(word)
+      labelToGermanWords.set(key, list)
     })
 
-  // Get min/max sort value to generate columns
-  let minSort = Infinity
-  let maxSort = -Infinity
-  categoryArticles.forEach(a => {
-    if (a.sortVal < minSort) minSort = a.sortVal
-    if (a.sortVal > maxSort) maxSort = a.sortVal
-  })
+    const uniqueDisplayKeys = Array.from(labelToGermanWords.keys())
 
-  // Generate complete time scale
-  const timeScale: { bucket: string; sortVal: number }[] = []
-  if (minSort !== Infinity && maxSort !== -Infinity) {
-    for (let s = minSort; s <= maxSort; s++) {
-      const year = Math.floor(s / 2)
-      const half = s % 2 === 0 ? "H1" : "H2"
-      timeScale.push({
-        bucket: `${year}-${half}`,
-        sortVal: s
-      })
-    }
-  }
-
-  // Count match occurrences grouped by localized display label
-  const matchCounts: Record<string, number> = {}
-  uniqueDisplayKeys.forEach(key => {
-    const germanWords = labelToGermanWords.get(key) || []
-    let count = 0
-    categoryArticles.forEach(art => {
-      // Check if this article matches any of the grouped German words (or English equivalents)
-      const isMatch = germanWords.some(word => {
-        const translation = data.translations[word] || ""
-        return checkKeywordMatchBilingual(art.fullSearchText, word, translation)
-      })
-      if (isMatch) count++
-    })
-    if (count > 0) {
-      matchCounts[key] = count
-    }
-  })
-
-  // Select top 30 unique display labels
-  const topDisplayKeys = Object.entries(matchCounts)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 30)
-    .map(entry => entry[0])
-
-  // Build grid counts and mapping
-  const grid: Record<string, Record<string, number>> = {}
-  const cellMatches: Record<string, Record<string, Article[]>> = {}
-  let maxCellCount = 0
-
-  topDisplayKeys.forEach(key => {
-    grid[key] = {}
-    cellMatches[key] = {}
-    timeScale.forEach(t => {
-      grid[key][t.bucket] = 0
-      cellMatches[key][t.bucket] = []
-    })
-  })
-
-  categoryArticles.forEach(art => {
-    topDisplayKeys.forEach(key => {
-      const germanWords = labelToGermanWords.get(key) || []
-      const isMatch = germanWords.some(word => {
-        const translation = data.translations[word] || ""
-        return checkKeywordMatchBilingual(art.fullSearchText, word, translation)
-      })
-
-      if (isMatch) {
-        grid[key][art.bucket]++
-        cellMatches[key][art.bucket].push(art)
-        if (grid[key][art.bucket] > maxCellCount) {
-          maxCellCount = grid[key][art.bucket]
+    // Filter articles by category and map date sorting
+    const categoryArticles = data.articles
+      .filter(a => a.category === selectedCat)
+      .map(a => {
+        const { bucket, sortVal } = getYearHalf(a.date)
+        const bodyText = bodies?.[a.id] || ""
+        const fullSearchText = `${a.title} ${a.description} ${bodyText}`.toLowerCase()
+        return {
+          ...a,
+          bucket,
+          sortVal,
+          fullSearchText
         }
+      })
+
+    // Get min/max sort value to generate columns
+    let minSort = Infinity
+    let maxSort = -Infinity
+    categoryArticles.forEach(a => {
+      if (a.sortVal < minSort) minSort = a.sortVal
+      if (a.sortVal > maxSort) maxSort = a.sortVal
+    })
+
+    // Generate complete time scale
+    const timeScale: { bucket: string; sortVal: number }[] = []
+    if (minSort !== Infinity && maxSort !== -Infinity) {
+      for (let s = minSort; s <= maxSort; s++) {
+        const year = Math.floor(s / 2)
+        const half = s % 2 === 0 ? "H1" : "H2"
+        timeScale.push({
+          bucket: `${year}-${half}`,
+          sortVal: s
+        })
+      }
+    }
+
+    // Count match occurrences grouped by localized display label
+    const matchCounts: Record<string, number> = {}
+    uniqueDisplayKeys.forEach(key => {
+      const germanWords = labelToGermanWords.get(key) || []
+      let count = 0
+      categoryArticles.forEach(art => {
+        const isMatch = germanWords.some(word => {
+          const translation = data.translations[word] || ""
+          return checkKeywordMatchBilingual(art.fullSearchText, word, translation)
+        })
+        if (isMatch) count++
+      })
+      if (count > 0) {
+        matchCounts[key] = count
       }
     })
-  })
 
-  // Exclude empty time columns at the borders (Cropping)
-  let firstActiveIdx = timeScale.length
-  let lastActiveIdx = -1
+    // Select top 30 unique display labels
+    const topDisplayKeys = Object.entries(matchCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 30)
+      .map(entry => entry[0])
 
-  timeScale.forEach((col, idx) => {
-    let hasMatch = false
+    // Build grid counts and mapping
+    const grid: Record<string, Record<string, number>> = {}
+    const cellMatches: Record<string, Record<string, Article[]>> = {}
+    let maxCellCount = 0
+
     topDisplayKeys.forEach(key => {
-      if (grid[key][col.bucket] > 0) hasMatch = true
+      grid[key] = {}
+      cellMatches[key] = {}
+      timeScale.forEach(t => {
+        grid[key][t.bucket] = 0
+        cellMatches[key][t.bucket] = []
+      })
     })
-    if (hasMatch) {
-      if (idx < firstActiveIdx) firstActiveIdx = idx
-      if (idx > lastActiveIdx) lastActiveIdx = idx
-    }
-  })
 
-  const croppedTimeScale = lastActiveIdx >= firstActiveIdx 
-    ? timeScale.slice(firstActiveIdx, lastActiveIdx + 1)
-    : timeScale
+    categoryArticles.forEach(art => {
+      topDisplayKeys.forEach(key => {
+        const germanWords = labelToGermanWords.get(key) || []
+        const isMatch = germanWords.some(word => {
+          const translation = data.translations[word] || ""
+          return checkKeywordMatchBilingual(art.fullSearchText, word, translation)
+        })
+
+        if (isMatch) {
+          grid[key][art.bucket]++
+          cellMatches[key][art.bucket].push(art)
+          if (grid[key][art.bucket] > maxCellCount) {
+            maxCellCount = grid[key][art.bucket]
+          }
+        }
+      })
+    })
+
+    // Exclude empty time columns at the borders (Cropping)
+    let firstActiveIdx = timeScale.length
+    let lastActiveIdx = -1
+
+    timeScale.forEach((col, idx) => {
+      let hasMatch = false
+      topDisplayKeys.forEach(key => {
+        if (grid[key][col.bucket] > 0) hasMatch = true
+      })
+      if (hasMatch) {
+        if (idx < firstActiveIdx) firstActiveIdx = idx
+        if (idx > lastActiveIdx) lastActiveIdx = idx
+      }
+    })
+
+    const croppedTimeScale = lastActiveIdx >= firstActiveIdx 
+      ? timeScale.slice(firstActiveIdx, lastActiveIdx + 1)
+      : timeScale
+
+    return {
+      labelToDisplay,
+      categoryArticles,
+      croppedTimeScale,
+      topDisplayKeys,
+      grid,
+      cellMatches,
+      maxCellCount
+    }
+  }, [selectedCat, data.articles, data.translations, bodies, language])
 
   const handleCellClick = (displayKey: string, displayLabel: string, bucket: string) => {
     const matches = (cellMatches[displayKey] && cellMatches[displayKey][bucket]) || []

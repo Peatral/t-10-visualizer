@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { Link } from '@tanstack/react-router'
 import { TrendingUp, Calendar, ArrowRight } from 'lucide-react'
 import { useData } from '../context/DataContext'
@@ -14,15 +14,20 @@ export const Dashboard: React.FC = () => {
 
   // Stats
   const totalArticles = data.articles.length
-  const categoryCounts = data.articles.reduce<Record<string, number>>((acc, art) => {
-    acc[art.category] = (acc[art.category] || 0) + 1
-    return acc
-  }, {})
+  
+  const categoryCounts = useMemo(() => {
+    return data.articles.reduce<Record<string, number>>((acc, art) => {
+      acc[art.category] = (acc[art.category] || 0) + 1
+      return acc
+    }, {})
+  }, [data.articles])
 
   // Get 5 most recent articles
-  const recentArticles = [...data.articles]
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 5)
+  const recentArticles = useMemo(() => {
+    return [...data.articles]
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 5)
+  }, [data.articles])
 
   // Details panel states
   const [panelOpen, setPanelOpen] = useState(false)
