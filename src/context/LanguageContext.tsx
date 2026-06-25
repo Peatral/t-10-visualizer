@@ -41,7 +41,10 @@ const translations = {
     newest: "Newest First",
     oldest: "Oldest First",
     searchFullText: "Search Full Text (Body)",
-    searchEmpty: "No articles matched your search query."
+    searchEmpty: "No articles matched your search query.",
+    relativeMode: "Relative Mode",
+    absoluteMode: "Absolute Mode",
+    relativeModeDesc: "Shows keyword mentions weighted against total articles in each period (using gaussian smoothing to stabilize low-data eras)."
   },
   de: {
     dashboardTitle: "T-10 Analyse-Dashboard",
@@ -81,7 +84,10 @@ const translations = {
     newest: "Neueste zuerst",
     oldest: "Älteste zuerst",
     searchFullText: "Volltext durchsuchen (Inhalt)",
-    searchEmpty: "Keine Artikel entsprechen Ihrer Suchanfrage."
+    searchEmpty: "Keine Artikel entsprechen Ihrer Suchanfrage.",
+    relativeMode: "Relativer Modus",
+    absoluteMode: "Absoluter Modus",
+    relativeModeDesc: "Zeigt Keyword-Nennungen im Verhältnis zur Gesamtzahl der Artikel in dem Zeitraum (mit Gauß-Glättung zur Stabilisierung datenarmem Ären)."
   }
 }
 

@@ -5,8 +5,11 @@ interface HeatmapTableProps {
   topWords: string[]
   croppedTimeScale: { bucket: string; sortVal: number }[]
   grid: Record<string, Record<string, number>>
+  displayGrid?: Record<string, Record<string, string | number>> // optional formatted string or relative fraction
+  weightGrid?: Record<string, Record<string, number>> // raw weights for relative mode color density styling
   translations: Record<string, string>
   maxCellCount: number
+  maxDisplayWeight?: number // max value for relative density styling
   handleCellClick: (word: string, displayLabel: string, bucket: string) => void
   handleRowClick: (word: string, displayLabel: string) => void
   handleColumnClick: (bucket: string) => void
@@ -16,8 +19,11 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
   topWords,
   croppedTimeScale,
   grid,
+  displayGrid,
+  weightGrid,
   translations,
   maxCellCount,
+  maxDisplayWeight,
   handleCellClick,
   handleRowClick,
   handleColumnClick
@@ -84,8 +90,20 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
                 </td>
                 {croppedTimeScale.map(col => {
                   const count = grid[word]?.[col.bucket] || 0
-                  const opacity = maxCellCount > 0 ? (count / maxCellCount).toFixed(2) : "0"
                   const hasCount = count > 0
+                  
+                  // Use displayGrid for value styling if present
+                  const displayValue = displayGrid ? (displayGrid[word]?.[col.bucket] ?? "") : (hasCount ? count : "")
+                  
+                  // Calculate opacity based on weight metric
+                  let opacity = "0"
+                  if (displayGrid && maxDisplayWeight && maxDisplayWeight > 0) {
+                    // Look up weight value from relativeWeights / displayGrid source values directly
+                    const rawVal = weightGrid && weightGrid[word] ? (weightGrid[word][col.bucket] || 0) : 0
+                    opacity = (rawVal / maxDisplayWeight).toFixed(2)
+                  } else if (maxCellCount > 0) {
+                    opacity = (count / maxCellCount).toFixed(2)
+                  }
 
                   return (
                     <td 
@@ -101,7 +119,7 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
                       }`}
                       title={hasCount ? `${count} articles containing '${displayLabel}' in ${col.bucket}` : undefined}
                     >
-                      {hasCount ? count : ""}
+                      {displayValue}
                     </td>
                   )
                 })}

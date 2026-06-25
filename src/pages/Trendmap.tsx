@@ -17,11 +17,15 @@ interface CalculationResult {
   grid: Record<string, Record<string, number>>
   cellMatches: Record<string, Record<string, Article[]>>
   maxCellCount: number
+  relativeGrid: Record<string, Record<string, string>> // Percentage formatted strings (e.g. "12.5%")
+  relativeWeights: Record<string, Record<string, number>> // Numeric fractions [0, 1] for color rendering
+  maxRelativeWeight: number
 }
 
 export const Trendmap: React.FC = () => {
   const data = useData()
   const { t, language } = useTranslation()
+  const [viewMode, setViewMode] = useState<'absolute' | 'relative'>('absolute')
 
   // Load the full body texts on-demand for matching
   const { data: bodies, isLoading: isBodiesLoading } = useQuery({
@@ -119,6 +123,42 @@ export const Trendmap: React.FC = () => {
         }
       }
 
+      // Count total articles published in this category in each time slot
+      const totalArticlesPerSlot: Record<string, number> = {}
+      timeScale.forEach(t => {
+        totalArticlesPerSlot[t.bucket] = 0
+      })
+      categoryArticles.forEach(art => {
+        if (totalArticlesPerSlot[art.bucket] !== undefined) {
+          totalArticlesPerSlot[art.bucket]++
+        }
+      })
+
+      // Apply Gaussian smoothing across neighboring slots for the baseline (denominator)
+      // to counterbalance low-data eras and prevent mathematical spikes from single articles.
+      const smoothedBaseline: Record<string, number> = {}
+      const kernel = [0.15, 0.7, 0.15] // Simple local gaussian kernel (left, target, right)
+      
+      timeScale.forEach((slot, idx) => {
+        let weightedSum = 0
+        let weightSum = 0
+
+        for (let k = -1; k <= 1; k++) {
+          const neighborIdx = idx + k
+          if (neighborIdx >= 0 && neighborIdx < timeScale.length) {
+            const neighborSlot = timeScale[neighborIdx]
+            const neighborCount = totalArticlesPerSlot[neighborSlot.bucket] || 0
+            const kernelWeight = kernel[k + 1]
+
+            weightedSum += neighborCount * kernelWeight
+            weightSum += kernelWeight
+          }
+        }
+
+        // Add a small global prior (e.g. 2 articles) to avoid dividing by 0 and suppress noise in dead eras
+        smoothedBaseline[slot.bucket] = (weightedSum / (weightSum || 1)) + 2.0
+      })
+
       // Count match occurrences grouped by localized display label
       const matchCounts: Record<string, number> = {}
       uniqueDisplayKeys.forEach(key => {
@@ -173,6 +213,34 @@ export const Trendmap: React.FC = () => {
         })
       })
 
+      // Build relative percentages using smoothed baseline
+      const relativeGrid: Record<string, Record<string, string>> = {}
+      const relativeWeights: Record<string, Record<string, number>> = {}
+      let maxRelativeWeight = 0
+
+      topDisplayKeys.forEach(key => {
+        relativeGrid[key] = {}
+        relativeWeights[key] = {}
+        timeScale.forEach(t => {
+          const count = grid[key][t.bucket] || 0
+          if (count === 0) {
+            relativeGrid[key][t.bucket] = ""
+            relativeWeights[key][t.bucket] = 0
+          } else {
+            const baseline = smoothedBaseline[t.bucket] || 1
+            const relativeFraction = count / baseline
+            relativeWeights[key][t.bucket] = relativeFraction
+            if (relativeFraction > maxRelativeWeight) {
+              maxRelativeWeight = relativeFraction
+            }
+            
+            // Format percentage display
+            const rawPercent = (count / (totalArticlesPerSlot[t.bucket] || 1)) * 100
+            relativeGrid[key][t.bucket] = `${rawPercent.toFixed(0)}%`
+          }
+        })
+      })
+
       // Exclude empty time columns at the borders (Cropping)
       let firstActiveIdx = timeScale.length
       let lastActiveIdx = -1
@@ -199,7 +267,10 @@ export const Trendmap: React.FC = () => {
         topDisplayKeys,
         grid,
         cellMatches,
-        maxCellCount
+        maxCellCount,
+        relativeGrid,
+        relativeWeights,
+        maxRelativeWeight
       })
       setIsCalculating(false)
     }, 40)
@@ -269,8 +340,8 @@ export const Trendmap: React.FC = () => {
   return (
     <div className="h-full flex flex-col relative bg-[#121212] font-sans">
       {/* Toolbar Subheader */}
-      <div className="bg-[#1e1e1e] border-b border-[#2e2e2e] px-8 py-3.5 shrink-0 flex items-center justify-between z-35 select-none">
-        <div className="flex items-center gap-4">
+      <div className="bg-[#1e1e1e] border-b border-[#2e2e2e] px-8 py-3.5 shrink-0 flex flex-wrap items-center justify-between gap-4 z-35 select-none">
+        <div className="flex items-center gap-4 flex-wrap">
           <div className="flex items-center gap-2">
             <Filter className="w-4 h-4 text-cyan-400" />
             <span className="text-xs font-semibold uppercase text-gray-400 font-sans">{t('categoryLabel')}</span>
@@ -289,6 +360,30 @@ export const Trendmap: React.FC = () => {
               ))}
             </select>
             <ChevronDown className="w-4 h-4 text-gray-400 absolute right-2.5 top-2.5 pointer-events-none" />
+          </div>
+
+          {/* Toggle buttons for view modes */}
+          <div className="flex bg-[#2a2a2a] p-0.5" title={t('relativeModeDesc')}>
+            <button
+              onClick={() => setViewMode('absolute')}
+              className={`px-3 py-1 text-xs font-semibold font-sans transition-colors ${
+                viewMode === 'absolute' 
+                  ? 'bg-cyan-500 text-black' 
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              {t('absoluteMode')}
+            </button>
+            <button
+              onClick={() => setViewMode('relative')}
+              className={`px-3 py-1 text-xs font-semibold font-sans transition-colors ${
+                viewMode === 'relative' 
+                  ? 'bg-cyan-500 text-black' 
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              {t('relativeMode')}
+            </button>
           </div>
         </div>
 
@@ -316,8 +411,11 @@ export const Trendmap: React.FC = () => {
             topWords={calcResult.topDisplayKeys} 
             croppedTimeScale={calcResult.croppedTimeScale} 
             grid={calcResult.grid} 
+            displayGrid={viewMode === 'relative' ? calcResult.relativeGrid : undefined}
+            weightGrid={viewMode === 'relative' ? calcResult.relativeWeights : undefined}
             translations={gridTranslations} 
             maxCellCount={calcResult.maxCellCount} 
+            maxDisplayWeight={viewMode === 'relative' ? calcResult.maxRelativeWeight : undefined}
             handleCellClick={handleCellClick} 
             handleRowClick={handleRowClick}
             handleColumnClick={handleColumnClick}
