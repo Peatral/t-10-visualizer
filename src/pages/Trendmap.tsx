@@ -184,6 +184,39 @@ export const Trendmap: React.FC = () => {
     setPanelOpen(true)
   }
 
+  const handleRowClick = (displayKey: string, displayLabel: string) => {
+    // Gather all matching articles in this row across all time buckets
+    const matches: Article[] = []
+    const bucketRecords = cellMatches[displayKey] || {}
+    Object.values(bucketRecords).forEach(articles => {
+      matches.push(...articles)
+    })
+    
+    if (matches.length === 0) return
+    
+    // Sort matching list by date descending (newest first)
+    const sorted = [...matches].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    
+    setMatchingArticles(sorted)
+    setSelectedArticle(sorted[0] || null)
+    setPanelTitle(`${t('articlesCount', { count: sorted.length })}: "${displayLabel}" [All Time]`)
+    setPanelOpen(true)
+  }
+
+  const handleColumnClick = (bucket: string) => {
+    // Show all articles in category matching the time-bucket
+    const matches = categoryArticles.filter(art => art.bucket === bucket)
+    if (matches.length === 0) return
+
+    // Sort matching list by date descending (newest first)
+    const sorted = [...matches].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+    setMatchingArticles(sorted)
+    setSelectedArticle(sorted[0] || null)
+    setPanelTitle(`${t('articlesCount', { count: sorted.length })}: [${bucket}]`)
+    setPanelOpen(true)
+  }
+
   // Convert localized display keys back to display labels for table headers
   const gridTranslations: Record<string, string> = {}
   topDisplayKeys.forEach(key => {
@@ -241,6 +274,8 @@ export const Trendmap: React.FC = () => {
             translations={gridTranslations} 
             maxCellCount={maxCellCount} 
             handleCellClick={handleCellClick} 
+            handleRowClick={handleRowClick}
+            handleColumnClick={handleColumnClick}
           />
         )}
       </div>
