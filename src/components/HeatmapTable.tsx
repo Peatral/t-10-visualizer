@@ -29,7 +29,7 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
       <table className="w-full border-collapse">
         <thead>
           <tr>
-            <th className="sticky left-0 bg-[#1e1e1e] z-20 border border-[#2e2e2e] text-left px-4 py-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider min-w-[200px] font-sans">
+            <th className="sticky left-0 bg-[#1e1e1e] z-20 border border-[#2e2e2e] text-left px-4 py-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap font-sans">
               {t('heatmapLabel')}
             </th>
             {croppedTimeScale.map(col => {
@@ -73,7 +73,7 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
               <tr key={word} className="hover:bg-[#252525]/30">
                 <td 
                   onClick={() => wordTotal > 0 && handleRowClick(word, displayLabel)}
-                  className={`sticky left-0 z-10 border border-[#2e2e2e] text-left px-4 py-2.5 text-xs font-semibold font-sans max-w-[240px] truncate transition-colors ${
+                  className={`sticky left-0 z-10 border border-[#2e2e2e] text-left px-4 py-2.5 text-xs font-semibold font-sans whitespace-nowrap transition-colors ${
                     wordTotal > 0 
                       ? 'bg-[#1a1a1a] text-[#03a9f4] cursor-pointer hover:bg-[#252525] hover:text-cyan-400' 
                       : 'bg-[#151515] text-gray-500'
