@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { Filter, ChevronDown } from 'lucide-react'
 import { DataSet } from 'vis-data'
 import { Timeline as VisTimeline } from 'vis-timeline'
@@ -21,63 +21,81 @@ export const Timeline: React.FC = () => {
   const [panelOpen, setPanelOpen] = useState(false)
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null)
 
-  // Filter articles based on selected category
-  const activeArticles = selectedCat === "All"
-    ? data.articles
-    : data.articles.filter(a => a.category === selectedCat)
+  // Non-blocking initialization states
+  const [isInitializing, setIsInitializing] = useState(true)
+
+  // Filter articles based on selected category (memoized to keep reference stable)
+  const activeArticles = useMemo(() => {
+    return selectedCat === "All"
+      ? data.articles
+      : data.articles.filter(a => a.category === selectedCat)
+  }, [selectedCat, data.articles])
 
   useEffect(() => {
     if (!timelineRef.current) return
 
-    // Clear previous timeline instance if any
+    setIsInitializing(true)
+
+    // Clear previous timeline instance immediately
     if (timelineInstance.current) {
       timelineInstance.current.destroy()
       timelineInstance.current = null
     }
 
-    // Map articles to Vis DataSet items
-    const visItems = activeArticles.map((art, index) => ({
-      id: index,
-      content: art.title,
-      start: art.date,
-      // Metadata payload
-      rawIndex: index,
-      rawArticle: art
-    }))
+    // Defer the heavy DOM attachment and Vis rendering to let the loader mount instantly
+    const timer = setTimeout(() => {
+      if (!timelineRef.current) return
 
-    const items = new DataSet(visItems)
+      // Map articles to Vis DataSet items
+      const visItems = activeArticles.map((art, index) => ({
+        id: index,
+        content: art.title,
+        start: art.date,
+        // Metadata payload
+        rawIndex: index,
+        rawArticle: art
+      }))
 
-    const options = {
-      width: '100%',
-      height: '100%',
-      margin: {
-        item: {
-          horizontal: 10,
-          vertical: 10
-        }
-      },
-      stack: true,
-      maxHeight: '100%',
-      zoomMin: 1000 * 60 * 60 * 24 * 30, // 30 days
-      zoomMax: 1000 * 60 * 60 * 24 * 365 * 40 // 40 years
-    }
+      const items = new DataSet(visItems)
 
-    const timeline = new VisTimeline(timelineRef.current, items, options)
-    timelineInstance.current = timeline
-
-    // Add selection handler
-    timeline.on('select', (properties) => {
-      if (properties.items.length > 0) {
-        const selectedId = properties.items[0]
-        const item = items.get(selectedId) as any
-        if (item && item.rawArticle) {
-          setSelectedArticle(item.rawArticle)
-          setPanelOpen(true)
-        }
+      // Optimize options for maximum drag performance (point render type, throttled redraws)
+      const options = {
+        width: '100%',
+        height: '100%',
+        margin: {
+          item: {
+            horizontal: 6,
+            vertical: 4
+          }
+        },
+        type: 'point' as const, // Points render significantly faster than default boxed styles
+        throttleRedraw: 20, // Throttles redraw operations during panning/zooming to avoid frame drops
+        stack: true,
+        maxHeight: '100%',
+        zoomMin: 1000 * 60 * 60 * 24 * 30, // 30 days
+        zoomMax: 1000 * 60 * 60 * 24 * 365 * 40 // 40 years
       }
-    })
+
+      const timeline = new VisTimeline(timelineRef.current, items, options)
+      timelineInstance.current = timeline
+
+      // Add selection handler
+      timeline.on('select', (properties) => {
+        if (properties.items.length > 0) {
+          const selectedId = properties.items[0]
+          const item = items.get(selectedId) as any
+          if (item && item.rawArticle) {
+            setSelectedArticle(item.rawArticle)
+            setPanelOpen(true)
+          }
+        }
+      })
+
+      setIsInitializing(false)
+    }, 60)
 
     return () => {
+      clearTimeout(timer)
       if (timelineInstance.current) {
         timelineInstance.current.destroy()
         timelineInstance.current = null
@@ -117,7 +135,14 @@ export const Timeline: React.FC = () => {
       </div>
 
       {/* Vis Timeline Container */}
-      <div className="flex-grow relative overflow-hidden">
+      <div className="flex-grow relative overflow-hidden bg-[#121212]">
+        {/* Loading overlay for non-blocking mounting */}
+        {isInitializing && (
+          <div className="absolute inset-0 z-40 bg-[#121212] flex flex-col items-center justify-center text-gray-500 gap-4">
+            <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+            <span className="text-sm font-semibold tracking-wider uppercase text-gray-500 animate-pulse">Initializing Timeline...</span>
+          </div>
+        )}
         <div ref={timelineRef} className="h-full w-full" />
       </div>
 
