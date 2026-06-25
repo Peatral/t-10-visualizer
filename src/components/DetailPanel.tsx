@@ -342,13 +342,52 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
                       <div className="w-3.5 h-3.5 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
                       <span>Loading full text...</span>
                     </div>
-                  ) : detailData?.bodyText ? (
-                    <div className="text-gray-400 text-sm leading-relaxed whitespace-pre-wrap font-sans">
-                      {detailData.bodyText}
-                    </div>
-                  ) : (
-                    <div className="text-gray-500 text-xs italic font-sans">No full content text available.</div>
-                  )}
+                  ) : (() => {
+                    const rawText = detailData?.bodyText || '';
+                    const isJapanTimesExpired = rawText.includes('The article you have been looking for has expired') || rawText.includes('newswire licensing terms');
+                    const isKyodoExpired = rawText.includes('Sorry, this article was first published more than three months ago');
+                    if (isJapanTimesExpired) {
+                      return (
+                        <div className="bg-[#2a1b1b] border border-[#5c2d2d] p-4 text-sm text-gray-300 font-sans">
+                          <p className="font-semibold text-amber-400 mb-2">Content Scrape Notice:</p>
+                          <p className="mb-3">This Japan Times article has expired due to licensing agreements and is no longer available on their system. You can attempt to access it directly:</p>
+                          <a 
+                            href={selectedArticle.link} 
+                            target="_blank" 
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#3f51b5] text-white hover:bg-[#4d62cd] font-medium text-xs transition-colors"
+                          >
+                            Open on Japan Times <ArrowUpRight className="w-3.5 h-3.5" />
+                          </a>
+                        </div>
+                      )
+                    }
+
+                    if (isKyodoExpired) {
+                      return (
+                        <div className="bg-[#2a1b1b] border border-[#5c2d2d] p-4 text-sm text-gray-300 font-sans">
+                          <p className="font-semibold text-amber-400 mb-2">Content Scrape Notice:</p>
+                          <p className="mb-3">This article from Kyodo News has been archived/hidden behind a paid membership system. You can view the source directly:</p>
+                          <a 
+                            href={selectedArticle.link} 
+                            target="_blank" 
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#3f51b5] text-white hover:bg-[#4d62cd] font-medium text-xs transition-colors"
+                          >
+                            Open on Kyodo News <ArrowUpRight className="w-3.5 h-3.5" />
+                          </a>
+                        </div>
+                      )
+                    }
+
+                    return detailData?.bodyText ? (
+                      <div className="text-gray-400 text-sm leading-relaxed whitespace-pre-wrap font-sans">
+                        {detailData.bodyText}
+                      </div>
+                    ) : (
+                      <div className="text-gray-500 text-xs italic font-sans">No full content text available.</div>
+                    )
+                  })()}
                 </div>
               </div>
             ) : (
