@@ -136,10 +136,9 @@ export const Trendmap: React.FC = () => {
         }
       })
 
-      // Select top 30 unique display labels
+      // Select unique display labels from the curated list (sorted by count descending)
       const topDisplayKeys = Object.entries(matchCounts)
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 30)
         .map(entry => entry[0])
 
       // Build grid counts and mapping
