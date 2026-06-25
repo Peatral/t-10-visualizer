@@ -3,6 +3,7 @@ import { Navbar } from './components/Navbar'
 import { Dashboard } from './pages/Dashboard'
 import { Trendmap } from './pages/Trendmap'
 import { Timeline } from './pages/Timeline'
+import { Search } from './pages/Search'
 
 const RootComponent = () => {
   return (
@@ -37,7 +38,13 @@ const timelineRoute = createRoute({
   component: Timeline,
 })
 
-const routeTree = rootRoute.addChildren([indexRoute, trendmapRoute, timelineRoute])
+const searchRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/search',
+  component: Search,
+})
+
+const routeTree = rootRoute.addChildren([indexRoute, trendmapRoute, timelineRoute, searchRoute])
 
 export const router = createRouter({ routeTree })
 

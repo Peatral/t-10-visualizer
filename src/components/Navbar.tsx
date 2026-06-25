@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from '@tanstack/react-router'
-import { LayoutDashboard, TrendingUp, Calendar, Globe } from 'lucide-react'
+import { LayoutDashboard, TrendingUp, Calendar, Globe, Search } from 'lucide-react'
 import { useTranslation } from '../context/LanguageContext'
 
 export const Navbar: React.FC = () => {
@@ -37,6 +37,12 @@ export const Navbar: React.FC = () => {
             className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-400 hover:text-white hover:bg-[#252525] transition-all [&.active]:bg-[#3f51b5] [&.active]:text-white"
           >
             <Calendar className="w-4 h-4" /> {t('timelineTitle')}
+          </Link>
+          <Link 
+            to="/search" 
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-400 hover:text-white hover:bg-[#252525] transition-all [&.active]:bg-[#3f51b5] [&.active]:text-white"
+          >
+            <Search className="w-4 h-4" /> {t('searchArticles')}
           </Link>
         </nav>
 

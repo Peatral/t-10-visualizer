@@ -33,7 +33,15 @@ const translations = {
     heatmapLabel: "Topic / Keyword",
     totalLabel: "Total",
     categoryLabel: "Category:",
-    noWords: "No matching vocabulary words found in the article database for this category."
+    noWords: "No matching vocabulary words found in the article database for this category.",
+    searchTitle: "Article Search Engine",
+    searchPlaceholder: "Search by title, description, or content...",
+    searchArticles: "Search",
+    sortBy: "Sort By",
+    newest: "Newest First",
+    oldest: "Oldest First",
+    searchFullText: "Search Full Text (Body)",
+    searchEmpty: "No articles matched your search query."
   },
   de: {
     dashboardTitle: "T-10 Analyse-Dashboard",
@@ -65,7 +73,15 @@ const translations = {
     heatmapLabel: "Thema / Keyword",
     totalLabel: "Gesamt",
     categoryLabel: "Kategorie:",
-    noWords: "Keine passenden Vokabeln in der Artikeldatenbank für diese Kategorie gefunden."
+    noWords: "Keine passenden Vokabeln in der Artikeldatenbank für diese Kategorie gefunden.",
+    searchTitle: "Artikel-Suchmaschine",
+    searchPlaceholder: "Suche nach Titel, Beschreibung oder Inhalt...",
+    searchArticles: "Suche",
+    sortBy: "Sortieren nach",
+    newest: "Neueste zuerst",
+    oldest: "Älteste zuerst",
+    searchFullText: "Volltext durchsuchen (Inhalt)",
+    searchEmpty: "Keine Artikel entsprechen Ihrer Suchanfrage."
   }
 }
 
