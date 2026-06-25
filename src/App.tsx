@@ -1,8 +1,7 @@
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { RouterProvider } from '@tanstack/react-router'
-import { DataContext } from './context/DataContext'
-import { LanguageProvider } from './context/LanguageContext'
+import { DataContext, LanguageProvider } from './context'
 import { fetchDataPayload, fetchArticleBodies } from './services/dataSource'
 import { router } from './routes'
 

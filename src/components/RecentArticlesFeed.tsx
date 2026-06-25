@@ -1,6 +1,6 @@
 import React from 'react'
 import { Activity } from 'lucide-react'
-import { useTranslation } from '../context/LanguageContext'
+import { useTranslation } from '../context'
 import type { Article } from '../types'
 
 interface RecentArticlesFeedProps {

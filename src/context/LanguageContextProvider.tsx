@@ -1,4 +1,6 @@
-import React, { createContext, useState, useContext } from 'react'
+import React, { useState } from 'react'
+import { LanguageContext } from './LanguageContext'
+import type { TranslationKey } from './LanguageContext'
 
 export type Language = 'en' | 'de'
 
@@ -63,7 +65,7 @@ const translations = {
     totalArticles: "Artikel Gesamt",
     indexedRecords: "Indizierte Artikeldatensätze",
     categoryDist: "Kategorieverteilung",
-    detailTitle: "Artikel-Details",
+    detailTitle: "Article-Details",
     source: "Quelle:",
     fullContent: "Vollständiger Artikelinhalt",
     selectArticle: "Wählen Sie einen Artikel aus, um Details anzuzeigen.",
@@ -91,16 +93,6 @@ const translations = {
   }
 }
 
-type TranslationKey = keyof typeof translations.en
-
-interface LanguageContextProps {
-  language: Language
-  setLanguage: (lang: Language) => void
-  t: (key: TranslationKey, params?: Record<string, string | number>) => string
-}
-
-const LanguageContext = createContext<LanguageContextProps | undefined>(undefined)
-
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('en')
 
@@ -119,12 +111,4 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       {children}
     </LanguageContext.Provider>
   )
-}
-
-export const useTranslation = () => {
-  const context = useContext(LanguageContext)
-  if (!context) {
-    throw new Error('useTranslation must be used within a LanguageProvider')
-  }
-  return context
 }

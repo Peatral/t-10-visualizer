@@ -2,8 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { Filter, ChevronDown, Info } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { fetchArticleBodies } from '../services/dataSource'
-import { useData } from '../context/DataContext'
-import { useTranslation } from '../context/LanguageContext'
+import { useData } from '../context'
+import { useTranslation } from '../context'
 import type { Article } from '../types'
 import { getYearHalf, checkKeywordMatchBilingual } from '../utils/matching'
 import { HeatmapTable } from '../components/HeatmapTable'
@@ -40,20 +40,20 @@ export const Trendmap: React.FC = () => {
   })
 
   // Helper to retrieve keyword candidates for a specific category
-  const getCandidateWords = (cat: string): string[] => {
+  const getCandidateWords = React.useCallback((cat: string): string[] => {
     const lower = cat.toLowerCase()
     if (lower.includes("energy")) return data.themenwolkeWords["Energy"] || []
     if (lower.includes("food")) return data.themenwolkeWords["Food"] || []
     if (lower.includes("housing")) return data.themenwolkeWords["Housing"] || []
     if (lower.includes("mobility")) return data.themenwolkeWords["Mobility"] || []
     return []
-  }
+  }, [data.themenwolkeWords])
 
   // Filter categories to only those containing keywords in the vocabulary sheet
   const categories = useMemo(() => {
     return Array.from(new Set(data.articles.map(a => a.category)))
       .filter(cat => getCandidateWords(cat).length > 0)
-  }, [data.articles, data.themenwolkeWords])
+  }, [data.articles, getCandidateWords])
 
   const [selectedCat, setSelectedCat] = useState(categories[0] || '')
   
@@ -344,7 +344,7 @@ export const Trendmap: React.FC = () => {
     }, 40)
 
     return () => clearTimeout(timer)
-  }, [selectedCat, data.articles, data.translations, bodies, language, isBodiesLoading])
+  }, [selectedCat, data.articles, data.translations, bodies, language, isBodiesLoading, getCandidateWords])
 
   const handleCellClick = (displayKey: string, displayLabel: string, bucket: string) => {
     if (!calcResult) return

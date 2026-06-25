@@ -11,7 +11,7 @@ import {
 } from 'lucide-react'
 import { DataSet } from 'vis-data'
 import { Timeline } from 'vis-timeline'
-import { useTranslation } from '../context/LanguageContext'
+import { useTranslation } from '../context'
 import type { Article } from '../types'
 
 interface DetailPanelProps {
@@ -197,7 +197,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
         miniTimelineInstance.current = null
       }
     }
-  }, [hideList, viewMode, articlesList, isOpen, isCollapsed, selectedArticle])
+  }, [hideList, viewMode, articlesList, isOpen, isCollapsed, selectedArticle, onSelectArticle])
 
   if (!isOpen) return null
 

@@ -1,23 +1,13 @@
-import { createRootRoute, createRoute, createRouter, Outlet } from '@tanstack/react-router'
-import { Navbar } from './components/Navbar'
+import { createRootRoute, createRoute, createRouter } from '@tanstack/react-router'
 import { Dashboard } from './pages/Dashboard'
 import { Trendmap } from './pages/Trendmap'
 import { Timeline } from './pages/Timeline'
 import { Search } from './pages/Search'
 
-const RootComponent = () => {
-  return (
-    <div className="h-full w-full flex flex-col bg-[#121212] text-[#e0e0e0]">
-      <Navbar />
-      <main className="flex-grow overflow-hidden relative">
-        <Outlet />
-      </main>
-    </div>
-  )
-}
+import { RootLayout } from './components/RootLayout'
 
 const rootRoute = createRootRoute({
-  component: RootComponent,
+  component: RootLayout,
 })
 
 const indexRoute = createRoute({

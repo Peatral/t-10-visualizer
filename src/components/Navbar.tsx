@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { LayoutDashboard, TrendingUp, Calendar, Globe, Search, Menu, X } from 'lucide-react'
-import { useTranslation } from '../context/LanguageContext'
+import { useTranslation } from '../context'
 
 export const Navbar: React.FC = () => {
   const { language, setLanguage, t } = useTranslation()

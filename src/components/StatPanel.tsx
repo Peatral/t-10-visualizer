@@ -1,6 +1,6 @@
 import React from 'react'
 import { Database, Tag } from 'lucide-react'
-import { useTranslation } from '../context/LanguageContext'
+import { useTranslation } from '../context'
 
 interface StatPanelProps {
   totalArticles: number
