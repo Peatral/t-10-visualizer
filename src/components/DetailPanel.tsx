@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { fetchArticleDetail } from '../services/dataSource'
+import { useTRPC } from '../utils/trpc'
 import { 
   MoveVertical, 
   Maximize2, 
@@ -40,13 +40,15 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
   const [leftColWidth, setLeftColWidth] = useState(35) // percentage
   const [viewMode, setViewMode] = useState<'list' | 'mini-timeline'>(defaultView)
   const { t } = useTranslation()
+  const trpc = useTRPC()
 
   // On-demand body text loading
-  const { data: detailData, isLoading: isDetailLoading } = useQuery({
-    queryKey: ['articleDetail', selectedArticle?.id],
-    queryFn: () => fetchArticleDetail(selectedArticle!.id),
-    enabled: !!selectedArticle?.id,
-  })
+  const { data: detailData, isLoading: isDetailLoading } = useQuery(
+    trpc.getArticleDetail.queryOptions(
+      { id: selectedArticle?.id || '' },
+      { enabled: !!selectedArticle?.id }
+    )
+  )
   
   const panelRef = useRef<HTMLDivElement>(null)
   const verticalDragRef = useRef<HTMLDivElement>(null)

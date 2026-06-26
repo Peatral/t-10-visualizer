@@ -2,8 +2,8 @@ import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-quer
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { RouterProvider } from '@tanstack/react-router'
 import { DataContext, LanguageProvider } from './context'
-import { fetchDataPayload, fetchArticleBodies } from './services/dataSource'
 import { router } from './routes'
+import { trpc, trpcClient, useTRPC } from './utils/trpc'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,18 +15,12 @@ const queryClient = new QueryClient({
 })
 
 function VisualizerApp() {
-  const { data, error, isLoading } = useQuery({
-    queryKey: ['dataPayload'],
-    queryFn: fetchDataPayload,
-  })
+  const trpcUtils = useTRPC()
+  
+  const { data, error, isLoading } = useQuery(
+    trpcUtils.getDataPayload.queryOptions()
+  )
 
-  // Prefetch large article bodies payload in the background as soon as app metadata resolves
-  useQuery({
-    queryKey: ['articleBodies'],
-    queryFn: fetchArticleBodies,
-    enabled: !!data,
-    staleTime: Infinity, // Static asset, cache indefinitely
-  })
 
   if (error) {
     return (
@@ -62,9 +56,11 @@ function VisualizerApp() {
 
 export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <VisualizerApp />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <VisualizerApp />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </trpc.Provider>
   )
 }

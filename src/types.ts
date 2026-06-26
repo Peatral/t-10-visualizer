@@ -17,7 +17,7 @@ export interface TrendmapPayload {
 }
 
 export interface DataPayload {
-  articles: Article[]
-  themenwolkeWords: Record<string, string[]>
-  translations: Record<string, string>
+  totalArticlesCount: number
+  categories: string[]
 }
+

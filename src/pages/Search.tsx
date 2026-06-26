@@ -1,25 +1,55 @@
-import React, { useMemo, useState, useEffect, useRef } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { Search as SearchIcon, Filter, Clock, Info } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { useSearch, useNavigate } from '@tanstack/react-router'
+import { useDebounce } from 'use-debounce'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { useDebouncedCallback } from 'use-debounce'
 import { useData } from '../context'
 import { useTranslation } from '../context'
-import { fetchArticleBodies } from '../services/dataSource'
+import { useTRPC } from '../utils/trpc'
 import { DetailPanel } from '../components/DetailPanel'
 import type { Article } from '../types'
 
-export const Search: React.FC = () => {
+export const Search = () => {
   const data = useData()
   const { t } = useTranslation()
   const searchParams = useSearch({ from: '/search' })
   const navigate = useNavigate({ from: '/search' })
+  const trpc = useTRPC()
 
   // Search parameters from URL
   const selectedCat = searchParams.category || 'All'
   const sortOrder = searchParams.sort || 'newest'
   const includeFullText = searchParams.fulltext || false
+
+  // Local state for immediate typing feedback
+  const [localQuery, setLocalQuery] = useState(searchParams.q || '')
+
+  // Derive debounced query from the local state
+  const [debouncedQuery] = useDebounce(localQuery, 400)
+
+  // Sync local query input only if the URL param changes externally (e.g. browser back/forward)
+  useEffect(() => {
+    setLocalQuery(searchParams.q || '')
+  }, [searchParams.q])
+
+  // Sync debounced query changes back to URL search params
+  useEffect(() => {
+    if ((searchParams.q || '') !== debouncedQuery) {
+      navigate({
+        search: (prev) => ({
+          ...prev,
+          q: debouncedQuery || undefined,
+        }),
+        replace: true,
+      })
+    }
+  }, [debouncedQuery, searchParams.q, navigate])
+
+  // Event handler for typing changes
+  const handleQueryChange = (value: string) => {
+    setLocalQuery(value)
+  }
 
   const updateSearch = (updates: Partial<typeof searchParams>) => {
     navigate({
@@ -31,85 +61,32 @@ export const Search: React.FC = () => {
     })
   }
 
-  // --- Debounce Setup ---
-  // Local state keeps the UI instantly responsive while typing
-  const [localQuery, setLocalQuery] = useState(searchParams.q || '')
-
-  // Sync local state if URL changes externally
-  useEffect(() => {
-    setLocalQuery(searchParams.q || '')
-  }, [searchParams.q])
-
-  // Debounce the router update by 300ms
-  const debouncedUpdateSearch = useDebouncedCallback((q: string) => {
-    updateSearch({ q: q || undefined })
-  }, 300)
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value
-    setLocalQuery(val)
-    debouncedUpdateSearch(val)
-  }
-
   // Details overlay panel states
-  const [panelOpen, setPanelOpen] = React.useState(false)
-  const [selectedArticle, setSelectedArticle] = React.useState<Article | null>(null)
+  const [panelOpen, setPanelOpen] = useState(false)
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null)
 
-  // Fetch full text corpus if full text search is enabled
-  const { data: bodies, isLoading: isBodiesLoading } = useQuery({
-    queryKey: ['articleBodies'],
-    queryFn: fetchArticleBodies,
-    enabled: includeFullText,
-  })
-
-  // List of unique categories
+  // List of unique categories for the dropdown filter
   const categories = useMemo(() => {
-    return ['All', ...Array.from(new Set(data.articles.map(a => a.category)))]
-  }, [data.articles])
+    return ['All', ...data.categories]
+  }, [data.categories])
 
-  // Filter and sort results (Using the URL's query param, not local query, so it runs post-debounce)
-  const filteredArticles = useMemo(() => {
-    const q = (searchParams.q || '').toLowerCase().trim()
-    
-    let list = data.articles
 
-    // 1. Filter by category
-    if (selectedCat !== 'All') {
-      list = list.filter(art => art.category === selectedCat)
-    }
-
-    // 2. Filter by search query
-    if (q) {
-      list = list.filter(art => {
-        const titleMatch = art.title.toLowerCase().includes(q)
-        const descMatch = art.description.toLowerCase().includes(q)
-        
-        if (titleMatch || descMatch) return true
-
-        // Check full body text if enabled
-        if (includeFullText && bodies) {
-          const body = bodies[art.id] || ''
-          return body.toLowerCase().includes(q)
-        }
-
-        return false
-      })
-    }
-
-    // 3. Sort
-    return [...list].sort((a, b) => {
-      const timeA = new Date(a.date).getTime()
-      const timeB = new Date(b.date).getTime()
-      return sortOrder === 'newest' ? timeB - timeA : timeA - timeB
+  // Run SQLite index & FTS5 search on the serverless backend using useQuery + queryOptions
+  const { data: filteredArticles = [], isLoading: isSearchLoading } = useQuery(
+    trpc.searchArticles.queryOptions({
+      q: debouncedQuery,
+      category: selectedCat,
+      sort: sortOrder,
+      includeFullText,
     })
-  }, [searchParams.q, selectedCat, sortOrder, includeFullText, bodies, data.articles])
+  )
 
   const handleArticleClick = (art: Article) => {
     setSelectedArticle(art)
     setPanelOpen(true)
   }
 
-  // --- Virtualization Setup ---
+  // --- Virtualization Setup (using @tanstack/react-virtual) ---
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   const rowVirtualizer = useVirtualizer({
@@ -129,18 +106,19 @@ export const Search: React.FC = () => {
             <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">Article Index Search</span>
           </div>
           <div className="text-xs text-gray-400 font-medium font-mono bg-[#151515] px-3 py-1 border border-[#2e2e2e]">
-            {filteredArticles.length} / {data.articles.length} {t('listView').toLowerCase()}
+            {filteredArticles.length} / {data.totalArticlesCount} {t('listView').toLowerCase()}
           </div>
+
         </div>
 
         {/* Toolbar / Filters Row */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-          {/* Query input - Now uses localQuery and handles debounce */}
+          {/* Query input */}
           <div className="md:col-span-5 relative">
             <input
               type="text"
               value={localQuery}
-              onChange={handleSearchChange}
+              onChange={(e) => handleQueryChange(e.target.value)}
               placeholder={t('searchPlaceholder')}
               className="w-full bg-[#252525] border border-[#2e2e2e] text-white px-3 py-2 pl-9 text-sm focus:outline-none focus:border-cyan-500 placeholder-gray-500"
             />
@@ -196,10 +174,10 @@ export const Search: React.FC = () => {
         ref={scrollContainerRef} 
         className="flex-grow overflow-auto relative bg-[#121212]"
       >
-        {includeFullText && isBodiesLoading ? (
+        {isSearchLoading ? (
           <div className="absolute inset-0 z-10 bg-[#121212]/80 flex flex-col items-center justify-center text-gray-500 gap-4">
             <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
-            <span className="text-sm font-semibold tracking-wider uppercase text-gray-500 animate-pulse">Loading Corpus for Full-Text Search...</span>
+            <span className="text-sm font-semibold tracking-wider uppercase text-gray-500 animate-pulse">Searching Articles...</span>
           </div>
         ) : filteredArticles.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-2">
@@ -224,6 +202,7 @@ export const Search: React.FC = () => {
             >
               {rowVirtualizer.getVirtualItems().map(virtualRow => {
                 const art = filteredArticles[virtualRow.index]
+                if (!art) return null
                 
                 return (
                   <tr

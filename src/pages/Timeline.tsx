@@ -1,35 +1,36 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Filter, ChevronDown } from 'lucide-react'
 import { DataSet } from 'vis-data'
 import { Timeline as VisTimeline } from 'vis-timeline'
+import { useQuery } from '@tanstack/react-query'
 import { useData } from '../context'
 import { useTranslation } from '../context'
+import { useTRPC } from '../utils/trpc'
 import type { Article } from '../types'
 import { DetailPanel } from '../components/DetailPanel'
 
 export const Timeline: React.FC = () => {
   const data = useData()
   const { t } = useTranslation()
+  const trpcUtils = useTRPC()
   const timelineRef = useRef<HTMLDivElement>(null)
   const timelineInstance = useRef<VisTimeline | null>(null)
 
-  // Find unique categories available
-  const categories = ["All", ...Array.from(new Set(data.articles.map(a => a.category)))]
+  const categories = ["All", ...data.categories]
   const [selectedCat, setSelectedCat] = useState("All")
 
   // Drilldown overlay panel states
   const [panelOpen, setPanelOpen] = useState(false)
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null)
 
+  // Fetch timeline articles on-demand based on category select
+  const { data: activeArticles = [], isLoading: isTimelineLoading } = useQuery(
+    trpcUtils.getTimelineArticles.queryOptions({ category: selectedCat })
+  )
+
   // Non-blocking initialization states
   const [isInitializing, setIsInitializing] = useState(true)
 
-  // Filter articles based on selected category (memoized to keep reference stable)
-  const activeArticles = useMemo(() => {
-    return selectedCat === "All"
-      ? data.articles
-      : data.articles.filter(a => a.category === selectedCat)
-  }, [selectedCat, data.articles])
 
   useEffect(() => {
     if (!timelineRef.current) return
@@ -145,12 +146,15 @@ export const Timeline: React.FC = () => {
       {/* Vis Timeline Container */}
       <div className="flex-grow relative overflow-hidden bg-[#121212]">
         {/* Loading overlay for non-blocking mounting */}
-        {isInitializing && (
+        {(isInitializing || isTimelineLoading) && (
           <div className="absolute inset-0 z-40 bg-[#121212] flex flex-col items-center justify-center text-gray-500 gap-4">
             <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
-            <span className="text-sm font-semibold tracking-wider uppercase text-gray-500 animate-pulse">Initializing Timeline...</span>
+            <span className="text-sm font-semibold tracking-wider uppercase text-gray-500 animate-pulse">
+              {isTimelineLoading ? "Loading Articles..." : "Initializing Timeline..."}
+            </span>
           </div>
         )}
+
         <div ref={timelineRef} className="h-full w-full" />
       </div>
 

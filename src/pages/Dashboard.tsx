@@ -1,33 +1,21 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { TrendingUp, Calendar, ArrowRight } from 'lucide-react'
-import { useData } from '../context'
+import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from '../context'
+import { useTRPC } from '../utils/trpc'
 import { DetailPanel } from '../components/DetailPanel'
 import { StatPanel } from '../components/StatPanel'
 import { RecentArticlesFeed } from '../components/RecentArticlesFeed'
 import type { Article } from '../types'
 
 export const Dashboard: React.FC = () => {
-  const data = useData()
   const { t } = useTranslation()
+  const trpcUtils = useTRPC()
 
-  // Stats
-  const totalArticles = data.articles.length
-  
-  const categoryCounts = useMemo(() => {
-    return data.articles.reduce<Record<string, number>>((acc, art) => {
-      acc[art.category] = (acc[art.category] || 0) + 1
-      return acc
-    }, {})
-  }, [data.articles])
-
-  // Get 5 most recent articles
-  const recentArticles = useMemo(() => {
-    return [...data.articles]
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .slice(0, 5)
-  }, [data.articles])
+  const { data: dashboardData, isLoading } = useQuery(
+    trpcUtils.getDashboardData.queryOptions()
+  )
 
   // Details panel states
   const [panelOpen, setPanelOpen] = useState(false)
@@ -37,6 +25,18 @@ export const Dashboard: React.FC = () => {
     setSelectedArticle(art)
     setPanelOpen(true)
   }
+
+  if (isLoading || !dashboardData) {
+    return (
+      <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-4 bg-[#121212]">
+        <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+        <span className="text-sm font-semibold tracking-wider uppercase text-gray-500 animate-pulse">Loading dashboard...</span>
+      </div>
+    )
+  }
+
+  const { totalArticles, categoryCounts, recentArticles } = dashboardData
+
 
   return (
     <div className="h-full overflow-y-auto bg-[#121212] select-none text-left font-sans">
