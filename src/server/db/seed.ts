@@ -2,8 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import Database from 'better-sqlite3'
 import { db } from './index.js'
-import { articles, topics, topicKeywords, articleTopicMatches, categories, trendmapCache, topicsToCategories } from './schema.js'
-import { calculateTrendmapGrid } from '../../utils/trendmapCalc.js'
+import { articles, topics, topicKeywords, articleTopicMatches, categories, topicsToCategories } from './schema.js'
 import { getYearHalf } from '../../utils/matching.js'
 import { TOPICS_LIST } from './topicData.js'
 
@@ -63,7 +62,6 @@ async function seed() {
   
   console.log('Creating tables, triggers, and FTS5 virtual tables...')
   sqlite.exec(`
-    DROP TABLE IF EXISTS trendmap_cache;
     DROP TABLE IF EXISTS article_topic_matches;
     DROP TABLE IF EXISTS topics_to_categories;
     DROP TABLE IF EXISTS topic_keywords;
@@ -118,12 +116,6 @@ async function seed() {
       FOREIGN KEY(topic_id) REFERENCES topics(id)
     );
 
-    CREATE TABLE trendmap_cache (
-      category TEXT NOT NULL,
-      language TEXT NOT NULL,
-      result_json TEXT NOT NULL
-    );
-
     CREATE TABLE article_topic_matches (
       article_id TEXT NOT NULL,
       category TEXT NOT NULL,
@@ -142,7 +134,6 @@ async function seed() {
     CREATE INDEX idx_keywords_topic ON topic_keywords(topic_id);
     CREATE INDEX idx_matches_category ON article_topic_matches(category);
     CREATE INDEX idx_matches_topic ON article_topic_matches(topic_id);
-    CREATE INDEX idx_cache_lookup ON trendmap_cache(category, language);
 
     -- FTS5 Virtual Table for full-text search
     CREATE VIRTUAL TABLE articles_fts USING fts5(
@@ -364,26 +355,6 @@ async function seed() {
     console.log(`Successfully populated article_topic_matches with ${matchEntries.length} matches.`)
   }
 
-  // 4. Pre-populate caches for each category
-  const categoriesList = await db.select().from(categories).all()
-  console.log('Pre-populating trendmapCache table for all categories and languages...')
-  for (const cat of categoriesList) {
-    const lower = cat.id.toLowerCase()
-    if (lower.includes("energy") || lower.includes("food") || lower.includes("housing") || lower.includes("mobility")) {
-      for (const lang of ['en', 'de'] as const) {
-        console.log(`Precomputing trendmap grid cache for: "${cat.name}" [${lang}]...`)
-        const result = await calculateTrendmapGrid(db, cat.name, lang)
-        await db.insert(trendmapCache)
-          .values({
-            category: cat.name,
-            language: lang,
-            resultJson: JSON.stringify(result),
-          })
-          .run()
-      }
-    }
-  }
-  console.log('Trendmap cache pre-population complete.')
   console.log('Seeding complete.')
 }
 

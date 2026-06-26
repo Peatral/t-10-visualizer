@@ -82,13 +82,6 @@ export const topicKeywordsRelations = relations(topicKeywords, ({ one }) => ({
   }),
 }))
 
-export const trendmapCache = sqliteTable('trendmap_cache', {
-  category: text('category').notNull(),
-  language: text('language').notNull(),
-  resultJson: text('result_json').notNull(),
-}, (table) => [
-  index('idx_cache_lookup').on(table.category, table.language),
-])
 
 export const articleTopicMatches = sqliteTable('article_topic_matches', {
   articleId: text('article_id').notNull().references(() => articles.id),
