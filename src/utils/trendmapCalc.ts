@@ -180,11 +180,16 @@ export async function calculateTrendmapGrid(db: any, category: string, language:
     const key = match.displayKey.toLowerCase()
     const art = articleLookup.get(match.articleId)
     if (art && grid[key] && grid[key][match.bucket] !== undefined) {
-      grid[key][match.bucket]++
-      cellMatches[key][match.bucket].push(match.articleId)
-      if (grid[key][match.bucket] > maxCellCount) {
-        maxCellCount = grid[key][match.bucket]
+      
+      // Only increment and push if we haven't seen this article in this cell yet
+      if (!cellMatches[key][match.bucket].includes(match.articleId)) {
+        grid[key][match.bucket]++
+        cellMatches[key][match.bucket].push(match.articleId)
+        if (grid[key][match.bucket] > maxCellCount) {
+          maxCellCount = grid[key][match.bucket]
+        }
       }
+      
     }
   })
 

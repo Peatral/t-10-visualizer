@@ -52,7 +52,10 @@ export const Trendmap: React.FC = () => {
     const matchIds = (calcResult.cellMatches[displayKey] && calcResult.cellMatches[displayKey][bucket]) || []
     if (matchIds.length === 0) return
     
-    const matches = matchIds
+    // Create a Set to deduplicate article IDs
+    const uniqueMatchIds = Array.from(new Set(matchIds))
+    
+    const matches = uniqueMatchIds
       .map(id => articleLookup.get(id))
       .filter((a): a is Article => !!a)
     
@@ -67,13 +70,18 @@ export const Trendmap: React.FC = () => {
 
   const handleRowClick = (displayKey: string, displayLabel: string) => {
     if (!calcResult) return
-    // Gather all matching articles in this row across all time buckets
+    
     const matches: Article[] = []
+    const seenIds = new Set<string>() // Track unique articles
     const bucketRecords = calcResult.cellMatches[displayKey] || {}
+    
     Object.values(bucketRecords).forEach(matchIds => {
       matchIds.forEach(id => {
-        const art = articleLookup.get(id)
-        if (art) matches.push(art)
+        if (!seenIds.has(id)) {
+          seenIds.add(id)
+          const art = articleLookup.get(id)
+          if (art) matches.push(art)
+        }
       })
     })
     
@@ -87,7 +95,6 @@ export const Trendmap: React.FC = () => {
     setPanelTitle(`${t('articlesCount', { count: sorted.length })}: "${displayLabel}" [All Time]`)
     setPanelOpen(true)
   }
-
   const handleColumnClick = (bucket: string) => {
     if (!calcResult) return
     // Show all articles in category matching the time-bucket
