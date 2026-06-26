@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm'
-import { articles, topics, articleTopicMatches, topicKeywords } from '../server/db/schema.js'
+import { articles, topics, articleTopicMatches, topicKeywords, topicsToCategories } from '../server/db/schema.js'
 import { getYearHalf } from './matching.js'
 
 export interface ArticleMetadata {
@@ -26,14 +26,17 @@ export interface TrendmapCalculationResult {
 }
 
 export async function calculateTrendmapGrid(db: any, category: string, language: 'en' | 'de'): Promise<TrendmapCalculationResult> {
-  // 1. Fetch topics for this category to build display lookup
+  const catId = category.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+
+  // 1. Fetch topics for this category using the junction table
   const dbTopics = await db.select({
     id: topics.id,
     nameDe: topics.nameDe,
     nameEn: topics.nameEn,
   })
   .from(topics)
-  .where(eq(topics.category, category))
+  .innerJoin(topicsToCategories, eq(topics.id, topicsToCategories.topicId))
+  .where(eq(topicsToCategories.categoryId, catId))
   .all()
 
   // Map topic IDs to display labels

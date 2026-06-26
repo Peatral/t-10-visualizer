@@ -1,4 +1,4 @@
-import { sqliteTable, text, index, integer } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text, index, integer, primaryKey } from 'drizzle-orm/sqlite-core'
 import { relations } from 'drizzle-orm'
 
 export const categories = sqliteTable('categories', {
@@ -8,6 +8,7 @@ export const categories = sqliteTable('categories', {
 
 export const categoriesRelations = relations(categories, ({ many }) => ({
   articles: many(articles),
+  topics: many(topicsToCategories),
 }))
 
 export const articles = sqliteTable('articles', {
@@ -34,16 +35,34 @@ export const articlesRelations = relations(articles, ({ one, many }) => ({
 
 export const topics = sqliteTable('topics', {
   id: text('id').primaryKey(),
-  category: text('category').notNull(),
   nameDe: text('name_de').notNull(),
   nameEn: text('name_en').notNull(),
-}, (table) => [
-  index('idx_topics_category').on(table.category),
-])
+})
 
 export const topicsRelations = relations(topics, ({ many }) => ({
   articleMatches: many(articleTopicMatches),
   keywords: many(topicKeywords),
+  categories: many(topicsToCategories),
+}))
+
+export const topicsToCategories = sqliteTable('topics_to_categories', {
+  topicId: text('topic_id').notNull().references(() => topics.id),
+  categoryId: text('category_id').notNull().references(() => categories.id),
+}, (table) => [
+  primaryKey({ columns: [table.topicId, table.categoryId] }),
+  index('idx_topic_cat_topic').on(table.topicId),
+  index('idx_topic_cat_cat').on(table.categoryId),
+])
+
+export const topicsToCategoriesRelations = relations(topicsToCategories, ({ one }) => ({
+  topic: one(topics, {
+    fields: [topicsToCategories.topicId],
+    references: [topics.id],
+  }),
+  category: one(categories, {
+    fields: [topicsToCategories.categoryId],
+    references: [categories.id],
+  }),
 }))
 
 export const topicKeywords = sqliteTable('topic_keywords', {

@@ -2,9 +2,8 @@ import fs from 'fs'
 import path from 'path'
 import Database from 'better-sqlite3'
 import { db } from './index.js'
-import { articles, topics, topicKeywords, articleTopicMatches, categories, trendmapCache } from './schema.js'
+import { articles, topics, topicKeywords, articleTopicMatches, categories, trendmapCache, topicsToCategories } from './schema.js'
 import { calculateTrendmapGrid } from '../../utils/trendmapCalc.js'
-import { eq, and } from 'drizzle-orm'
 import { getYearHalf } from '../../utils/matching.js'
 
 type NewArticle = typeof articles.$inferInsert
@@ -42,6 +41,7 @@ async function seed() {
   sqlite.exec(`
     DROP TABLE IF EXISTS trendmap_cache;
     DROP TABLE IF EXISTS article_topic_matches;
+    DROP TABLE IF EXISTS topics_to_categories;
     DROP TABLE IF EXISTS topic_keywords;
     DROP TABLE IF EXISTS topics;
     DROP TABLE IF EXISTS article_keyword_matches;
@@ -73,9 +73,16 @@ async function seed() {
 
     CREATE TABLE topics (
       id TEXT PRIMARY KEY,
-      category TEXT NOT NULL,
       name_de TEXT NOT NULL,
       name_en TEXT NOT NULL
+    );
+
+    CREATE TABLE topics_to_categories (
+      topic_id TEXT NOT NULL,
+      category_id TEXT NOT NULL,
+      PRIMARY KEY(topic_id, category_id),
+      FOREIGN KEY(topic_id) REFERENCES topics(id),
+      FOREIGN KEY(category_id) REFERENCES categories(id)
     );
 
     CREATE TABLE topic_keywords (
@@ -104,7 +111,8 @@ async function seed() {
     
     CREATE INDEX idx_category_id ON articles(category_id);
     CREATE INDEX idx_date ON articles(date);
-    CREATE INDEX idx_topics_category ON topics(category);
+    CREATE INDEX idx_topic_cat_topic ON topics_to_categories(topic_id);
+    CREATE INDEX idx_topic_cat_cat ON topics_to_categories(category_id);
     CREATE INDEX idx_keywords_topic ON topic_keywords(topic_id);
     CREATE INDEX idx_matches_category ON article_topic_matches(category);
     CREATE INDEX idx_matches_topic ON article_topic_matches(topic_id);
@@ -135,8 +143,22 @@ async function seed() {
     END;
   `)
 
-  // 1. Seed translations & themenwolke from trendmap.json
-  const topicsMap = new Map<string, { id: string, category: string, nameDe: string, nameEn: string, keywords: Set<string> }>()
+  // 1. Seed categories first to satisfy Foreign Key constraints for topics_to_categories junction
+  let rawArticles: any[] = []
+  if (fs.existsSync(articlesJsonPath)) {
+    console.log('Seeding categories...')
+    rawArticles = JSON.parse(fs.readFileSync(articlesJsonPath, 'utf8'))
+    const uniqueCategoryNames: string[] = Array.from(new Set(rawArticles.map((art: any) => art.category)))
+    const categoryEntries = uniqueCategoryNames.map(name => ({
+      id: getSlug(name),
+      name: name
+    }))
+    await db.insert(categories).values(categoryEntries).run()
+    console.log(`Seeded ${categoryEntries.length} unique categories.`)
+  }
+
+  // 2. Seed translations & themenwolke from trendmap.json
+  const topicsMap = new Map<string, { id: string, nameDe: string, nameEn: string, categories: Set<string>, keywords: Set<string> }>()
 
   const SYNONYMS_DICT: Record<string, string[]> = {
     "ki": ["ai", "artificial intelligence", "künstliche intelligenz", "artifical intelligence", "machine learning", "deep learning", "maschinelles lernen"],
@@ -257,7 +279,7 @@ async function seed() {
       id: "kernkraft",
       nameDe: "Kernkraft / Atomkraft",
       nameEn: "Nuclear power / Nuclear energy",
-      keywords: ["kernkraft", "atomkraft", "nuclear", "atomenergie", "kernenergie", "nuclear energy", "nuclear power", "akw", "kkw", "atommüll", "atommüll-lager"]
+      keywords: ["kernkraft", "atomkraft", "nuclear", "atomenergie", "kernenergie", "nuclear energy", "nuclear power", "akw", "kkw"]
     }
   ]
 
@@ -268,6 +290,15 @@ async function seed() {
       h |= 0
     }
     return h
+  }
+
+  function resolveCategoryId(catName: string): string {
+    const c = catName.toLowerCase()
+    if (c.includes("energy")) return "t-10-energy"
+    if (c.includes("food")) return "t-10-food"
+    if (c.includes("housing")) return "t-10-housing"
+    if (c.includes("mobility")) return "t-10-mobility"
+    return getSlug(catName)
   }
 
   if (fs.existsSync(trendmapJsonPath)) {
@@ -297,11 +328,39 @@ async function seed() {
           }
         }
 
+        const resolvedCatId = resolveCategoryId(cat)
+        let topicCats = new Set<string>()
+
         if (matchedGroup) {
           topicId = matchedGroup.id
           nameDe = matchedGroup.nameDe
           nameEn = matchedGroup.nameEn
           keywordsArr = [...matchedGroup.keywords]
+
+          // Link custom topics to multiple relevant categories
+          if (topicId === "ki") {
+            topicCats = new Set(["t-10-mobility", "t-10-energy", "t-10-food", "t-10-housing"])
+          } else if (topicId === "pv") {
+            topicCats = new Set(["t-10-energy", "t-10-housing"])
+          } else if (topicId === "e-mobilitaet") {
+            topicCats = new Set(["t-10-mobility", "t-10-energy"])
+          } else if (topicId === "waermepumpe") {
+            topicCats = new Set(["t-10-energy", "t-10-housing"])
+          } else if (topicId === "windenergie") {
+            topicCats = new Set(["t-10-energy"])
+          } else if (topicId === "auto") {
+            topicCats = new Set(["t-10-mobility"])
+          } else if (topicId === "fahrrad") {
+            topicCats = new Set(["t-10-mobility"])
+          } else if (topicId === "wasserstoff") {
+            topicCats = new Set(["t-10-energy", "t-10-mobility"])
+          } else if (topicId === "batterie") {
+            topicCats = new Set(["t-10-energy", "t-10-mobility", "t-10-housing"])
+          } else if (topicId === "kohle") {
+            topicCats = new Set(["t-10-energy"])
+          } else if (topicId === "kernkraft") {
+            topicCats = new Set(["t-10-energy"])
+          }
         } else {
           // Default topic
           topicId = w.toLowerCase()
@@ -336,18 +395,20 @@ async function seed() {
               })
             }
           })
+
+          topicCats = new Set([resolvedCatId])
         }
 
-        const mapKey = `${cat}:${topicId}`
-        const existing = topicsMap.get(mapKey)
+        const existing = topicsMap.get(topicId)
         if (existing) {
           keywordsArr.forEach(k => existing.keywords.add(k))
+          topicCats.forEach(c => existing.categories.add(c))
         } else {
-          topicsMap.set(mapKey, {
+          topicsMap.set(topicId, {
             id: topicId,
-            category: cat,
             nameDe,
             nameEn,
+            categories: topicCats,
             keywords: new Set(keywordsArr)
           })
         }
@@ -356,25 +417,26 @@ async function seed() {
 
     const topicsEntries: any[] = []
     const keywordsEntries: any[] = []
+    const topicsToCategoriesEntries: any[] = []
 
-    for (const [mapKey, topic] of topicsMap.entries()) {
-      const [cat] = mapKey.split(":")
-      const slugCat = cat.toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "")
-      const uniqueId = `${slugCat}-${topic.id}`
-
+    for (const topic of topicsMap.values()) {
       topicsEntries.push({
-        id: uniqueId,
-        category: topic.category,
+        id: topic.id,
         nameDe: topic.nameDe,
         nameEn: topic.nameEn,
       })
 
       for (const kw of topic.keywords) {
         keywordsEntries.push({
-          topicId: uniqueId,
+          topicId: topic.id,
           keyword: kw,
+        })
+      }
+
+      for (const catId of topic.categories) {
+        topicsToCategoriesEntries.push({
+          topicId: topic.id,
+          categoryId: catId,
         })
       }
     }
@@ -385,31 +447,15 @@ async function seed() {
     if (keywordsEntries.length > 0) {
       await db.insert(topicKeywords).values(keywordsEntries).run()
     }
-    console.log(`Seeded ${topicsEntries.length} topics and ${keywordsEntries.length} topic keywords.`)
+    if (topicsToCategoriesEntries.length > 0) {
+      await db.insert(topicsToCategories).values(topicsToCategoriesEntries).run()
+    }
+    console.log(`Seeded ${topicsEntries.length} topics, ${keywordsEntries.length} topic keywords, and ${topicsToCategoriesEntries.length} topic-category links.`)
   }
 
-  // 2. Seed articles and categories
-  if (fs.existsSync(articlesJsonPath)) {
-    console.log('Seeding categories and articles...')
-    interface RawArticleInput {
-      id: string
-      title: string
-      description: string
-      date: string
-      link: string
-      category: string
-    }
-    const rawArticles = JSON.parse(fs.readFileSync(articlesJsonPath, 'utf8')) as RawArticleInput[]
-    
-    // Extract unique categories and seed them
-    const uniqueCategoryNames: string[] = Array.from(new Set(rawArticles.map((art) => art.category)))
-    const categoryEntries = uniqueCategoryNames.map(name => ({
-      id: getSlug(name),
-      name: name
-    }))
-    await db.insert(categories).values(categoryEntries).run()
-    console.log(`Seeded ${categoryEntries.length} unique categories.`)
-
+  // 3. Seed articles
+  if (rawArticles.length > 0) {
+    console.log('Seeding articles...')
     let count = 0
     const batchSize = 100
     let currentBatch: Array<NewArticle> = []
@@ -481,10 +527,9 @@ async function seed() {
       const combinedText = `${art.title} ${art.description} ${art.bodyText}`
 
       for (const topic of topicsMap.values()) {
-        const artCatLower = art.category.toLowerCase()
-        const topicCatLower = topic.category.toLowerCase()
+        const artCatId = getSlug(art.category)
 
-        if (artCatLower.includes(topicCatLower) || topicCatLower.includes(artCatLower)) {
+        if (topic.categories.has(artCatId)) {
           let isMatch = false
           for (const kw of topic.keywords) {
             if (checkSingleMatch(combinedText, kw)) {
@@ -494,18 +539,13 @@ async function seed() {
           }
 
           if (isMatch) {
-            const slugCat = topic.category.toLowerCase()
-              .replace(/[^a-z0-9]+/g, "-")
-              .replace(/^-+|-+$/g, "")
-            const uniqueId = `${slugCat}-${topic.id}`
-
             matchEntries.push({
               articleId: art.id,
               category: art.category,
               date: art.date,
               bucket,
               sortVal,
-              topicId: uniqueId,
+              topicId: topic.id,
             })
           }
         }
@@ -518,34 +558,30 @@ async function seed() {
       await db.insert(articleTopicMatches).values(batch).run()
     }
     console.log(`Successfully populated article_topic_matches with ${matchEntries.length} matches.`)
+  }
 
-    console.log('Pre-populating trendmapCache table for all categories and languages...')
-    const languages: Array<'en' | 'de'> = ['en', 'de']
-    for (const cat of uniqueCategoryNames) {
-      for (const lang of languages) {
-        console.log(`Precomputing trendmap grid cache for: "${cat}" [${lang}]...`)
-        try {
-          const result = await calculateTrendmapGrid(db, cat, lang)
-          await db.delete(trendmapCache)
-            .where(and(eq(trendmapCache.category, cat), eq(trendmapCache.language, lang)))
-            .run()
-          await db.insert(trendmapCache)
-            .values({
-              category: cat,
-              language: lang,
-              resultJson: JSON.stringify(result),
-            })
-            .run()
-        } catch (cacheErr) {
-          console.error(`Failed to precompute cache for "${cat}" [${lang}]:`, cacheErr)
-        }
+  // 4. Pre-populate caches for each category
+  const categoriesList = await db.select().from(categories).all()
+  console.log('Pre-populating trendmapCache table for all categories and languages...')
+  for (const cat of categoriesList) {
+    // Only pre-calculate trendmaps for the 4 core categories which contain words
+    const lower = cat.id.toLowerCase()
+    if (lower.includes("energy") || lower.includes("food") || lower.includes("housing") || lower.includes("mobility")) {
+      for (const lang of ['en', 'de'] as const) {
+        console.log(`Precomputing trendmap grid cache for: "${cat.name}" [${lang}]...`)
+        const result = await calculateTrendmapGrid(db, cat.name, lang)
+        await db.insert(trendmapCache)
+          .values({
+            category: cat.name,
+            language: lang,
+            resultJson: JSON.stringify(result),
+          })
+          .run()
       }
     }
-    console.log('Trendmap cache pre-population complete.')
-
-    sqlite.close()
-    console.log('Seeding complete.')
   }
+  console.log('Trendmap cache pre-population complete.')
+  console.log('Seeding complete.')
 }
 
 seed().catch(err => {
