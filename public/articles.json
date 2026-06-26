@@ -59,7 +59,7 @@
     "id": "https://www.usatoday.com/story/news/nation/2022/08/24/california-electric-car-sales-2026-gas-cars/7888843001/",
     "title": "California aims to triple electric car sales by 2026, phase out gas cars",
     "description": "USA TODAY delivers current national and local news, sports, entertainment, finance, technology, and more through award-winning journalism, photos, and videos.",
-    "date": "2026-06-23",
+    "date": "2022-08-24",
     "link": "https://www.usatoday.com/story/news/nation/2022/08/24/california-electric-car-sales-2026-gas-cars/7888843001/",
     "category": "T-10 MOBILITY"
   },
@@ -442,7 +442,7 @@
   {
     "id": "https://electrek.co/2023/11/20/solar-powered-japanese-tiny-van-puzzle-unveiled/",
     "title": "Japan's solar-powered electric tiny-van PUZZLE headed for the US",
-    "description": "You may have heard of the Japanese phenomenon of “kei cars”, which are pint-sized vehicles designed to fit into a...",
+    "description": "EV and Tesla News, Green Energy, Ebikes, and more",
     "date": "2023-11-20",
     "link": "https://electrek.co/2023/11/20/solar-powered-japanese-tiny-van-puzzle-unveiled/",
     "category": "T-10 MOBILITY"
@@ -579,7 +579,7 @@
     "id": "https://thedriven.io/2024/05/01/china-launches-worlds-largest-electric-container-ship-with-50-mwh-battery/",
     "title": "China launches world’s largest electric container ship with 50 MWh battery",
     "description": "China Ocean Shipping Group launches world’s largest electric container ship, with a 50 MWh battery.",
-    "date": "2024-04-30",
+    "date": "2024-05-01",
     "link": "https://thedriven.io/2024/05/01/china-launches-worlds-largest-electric-container-ship-with-50-mwh-battery/",
     "category": "T-10 MOBILITY"
   },
@@ -682,7 +682,7 @@
   {
     "id": "https://theprogressplaybook.com/2024/11/19/solar-installations-are-now-mandatory-for-large-parking-lots-in-france/",
     "title": "Solar installations are now mandatory for large parking lots in France | The Progress Playbook",
-    "description": "The aim is to accelerate the adoption of renewable energy in the country, which already operates one of the world's cleanest power grids.",
+    "description": "Nick Hedley is a research analyst focused on clean energy and sustainable development. He works for Zero Carbon Analytics and is an energy access specialist.",
     "date": "2024-11-19",
     "link": "https://theprogressplaybook.com/2024/11/19/solar-installations-are-now-mandatory-for-large-parking-lots-in-france/",
     "category": "T-10 MOBILITY"
@@ -754,7 +754,7 @@
   {
     "id": "https://electrek.co/2025/08/19/2026-nissan-leaf-cheapest-ev-prices-under-30k/",
     "title": "The 2026 Nissan LEAF is the cheapest EV with prices under $30K",
-    "description": "The new 2026 Nissan LEAF will arrive at US dealerships any day now. And it’s even cheaper than the OG...",
+    "description": "EV and Tesla News, Green Energy, Ebikes, and more",
     "date": "2025-08-19",
     "link": "https://electrek.co/2025/08/19/2026-nissan-leaf-cheapest-ev-prices-under-30k/",
     "category": "T-10 MOBILITY"
@@ -906,8 +906,8 @@
   {
     "id": "https://mississippitoday.org/2022/08/29/jackson-water-system-fails-emergency/",
     "title": "Jackson water system is failing, city with no or little water indefinitely - Mississippi Today",
-    "description": "The drinking water system in Jackson has failed, and officials cannot say when reliable water service will be restored.",
-    "date": "2022-08-30",
+    "description": "Mississippi Today is the state’s flagship nonprofit newsroom serving Mississippi and meeting the information needs of communities across the state.",
+    "date": "2022-08-29",
     "link": "https://mississippitoday.org/2022/08/29/jackson-water-system-fails-emergency/",
     "category": "T-10 FOOD"
   },
@@ -1000,14 +1000,6 @@
     "category": "T-10 FOOD"
   },
   {
-    "id": "https://www.mdpi.com/2071-1050/14/21/14449",
-    "title": "Sustainability | Free Full-Text | How Compatible Are Western European Dietary Patterns to Climate Targets? Accounting for Uncertainty of Life Cycle Assessments by Applying a Probabilistic Approach",
-    "description": "The food system plays a crucial role in mitigating climate change. Even if fossil fuel emissions are halted immediately, current trends in global food systems may prevent the achieving of the Paris Agreement�s climate targets. The high degree of variability and uncertainty involved in calculating diet-related greenhouse gas emissions limits the ability to evaluate reduction potentials to remain below a global warming of 1.5 or 2 degrees. This study assessed Western European dietary patterns while accounting for uncertainty and variability. An extensive literature review provided value ranges for climate impacts of animal-based foods to conduct an uncertainty analysis via Monte Carlo simulation. The resulting carbon footprints were assessed against food system-specific greenhouse gas emission thresholds. The range and absolute value of a diet carbon footprint become larger the higher the amount of products with highly varying emission values in the diet. All dietary pattern carbon footprints overshoot the 1.5 degrees threshold. The vegan, vegetarian, and diet with low animal-based food intake were predominantly below the 2 degrees threshold. Omnivorous diets with more animal-based product content trespassed them. Reducing animal-based foods is a powerful strategy to decrease emissions. However, further mitigation strategies are required to achieve climate goals.",
-    "date": "2022-11-03",
-    "link": "https://web.archive.org/web/2/https://www.mdpi.com/2071-1050/14/21/14449",
-    "category": "T-10 FOOD"
-  },
-  {
     "id": "https://spectrum.ieee.org/agrivoltaics-optimize-yield",
     "title": "Agrivoltaic Panels Allow Farmers to Harvest Energy - IEEE Spectrum",
     "description": "Efforts to combine solar technology and farming — known as agrivoltaics — have been underway for a decade. In the past several years, some researchers have begun exploring the use of PV panels that allow some light through, rather than simply capturing it all and casting shade.",
@@ -1061,6 +1053,14 @@
     "description": "Eating one freshwater fish caught in a river or lake in the United States is the equivalent of drinking a month&#039;s worth of water contaminated with toxic &quot;forever chemicals&quot;, new research said on Tuesday.",
     "date": "2023-01-17",
     "link": "https://web.archive.org/web/2/https://phys.org/news/2023-01-wild-fish-month-tainted.html",
+    "category": "T-10 FOOD"
+  },
+  {
+    "id": "https://phys.org/news/2023-01-alarming-entire-global.html",
+    "title": "New report shows alarming changes in the entire global water cycle",
+    "description": "",
+    "date": "2023-01-01",
+    "link": "https://phys.org/news/2023-01-alarming-entire-global.html",
     "category": "T-10 FOOD"
   },
   {
@@ -1136,6 +1136,14 @@
     "category": "T-10 FOOD"
   },
   {
+    "id": "https://news.stanford.edu/2023/05/18/new-technology-uses-ordinary-sunlight-disinfect-drinking-water/",
+    "title": "New technology uses ordinary sunlight to disinfect drinking water | Stanford News",
+    "description": "A low-cost, recyclable powder can kill thousands of waterborne bacteria per second when exposed to sunlight. Stanford and SLAC scientists say the ultrafast disinfectant could be a revolutionary advance for 2 billion people worldwide without access to safe drinking water.",
+    "date": "2023-05-18",
+    "link": "https://news.stanford.edu/2023/05/18/new-technology-uses-ordinary-sunlight-disinfect-drinking-water/",
+    "category": "T-10 FOOD"
+  },
+  {
     "id": "https://www.ise.fraunhofer.de/de/presse-und-medien/news/2023/neue-forschungsanlage-modellregion-agri-photovoltaik-baden-wuerttemberg-beerenanbau.html",
     "title": "Neue Forschungsanlage der »Modellregion Agri-Photovoltaik Baden-Württemberg« für Beerenanbau mit geschlossenem Wasserkreislauf - Fraunhofer ISE",
     "description": "Das Agri-PV-System über verschiedenen Beerensorten verfügt über komplett geschlossene Kreisläufe für Wasser und Nährstoffe, um einen möglichst ressourcenschonenden Anbau von Strauch- und Erdbeeren zu erproben.",
@@ -1181,6 +1189,14 @@
     "description": "UN Secretary-General António Guterres on Monday highlighted the need to address global hunger, promote cooperation between businesses and governments, and mitigate the damaging impact of continuing climate change on food production.",
     "date": "2023-07-24",
     "link": "https://news.un.org/en/story/2023/07/1139037",
+    "category": "T-10 FOOD"
+  },
+  {
+    "id": "https://www.britishherald.com/2023/08/12/global-heating-likely-to-hit-world-food-supply-before-1-5c-un-expert/",
+    "title": "Global heating to hit world food supply before 1.5C : UN expert",
+    "description": "In the context of global heating, a UN expert issued a warning that the world could experience significant disruptions to food supplies",
+    "date": "2023-08-12",
+    "link": "https://web.archive.org/web/2/https://www.britishherald.com/2023/08/12/global-heating-likely-to-hit-world-food-supply-before-1-5c-un-expert/",
     "category": "T-10 FOOD"
   },
   {
@@ -1347,7 +1363,7 @@
     "id": "https://www.japantimes.co.jp/news/2024/07/27/japan/heat-wave-rice-shortage-japan/",
     "title": "Heat waves impact Japan's rice quality, leading to shortage - The Japan Times",
     "description": "News on Japan, Business News, Opinion, Sports, Entertainment and More article expired",
-    "date": "2026-06-23",
+    "date": "2024-07-27",
     "link": "https://www.japantimes.co.jp/news/2024/07/27/japan/heat-wave-rice-shortage-japan/",
     "category": "T-10 FOOD"
   },
@@ -1619,7 +1635,7 @@
     "id": "https://www.newyorker.com/magazine/2025/01/13/why-is-the-american-diet-so-deadly",
     "title": "Are Ultra-Processed Foods Killing Us? | The New Yorker",
     "description": "Studies have linked them to obesity, diabetes, depression, and even dementia. Dhruv Khullar reports on a revolution in nutrition science that aims to fix America’s deadly diet.",
-    "date": "2025-01-06",
+    "date": "2025-01-13",
     "link": "https://www.newyorker.com/magazine/2025/01/13/why-is-the-american-diet-so-deadly",
     "category": "T-10 FOOD"
   },
@@ -1627,7 +1643,7 @@
     "id": "https://thorax.bmj.com/content/early/2025/07/19/thorax-2024-222100",
     "title": "Association between ultra-processed food consumption and lung cancer risk: a population-based cohort study | Thorax",
     "description": "Background The evidence on associations between ultra-processed foods (UPF) and lung cancer risk is limited and inconsistent.\n\nResearch question Are UPF associated with an increased risk of lung cancer, non-small cell lung cancer (NSCLC) and small cell lung cancer (SCLC)？\n\nMethods Data of participants in this study were collected from the Prostate, Lung, Colorectal and Ovarian (PLCO) Cancer Screening Trial. Dietary intakes were assessed through a validated diet history questionnaire. These foods were categorised using the NOVA classification according to the degree of processing in the PLCO Cancer Screening Cohort. All cases of incident lung cancer were pathologically verified. Multivariable Cox regression was used to assess the association between consumption of UPF and lung cancer after adjustment for various potential confounders, including key risk factors related to lung cancer and overall diet quality.\n\nResults A total of 1706 cases of lung cancer cases, including 1473 NSCLC and 233 SCLC, were identified during a mean follow-up of 12.2 years among 101 732 adults (mean age 62.5 years). After multivariable adjustments, individuals in the highest quarters for UPF consumption had a higher risk of lung cancer (HR=1.41, 95% CI 1.22 to 1.60), NSCLC (HR=1.37, 95% CI 1.20 to 1.58) and SCLC (HR=1.44, 95% CI 1.03 to 2.10) compared with those in the lowest quarter. These results remained statistically significant after a large range of subgroup and sensitivity analyses.\n\nConclusions Higher consumption of UPF is associated with an increased risk of lung cancer, NSCLC and SCLC. Although additional research in other populations and settings is warranted, these findings suggest the healthy benefits of limiting UPF.\n\nData may be obtained from a third party and are not publicly available. Data described in the manuscript, code book and analytic code will not be made available because the authors are prohibited from distributing or transferring the data and code books on which their research was based to any other individual or entity under the terms of an approved NCI Research Proposal and Data and Materials Distribution Agreement through which the authors obtained these data.",
-    "date": "2025-07-29",
+    "date": "2025-07-19",
     "link": "https://web.archive.org/web/2/https://thorax.bmj.com/content/early/2025/07/19/thorax-2024-222100",
     "category": "T-10 FOOD"
   },
@@ -1853,6 +1869,14 @@
     "description": "A study by Stanford shows that the world can switch to 100% clean, renewable energy and lower energy costs immediately.",
     "date": "2022-08-04",
     "link": "https://mymodernmet.com/100-renewable-energy/",
+    "category": "T-10 ENERGY"
+  },
+  {
+    "id": "https://phys.org/news/2022-08-fossil-fuel-companies-wont-paris.html",
+    "title": "Fossil fuel companies' projections won't meet Paris Agreement climate goals",
+    "description": "",
+    "date": "2022-08-01",
+    "link": "https://phys.org/news/2022-08-fossil-fuel-companies-wont-paris.html",
     "category": "T-10 ENERGY"
   },
   {
@@ -2347,7 +2371,7 @@
     "id": "https://theintercept.com/2023/02/01/shell-oil-niger-delta-nigeria-lawsuit/",
     "title": "Shell Oil Spills Lead to Lawsuit by 13,000 People in Nigeria",
     "description": "Residents of the Niger Delta's Ogale and Bille communities in Nigeria sued Shell Oil in UK court over years of oil spills they say caused disease and death.",
-    "date": "2023-02-02",
+    "date": "2023-02-01",
     "link": "https://theintercept.com/2023/02/01/shell-oil-niger-delta-nigeria-lawsuit/",
     "category": "T-10 ENERGY"
   },
@@ -2427,14 +2451,14 @@
     "id": "https://www.abc.net.au/news/2023-03-01/rooftop-solar-to-overtake-coal-as-australias-main-power-source/102033740",
     "title": "Rooftop solar poised to become Australia's biggest power source amid coal's demise - ABC News",
     "description": "A new report says more than 3.4 million Australian customers have a rooftop solar system, with the rate of new installations running at roughly 300,000 a year, accelerating the decline of fossil fuel-fired power.",
-    "date": "2023-02-28",
+    "date": "2023-03-01",
     "link": "https://www.abc.net.au/news/2023-03-01/rooftop-solar-to-overtake-coal-as-australias-main-power-source/102033740",
     "category": "T-10 ENERGY"
   },
   {
     "id": "https://pv-magazine-usa.com/2023/03/06/all-in-on-the-future-meyer-burger-shifting-to-100-glass-glass-bifacial/",
     "title": "All-in on the future: Meyer Burger shifting to 100% glass-glass bifacial – pv magazine USA",
-    "description": "The Swiss solar module manufacturer stated they will transition all of its manufacturing away from plastic.",
+    "description": "pv magazine USA, the leading solar and energy storage trade media platform. Industry news covering market trends, technological advancements, expert commentary, and more.",
     "date": "2023-03-06",
     "link": "https://pv-magazine-usa.com/2023/03/06/all-in-on-the-future-meyer-burger-shifting-to-100-glass-glass-bifacial/",
     "category": "T-10 ENERGY"
@@ -2696,6 +2720,14 @@
     "category": "T-10 ENERGY"
   },
   {
+    "id": "https://techxplore.com/news/2023-07-maine-offshore-energy.html",
+    "title": "Maine plans to use offshore wind for half its energy needs by 2040",
+    "description": "",
+    "date": "2023-07-01",
+    "link": "https://techxplore.com/news/2023-07-maine-offshore-energy.html",
+    "category": "T-10 ENERGY"
+  },
+  {
     "id": "https://www.france24.com/en/live-news/20230727-egypt-announces-planned-power-cuts-measures-amid-heatwave",
     "title": "Egypt announces planned power cuts, measures amid heatwave",
     "description": "Egypt's prime minister announced a number of measures Thursday, including planned power cuts, to cut down on energy consumption as the country and wider region endure a brutal heatwave.",
@@ -2949,6 +2981,14 @@
     "description": "Renewable energy provides the cheapest source of new energy for Australia, a new draft report from the CSIRO and energy market operator has found.",
     "date": "2023-12-21",
     "link": "https://www.abc.net.au/news/2023-12-21/nuclear-energy-most-expensive-csiro-gencost-report-draft/103253678",
+    "category": "T-10 ENERGY"
+  },
+  {
+    "id": "https://techxplore.com/news/2023-12-britain-generate-electricity-solar-hydro.html",
+    "title": "Britain likely to generate more electricity from wind, solar and hydro than fossil fuels for the first year ever in 2023",
+    "description": "",
+    "date": "2023-12-01",
+    "link": "https://techxplore.com/news/2023-12-britain-generate-electricity-solar-hydro.html",
     "category": "T-10 ENERGY"
   },
   {
@@ -3403,7 +3443,7 @@
     "id": "https://www.abc.net.au/news/science/2024-07-16/chinas-renewable-energy-boom-breaks-records/104086640",
     "title": "China is installing the wind and solar equivalent of five large nuclear power stations per week - ABC News",
     "description": "While Australia debates the merits of going nuclear and frustration grows over the slower-than-needed switch to solar and wind power, China's renewables rollout is breaking all the records.",
-    "date": "2024-07-15",
+    "date": "2024-07-16",
     "link": "https://www.abc.net.au/news/science/2024-07-16/chinas-renewable-energy-boom-breaks-records/104086640",
     "category": "T-10 ENERGY"
   },
@@ -3434,7 +3474,7 @@
   {
     "id": "https://electrek.co/2024/07/16/china-on-track-to-reach-clean-energy-targets-six-years-ahead-of-schedule/",
     "title": "China is on track to reach clean energy targets six years early",
-    "description": "China, the world’s largest pollution emitter, is going green with clean energy alternatives and doing so quickly. Recent energy reports...",
+    "description": "EV and Tesla News, Green Energy, Ebikes, and more",
     "date": "2024-07-16",
     "link": "https://electrek.co/2024/07/16/china-on-track-to-reach-clean-energy-targets-six-years-ahead-of-schedule/",
     "category": "T-10 ENERGY"
@@ -3899,7 +3939,7 @@
     "id": "https://electrek.co/2025/04/07/world-surges-past-40-percent-clean-power-in-record-renewable-boom/",
     "title": "World surges past 40% clean power in record renewables boom | Electrek",
     "description": "Renewables and nuclear provided 40.9% of the world’s power generation in 2024, passing the 40% mark for the first time since the 1940s. ",
-    "date": "2025-04-08",
+    "date": "2025-04-07",
     "link": "https://electrek.co/2025/04/07/world-surges-past-40-percent-clean-power-in-record-renewable-boom/",
     "category": "T-10 ENERGY"
   },
@@ -4896,14 +4936,6 @@
     "category": "T-10 HOUSING"
   },
   {
-    "id": "https://www.mdpi.com/2071-1050/13/15/8161/htm",
-    "title": "Sustainability | Free Full-Text | An Analysis of the Potential for the Formation of ‘Nodes of Persisting Complexity’ | HTML",
-    "description": "Human civilisation has undergone a continuous trajectory of rising sociopolitical complexity since its inception; a trend which has undergone a dramatic recent acceleration. This phenomenon has resulted in increasingly severe perturbation of the Earth System, manifesting recently as global-scale effects such as climate change. These effects create an increased risk of a global ‘de-complexification’ (collapse) event in which complexity could undergo widespread reversal. ‘Nodes of persisting complexity’ are geographical locations which may experience lesser effects from ‘de-complexification’ due to having ‘favourable starting conditions’ that may allow the retention of a degree of complexity. A shortlist of nations (New Zealand, Iceland, the United Kingdom, Australia and Ireland) were identified and qualitatively analysed in detail to ascertain their potential to form ‘nodes of persisting complexity’ (New Zealand is identified as having the greatest potential). The analysis outputs are applied to identify insights for enhancing resilience to ‘de-complexification’.",
-    "date": "2021-07-21",
-    "link": "https://web.archive.org/web/2/https://www.mdpi.com/2071-1050/13/15/8161/htm",
-    "category": "T-10 HOUSING"
-  },
-  {
     "id": "https://www.spiegel.de/wissenschaft/natur/grenzen-des-wachstums-interview-mit-dennis-meadows-a-870238.html",
     "title": "Grenzen des Wachstums: Interview mit Dennis Meadows - DER SPIEGEL",
     "description": "\"Die Grenzen des Wachstums\" ist die Bibel der Umweltbewegung: In der Studie warnte Dennis Meadows vor 40 Jahren vor der Ausbeutung der Erde und dem Kollaps der Weltwirtschaft. Im Interview erklärt er, warum er mit seinen düsteren Vorhersagen recht behalten wird.",
@@ -4957,6 +4989,14 @@
     "description": "Das Vorhaben der Weinbau-Hochschule in Geisenheim könnte neue Wege in der Solarenergie aufzeigen. Doch die Organisatoren müssen sich zunächst mit der Bürokratie auseinandersetzen.",
     "date": "2022-07-08",
     "link": "https://www.faz.net/aktuell/rhein-main/region-und-hessen/photovoltaik-am-weinberg-energie-und-wein-aus-geisenheim-18157280.html",
+    "category": "T-10 HOUSING"
+  },
+  {
+    "id": "https://phys.org/news/2022-07-alarm-earth-overshoot-day-thursday.html",
+    "title": "Alarm as Earth hits 'Overshoot Day' Thursday: NGOs",
+    "description": "",
+    "date": "2022-07-01",
+    "link": "https://phys.org/news/2022-07-alarm-earth-overshoot-day-thursday.html",
     "category": "T-10 HOUSING"
   },
   {
@@ -5514,7 +5554,7 @@
   {
     "id": "https://www.commondreams.org/news/2022/08/03/sanders-blasts-huge-giveaway-fossil-fuel-industry-manchin-deal",
     "title": "Sanders Blasts 'Huge Giveaway' to Fossil Fuel Industry in Manchin Deal",
-    "description": "Video",
+    "description": "&#34;We cannot provide billions of dollars in new tax breaks to the very same fossil fuel companies that are currently destroying the planet.&#34;",
     "date": "2022-08-03",
     "link": "https://www.commondreams.org/news/2022/08/03/sanders-blasts-huge-giveaway-fossil-fuel-industry-manchin-deal",
     "category": "Politics"
@@ -5522,7 +5562,7 @@
   {
     "id": "https://www.commondreams.org/news/2022/08/04/sanders-announces-amendment-strip-all-fossil-fuel-handouts-manchin-deal",
     "title": "Sanders Announces Amendment to Strip All Fossil Fuel Handouts From Manchin Deal",
-    "description": "Video",
+    "description": "The Vermont senator will also introduce an amendment to strengthen the reconciliation bill&#39;s drug price reforms.",
     "date": "2022-08-04",
     "link": "https://www.commondreams.org/news/2022/08/04/sanders-announces-amendment-strip-all-fossil-fuel-handouts-manchin-deal",
     "category": "Politics"
@@ -5562,7 +5602,7 @@
   {
     "id": "https://www.commondreams.org/news/2022/08/31/uk-speech-sanders-says-stand-together-and-tell-oligarchs-they-cannot-have-it-all",
     "title": "In UK Speech, Sanders Says 'Stand Together and Tell the Oligarchs They Cannot Have It All'",
-    "description": "Video",
+    "description": "Addressing a trade union rally in London, the U.S. senator called for bringing &#34;working people together in the fight for justice and a world that belongs to all of us not just the people on top.&#34;",
     "date": "2022-08-31",
     "link": "https://www.commondreams.org/news/2022/08/31/uk-speech-sanders-says-stand-together-and-tell-oligarchs-they-cannot-have-it-all",
     "category": "Politics"
@@ -5618,7 +5658,7 @@
   {
     "id": "https://www.pv-magazine.de/2022/04/13/eu-ermoeglicht-niedrigere-mehrwertsteuer-auf-lieferung-und-installation-von-solarmodulen/",
     "title": "EU ermöglicht niedrigere Mehrwertsteuer auf Lieferung und Installation von Solarmodulen – pv magazine Deutschland",
-    "description": "Nach den neuen Bestimmungen steht es den Mitgliedstaaten frei, für bestimmte Produkte und Dienstleistungen einen Mehrwertsteuersatz von null bis fünf Prozent anzuwenden. Die Richtlinie Nr. 2022/542 wurde am 5. April im Amtsblatt der Europäischen Union veröffentlicht.",
+    "description": "pv magazine Deutschland, die führende Fachmedienplattform. Nachrichten aus der Photovoltaik- und Speicherbranche: hochwertige Inhalte, fundierte Analysen, aktuelle Markttrends, innovative Technologien, Expertenmeinungen und mehr.",
     "date": "2022-04-13",
     "link": "https://www.pv-magazine.de/2022/04/13/eu-ermoeglicht-niedrigere-mehrwertsteuer-auf-lieferung-und-installation-von-solarmodulen/",
     "category": "Politics"
@@ -5762,7 +5802,7 @@
   {
     "id": "https://www.commondreams.org/news/2022/11/07/thats-oligarchy-sanders-rips-billionaires-trying-buy-midterm-victories",
     "title": "'That's Oligarchy': Sanders Rips Billionaires for Trying to Buy Midterm Victories",
-    "description": "Along with \"Trump and his allies,\" Sen. Bernie Sanders said the richest people in the United States are \"trying to undermine American democracy.\"",
+    "description": "Along with &#34;Trump and his allies,&#34; Sen. Bernie Sanders said the richest people in the United States are &#34;trying to undermine American democracy.&#34;",
     "date": "2022-11-07",
     "link": "https://www.commondreams.org/news/2022/11/07/thats-oligarchy-sanders-rips-billionaires-trying-buy-midterm-victories",
     "category": "Politics"
@@ -6061,6 +6101,14 @@
     "description": "Agency plans to take a ‘case-by-case’ approach that allows it to be more flexible, but critics argue ‘it is a lack of definition, and it makes no sense’",
     "date": "2023-08-18",
     "link": "https://www.theguardian.com/environment/2023/aug/18/epa-new-definition-pfas-forever-chemicals",
+    "category": "Politics"
+  },
+  {
+    "id": "https://news.stanford.edu/2023/08/18/can-alternative-meat-compete/",
+    "title": "Can alternative meat compete? | Stanford News",
+    "description": "The analysis compares innovations and policies related to plant-based and lab-grown alternatives to animal meat and dairy in the U.S. and European Union. Its findings could help ensure legislation levels the food industry playing field.",
+    "date": "2023-08-18",
+    "link": "https://news.stanford.edu/2023/08/18/can-alternative-meat-compete/",
     "category": "Politics"
   },
   {
@@ -6739,7 +6787,7 @@
     "id": "https://cleantechnica.com/2024/05/16/biden-harris-administration-announces-71m-investment-to-advance-american-solar-manufacturing-and-development/",
     "title": "Biden-Harris Administration Announces $71M Investment to Advance American Solar Manufacturing and Development - CleanTechnica",
     "description": "American Solar Manufacturing investment into American Agenda, Biden Harris administration",
-    "date": "2024-05-17",
+    "date": "2024-05-16",
     "link": "https://cleantechnica.com/2024/05/16/biden-harris-administration-announces-71m-investment-to-advance-american-solar-manufacturing-and-development/",
     "category": "Politics"
   },
@@ -7218,7 +7266,7 @@
   {
     "id": "https://www.salon.com/2024/10/16/musk-and-other-billionaires-keep-afloat-donating-over-350-million-to-maga-super-pacs/",
     "title": "Musk and other billionaires keep Trump afloat, donating over $350 million to MAGA super PACs | Salon.com",
-    "description": "Despite his support among the ultra-rich, Vice President Kamala Harris has raised nearly twice as much as Trump",
+    "description": "Marin Scotten is a news and politics fellow at Salon. ",
     "date": "2024-10-16",
     "link": "https://www.salon.com/2024/10/16/musk-and-other-billionaires-keep-afloat-donating-over-350-million-to-maga-super-pacs/",
     "category": "Politics"
@@ -7491,7 +7539,7 @@
     "id": "https://cleantechnica.com/2025/01/02/fossil-fuel-interests-ramp-up-their-solar-makes-electricity-more-expensive-falsehood/",
     "title": "Fossil Fuel Interests Ramp Up Their \"Solar Makes Electricity More Expensive\" Falsehood - CleanTechnica",
     "description": "Two news stories recently claim solar power makes the cost of electricity increase. It their any truth to those claims?",
-    "date": "2025-01-03",
+    "date": "2025-01-02",
     "link": "https://cleantechnica.com/2025/01/02/fossil-fuel-interests-ramp-up-their-solar-makes-electricity-more-expensive-falsehood/",
     "category": "Politics"
   },
@@ -7651,7 +7699,7 @@
     "id": "https://www.washingtonpost.com/climate-environment/2025/03/04/state-department-air-pollution-embassies/",
     "title": "State Department shutters global air pollution monitoring program - The Washington Post",
     "description": "The program had used sensors at more than 80 U.S. embassies and consulates to track air quality, mostly in places where such data was unavailable.",
-    "date": "2025-03-05",
+    "date": "2025-03-04",
     "link": "https://web.archive.org/web/2/https://www.washingtonpost.com/climate-environment/2025/03/04/state-department-air-pollution-embassies/",
     "category": "Politics"
   },
@@ -7779,7 +7827,7 @@
     "id": "https://www.nytimes.com/2025/04/17/climate/trump-fishing-marine-protected-zone.html",
     "title": "Trump Opens Marine National Monument to Commercial Fisheries - The New York Times",
     "description": "The president said the move was aimed at making the United States the world’s “dominant seafood leader.”",
-    "date": "2025-04-18",
+    "date": "2025-04-17",
     "link": "https://web.archive.org/web/2/https://www.nytimes.com/2025/04/17/climate/trump-fishing-marine-protected-zone.html",
     "category": "Politics"
   },
@@ -7882,7 +7930,7 @@
   {
     "id": "https://prospect.org/environment/2025-05-20-sun-sets-west-virginias-green-energy-future/",
     "title": "The Sun Sets on West Virginia’s Green-Energy Future - The American Prospect",
-    "description": "President Biden’s Inflation Reduction Act was finally bringing jobs and industry back to the state. But not for long.",
+    "description": "Ideas, Politics &amp; Power",
     "date": "2025-05-20",
     "link": "https://prospect.org/environment/2025-05-20-sun-sets-west-virginias-green-energy-future/",
     "category": "Politics"
@@ -7955,7 +8003,7 @@
     "id": "https://www.nytimes.com/2025/06/23/climate/trump-end-protections-for-58-million-acres-of-national-forests.html",
     "title": "Trump Administration to End Protections for 58 Million Acres of National Forests - The New York Times",
     "description": "Agriculture Secretary Brooke Rollins said the Clinton-era rule barring road construction and logging was outdated and “absurd.”",
-    "date": "2025-06-24",
+    "date": "2025-06-23",
     "link": "https://web.archive.org/web/2/https://www.nytimes.com/2025/06/23/climate/trump-end-protections-for-58-million-acres-of-national-forests.html",
     "category": "Politics"
   },
@@ -8090,7 +8138,7 @@
   {
     "id": "https://prospect.org/environment/2025-08-27-trump-blinding-government-methane-pollution-natural-gas/",
     "title": "Trump Is Blinding the Government to Methane Pollution. But Others Are Still Watching. - The American Prospect",
-    "description": "‘If people could see this with their bare eyes, none of this would be happening.’",
+    "description": "Ideas, Politics &amp; Power",
     "date": "2025-08-27",
     "link": "https://prospect.org/environment/2025-08-27-trump-blinding-government-methane-pollution-natural-gas/",
     "category": "Politics"
@@ -9328,6 +9376,14 @@
     "category": "Climate Change"
   },
   {
+    "id": "https://news.stanford.edu/2022/09/22/wildfire-smoke-unraveling-decades-air-quality-gains/",
+    "title": "Wildfire smoke is unraveling decades of air quality gains | Stanford News",
+    "description": "Stanford researchers have developed an AI model for predicting dangerous particle pollution to help track the American West’s rapidly worsening wildfire smoke. The detailed results show millions of Americans are routinely exposed to pollution at levels rarely seen just a decade ago.",
+    "date": "2022-09-22",
+    "link": "https://news.stanford.edu/2022/09/22/wildfire-smoke-unraveling-decades-air-quality-gains/",
+    "category": "Climate Change"
+  },
+  {
     "id": "https://www.theguardian.com/world/2022/sep/23/greta-thunberg-fridays-for-future-california-wildfires-video",
     "title": "‘The climate crisis is now’: haunting video spotlights California wildfires | Wildfires | The Guardian",
     "description": "The release by a Greta Thunberg-inspired activist group was timed with the global climate strike protests launching Friday",
@@ -9448,6 +9504,14 @@
     "category": "Climate Change"
   },
   {
+    "id": "https://www.economist.com/interactive/interactive/briefing/2022/11/05/the-world-is-going-to-miss-the-totemic-1-5c-climate-target",
+    "title": "The world is going to miss the totemic 1.5°C climate target | The Economist",
+    "description": "It needs to face up to the fact",
+    "date": "2022-11-05",
+    "link": "https://www.economist.com/interactive/interactive/briefing/2022/11/05/the-world-is-going-to-miss-the-totemic-1-5c-climate-target",
+    "category": "Climate Change"
+  },
+  {
     "id": "https://www.cbsnews.com/news/climate-activists-block-private-jets-at-amsterdam-airport/",
     "title": "Climate activists block private jets at Amsterdam airport - CBS News",
     "description": "CBS News is a trusted source for the latest in politics, U.S. and world news. The network is home to award-winning broadcasts CBS Mornings, CBS Evening News, 60 Minutes, CBS Sunday Morning, 48 Hours and Face the Nation.",
@@ -9483,7 +9547,7 @@
     "id": "https://www.newyorker.com/magazine/2022/11/28/climate-change-from-a-to-z",
     "title": "Climate Change from A to Z | The New Yorker",
     "description": "Elizabeth Kolbert on the stories we tell ourselves about the future.",
-    "date": "2022-11-21",
+    "date": "2022-11-28",
     "link": "https://www.newyorker.com/magazine/2022/11/28/climate-change-from-a-to-z",
     "category": "Climate Change"
   },
@@ -9616,6 +9680,14 @@
     "category": "Climate Change"
   },
   {
+    "id": "https://news.stanford.edu/2023/02/28/zombie-forests/",
+    "title": "Zombie forests | Stanford News",
+    "description": "The researchers created maps showing where warmer weather has left trees in conditions that don’t suit them, making them more prone to being replaced by other species. The findings could help inform long-term wildfire and ecosystem management in these “zombie forests.”",
+    "date": "2023-02-28",
+    "link": "https://news.stanford.edu/2023/02/28/zombie-forests/",
+    "category": "Climate Change"
+  },
+  {
     "id": "https://english.elpais.com/science-tech/2023-04-03/gulf-of-mexico-oil-worse-for-climate-than-thought-according-to-a-new-study.html",
     "title": "Gulf of Mexico oil worse for climate than thought, according to a new study | Science & Tech | EL PAÍS English",
     "description": "Reductions in both methane and carbon dioxide emissions are essential to lessen the future severity of climate change, the study notes",
@@ -9643,7 +9715,7 @@
     "id": "https://www.cnn.com/2023/05/05/weather/alberta-canada-wildfires-evacuations/index.html",
     "title": "Alberta wildfires: Almost 25,000 people in Western Canada evacuated as fires rage across region amid hot weather and high winds | CNN",
     "description": "Almost 25,000 people who live in the Canadian province of Alberta have been evacuated as wildfires rage across the region, which is seeing abnormally hot weather and high winds, emergency officials said Saturday.",
-    "date": "2023-05-06",
+    "date": "2023-05-05",
     "link": "https://www.cnn.com/2023/05/05/weather/alberta-canada-wildfires-evacuations/index.html",
     "category": "Climate Change"
   },
@@ -9912,6 +9984,14 @@
     "category": "Climate Change"
   },
   {
+    "id": "https://phys.org/news/2023-06-oceans-warmer-month.html",
+    "title": "Oceans warmer last month than any May on record",
+    "description": "",
+    "date": "2023-06-01",
+    "link": "https://phys.org/news/2023-06-oceans-warmer-month.html",
+    "category": "Climate Change"
+  },
+  {
     "id": "https://variety.com/2023/legit/news/jodie-comer-leaves-broadway-show-cant-breathe-nyc-air-1235636265/",
     "title": "Jodie Comer Leaves Broadway Show 10 Mins In, 'Can't Breathe' NYC Air - Variety",
     "description": "Jodie Comer is getting rave reviews for her work in the play \"Prima Facie,\" but her Jun. 7 performance was cut short due to unhealthy air in NYC.",
@@ -9923,7 +10003,7 @@
     "id": "https://www.reuters.com/world/americas/canada-track-its-worst-ever-wildfire-season-2023-06-05/",
     "title": "Canada on track for its worst-ever wildfire season | Reuters",
     "description": "Canada is on track for its worst-ever year of wildfire destruction as warm and dry conditions are forecast to persist through to the end of the summer after an unprecedented start to the fire season, officials said on Monday.",
-    "date": "2023-06-06",
+    "date": "2023-06-05",
     "link": "https://web.archive.org/web/2/https://www.reuters.com/world/americas/canada-track-its-worst-ever-wildfire-season-2023-06-05/",
     "category": "Climate Change"
   },
@@ -9963,7 +10043,7 @@
     "id": "https://www.abc.net.au/news/2023-06-11/kazakhstan-forest-fires-kill-14-minister-sacked-putin-message/102466678",
     "title": "Kazakhstan forest fires kill 14 with 60,000 hectares of land destroyed and government minister sacked - ABC News",
     "description": "Fourteen people die in major forest fires in north-eastern Kazakhstan, the emergency situations ministry says — the Central Asian country's highest such toll in years.",
-    "date": "2023-06-10",
+    "date": "2023-06-11",
     "link": "https://www.abc.net.au/news/2023-06-11/kazakhstan-forest-fires-kill-14-minister-sacked-putin-message/102466678",
     "category": "Climate Change"
   },
@@ -10045,6 +10125,14 @@
     "description": "Questions raised about death toll after more than half of the fatalities reported in a single district in Uttar Pradesh",
     "date": "2023-06-19",
     "link": "https://www.theguardian.com/world/2023/jun/19/india-heatwave-scores-dead-warning-stay-indoors-during-day-heat-wave-uttar-pradesh-eastern-bihar",
+    "category": "Climate Change"
+  },
+  {
+    "id": "https://phys.org/news/2023-06-june-temperatures-briefly-key-climate.html",
+    "title": "June temperatures briefly passed key climate threshold. Scientists expect more such spikes",
+    "description": "",
+    "date": "2023-06-01",
+    "link": "https://phys.org/news/2023-06-june-temperatures-briefly-key-climate.html",
     "category": "Climate Change"
   },
   {
@@ -10131,7 +10219,7 @@
     "id": "https://www.cnn.com/2023/06/26/americas/canada-wildfire-season-worst-2023/index.html",
     "title": "Canadian wildfire smoke reaches Europe as Canada reports its worst fire season | CNN",
     "description": "Canada has officially marked its worst wildfire season on record, with smoke from the blazes crossing the Atlantic Ocean and reaching western Europe on Monday.",
-    "date": "2023-06-27",
+    "date": "2023-06-26",
     "link": "https://www.cnn.com/2023/06/26/americas/canada-wildfire-season-worst-2023/index.html",
     "category": "Climate Change"
   },
@@ -10523,7 +10611,7 @@
     "id": "https://www.abc.net.au/news/science/2021-01-24/heatwaves-sydney-uninhabitable-climate-change-urban-planning/12993580",
     "title": "Heatwaves may mean Sydney is too hot for people to live in 'within decades' - ABC News",
     "description": "With Australia's largest city facing 50-degree-plus summers, experts say its suburbs must be radically redesigned and rebuilt in order to remain liveable.",
-    "date": "2021-01-23",
+    "date": "2021-01-24",
     "link": "https://www.abc.net.au/news/science/2021-01-24/heatwaves-sydney-uninhabitable-climate-change-urban-planning/12993580",
     "category": "Climate Change"
   },
@@ -10595,7 +10683,7 @@
     "id": "https://www.abc.net.au/news/2023-07-24/antarctic-sea-ice-levels-nosedive-five-sigma-event/102635204",
     "title": "Antarctic sea ice levels dive in 'five-sigma event', as experts flag worsening consequences for planet - ABC News",
     "description": "Antarctic sea ice has usually been able to recover in winter. But this time it's different, with levels taking a sharp downward turn at a time of year when sea ice usually forms reliably — and experts are worried.",
-    "date": "2023-07-23",
+    "date": "2023-07-24",
     "link": "https://www.abc.net.au/news/2023-07-24/antarctic-sea-ice-levels-nosedive-five-sigma-event/102635204",
     "category": "Climate Change"
   },
@@ -10691,7 +10779,7 @@
     "id": "https://www.euronews.com/travel/2023/07/26/sicily-travel-warning-wildfires-force-evacuation-of-tourists-and-temporarily-close-palermo",
     "title": "Sicily travel warning: Wildfires force evacuation of tourists and threaten heritage site | Euronews",
     "description": "The heatwave that has been scorching southern Europe has increased the risk of fires and heat-related deaths in Italy.",
-    "date": "2023-07-28",
+    "date": "2023-07-26",
     "link": "https://www.euronews.com/travel/2023/07/26/sicily-travel-warning-wildfires-force-evacuation-of-tourists-and-temporarily-close-palermo",
     "category": "Climate Change"
   },
@@ -10707,7 +10795,7 @@
     "id": "https://www.reuters.com/business/environment/saguaro-cacti-collapsing-arizona-extreme-heat-scientist-says-2023-07-25/",
     "title": "Saguaro cacti collapsing in Arizona extreme heat, scientist says | Reuters",
     "description": "Arizona's saguaro cacti, a symbol of the U.S. West, are leaning, losing arms and in some cases falling over during the state's record streak of extreme heat, a scientist said on Tuesday.",
-    "date": "2023-07-26",
+    "date": "2023-07-25",
     "link": "https://web.archive.org/web/2/https://www.reuters.com/business/environment/saguaro-cacti-collapsing-arizona-extreme-heat-scientist-says-2023-07-25/",
     "category": "Climate Change"
   },
@@ -10891,7 +10979,7 @@
     "id": "https://www.cnn.com/2023/08/16/americas/canada-northwest-territories-wildfires-thursday/index.html",
     "title": "Yellowknife, Northwest Territories: The entire capital city has been ordered to evacuate as hundreds of wildfires scorch the region, officials say | CNN",
     "description": "Hundreds of wildfires burning in Canada’s Northwest Territories have prompted emergency declarations and the evacuation of the capital city of Yellowknife by road and air.",
-    "date": "2023-08-17",
+    "date": "2023-08-16",
     "link": "https://www.cnn.com/2023/08/16/americas/canada-northwest-territories-wildfires-thursday/index.html",
     "category": "Climate Change"
   },
@@ -11083,7 +11171,7 @@
     "id": "https://www.abc.net.au/news/2023-09-11/global-temperatures-pass-1-5c-above-pre-industrial-levels/102836304",
     "title": "Global records tumble as temperatures exceed 1.5C above pre-industrial levels for first time - ABC News",
     "description": "Data released from Copernicus, a branch of the European Union Space Programme, shows August was 1.59C warmer than 1850–1900 levels, following a 1.6C increase in July.\n\n\n ",
-    "date": "2023-09-10",
+    "date": "2023-09-11",
     "link": "https://www.abc.net.au/news/2023-09-11/global-temperatures-pass-1-5c-above-pre-industrial-levels/102836304",
     "category": "Climate Change"
   },
@@ -11272,6 +11360,14 @@
     "category": "Climate Change"
   },
   {
+    "id": "https://out.reddit.com/t3_18342x4?anon=1&app_name=reddit_ios&token=AQAARRFjZUkbQf9YDQ9lvihpif7zZj4m9V--qy2HBFEs-RnK8pum&url=https%3A%2F%2Fwww.reuters.com%2Fbusiness%2Fenvironment%2Fworlds-largest-iceberg-breaks-free-heads-toward-southern-ocean-2023-11-24%2F",
+    "title": "Seite kann nicht geöffnet werden",
+    "description": "",
+    "date": "2023-11-24",
+    "link": "https://out.reddit.com/t3_18342x4?anon=1&app_name=reddit_ios&token=AQAARRFjZUkbQf9YDQ9lvihpif7zZj4m9V--qy2HBFEs-RnK8pum&url=https%3A%2F%2Fwww.reuters.com%2Fbusiness%2Fenvironment%2Fworlds-largest-iceberg-breaks-free-heads-toward-southern-ocean-2023-11-24%2F",
+    "category": "Climate Change"
+  },
+  {
     "id": "https://www.weatherandradar.com/weather-news/state-of-emergency-once-in-a-century-drought-in-amazon--16f8d921-798a-4932-9b0a-40dd440dda27",
     "title": "State of emergency: Once-in-a-century drought in Amazon – Weather News",
     "description": "The largest rainforest area in the world, the Amazon, is suffering from the most severe drought in over a century. ",
@@ -11379,7 +11475,7 @@
     "id": "https://www.cnn.com/2024/01/06/india/extreme-heat-india-climate-ac-intl-hnk/index.html",
     "title": "Extreme heat is pushing India to the brink of ‘survivability.’ One obvious solution is also a big part of the problem | CNN",
     "description": "When blistering extreme heat gripped India’s capital this summer, Ramesh says he felt faint but had no option other than to keep on toiling under the burning sun to provide for his family.",
-    "date": "2024-01-07",
+    "date": "2024-01-06",
     "link": "https://www.cnn.com/2024/01/06/india/extreme-heat-india-climate-ac-intl-hnk/index.html",
     "category": "Climate Change"
   },
@@ -11555,7 +11651,7 @@
     "id": "https://www.cnn.com/2024/03/06/climate/hottest-february-climate-copernicus-record-intl/index.html",
     "title": "Climate change: The planet just shattered heat records for the ninth month in a row | CNN",
     "description": "Last month was the hottest February on record as global warming pushes temperatures off the charts.",
-    "date": "2024-03-07",
+    "date": "2024-03-06",
     "link": "https://www.cnn.com/2024/03/06/climate/hottest-february-climate-copernicus-record-intl/index.html",
     "category": "Climate Change"
   },
@@ -11811,7 +11907,7 @@
     "id": "https://www.japantimes.co.jp/news/2024/04/24/asia-pacific/philippines-extreme-heat/",
     "title": "'So hot you can't breathe': Extreme heat hits the Philippines - The Japan Times",
     "description": "News on Japan, Business News, Opinion, Sports, Entertainment and More article expired",
-    "date": "2026-06-26",
+    "date": "2024-04-24",
     "link": "https://www.japantimes.co.jp/news/2024/04/24/asia-pacific/philippines-extreme-heat/",
     "category": "Climate Change"
   },
@@ -11893,6 +11989,14 @@
     "description": "Thousands of residents in the Regional Municipality of Wood Buffalo have been ordered to leave their homes as a wildfire burning southwest of Fort McMurray continues to draw closer to the community.",
     "date": "2024-05-14",
     "link": "https://www.cbc.ca/news/canada/edmonton/alberta-wildfire-grande-prairie-fort-mcmurray-1.7203695",
+    "category": "Climate Change"
+  },
+  {
+    "id": "https://phys.org/news/2024-05-wildfire-canadian-oil-sands-city.html",
+    "title": "Wildfire closes in on Canadian oil sands city",
+    "description": "",
+    "date": "2024-05-01",
+    "link": "https://phys.org/news/2024-05-wildfire-canadian-oil-sands-city.html",
     "category": "Climate Change"
   },
   {
@@ -12315,7 +12419,7 @@
     "id": "https://pagesix.com/2024/07/16/entertainment/drakes-toronto-mansion-floods-during-severe-rainfall/",
     "title": "Drake’s Toronto mansion floods during severe rainfall",
     "description": "Drake’s Toronto mansion floods during severe rainfall",
-    "date": "2024-07-17",
+    "date": "2024-07-16",
     "link": "https://pagesix.com/2024/07/16/entertainment/drakes-toronto-mansion-floods-during-severe-rainfall/",
     "category": "Climate Change"
   },
@@ -12755,7 +12859,7 @@
     "id": "https://www.cnn.com/2024/09/05/climate/hottest-summer-record-copernicus/index.html",
     "title": "The planet endures its hottest summer on record — for the second straight year | CNN",
     "description": "Heat waves baked the planet this summer breaking global records, scientists report, and putting 2024 on track to be the hottest year in recorded history",
-    "date": "2024-09-06",
+    "date": "2024-09-05",
     "link": "https://www.cnn.com/2024/09/05/climate/hottest-summer-record-copernicus/index.html",
     "category": "Climate Change"
   },
@@ -13451,7 +13555,7 @@
     "id": "https://www.abc.net.au/news/2025-01-28/marine-heatwave-pilbara-mass-fish-deaths/104852574",
     "title": "Marine heatwave likely cause of mass fish deaths on WA's Pilbara coast, authorities say - ABC News",
     "description": "Authorities believe marine heatwave conditions may have led to the death of around 30,000 fish at Gnoorea Beach, south of Karratha.",
-    "date": "2025-01-27",
+    "date": "2025-01-28",
     "link": "https://www.abc.net.au/news/2025-01-28/marine-heatwave-pilbara-mass-fish-deaths/104852574",
     "category": "Climate Change"
   },
@@ -13571,7 +13675,7 @@
     "id": "https://www.cnn.com/2025/03/26/china/china-glacier-shrinking-global-warming-climate-intl-hnk/index.html",
     "title": "China’s glacier area shrinks by 26% over six decades due to global warming | CNN",
     "description": "China’s glacier area has shrunk by 26% since 1960 due to rapid global warming, with 7,000 small glaciers disappearing completely and glacial retreat intensifying in recent years, official data released in March showed.",
-    "date": "2025-03-27",
+    "date": "2025-03-26",
     "link": "https://www.cnn.com/2025/03/26/china/china-glacier-shrinking-global-warming-climate-intl-hnk/index.html",
     "category": "Climate Change"
   },
