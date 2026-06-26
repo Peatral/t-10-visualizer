@@ -48,9 +48,9 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
 
   return (
     <div ref={scrollContainerRef} className="flex-grow overflow-auto bg-[#1e1e1e] relative">
-      <table className="w-full border-collapse block">
-        <thead className="block sticky top-0 z-30 bg-[#1e1e1e]">
-          <tr className="flex w-full">
+      <table className="w-full min-w-max border-collapse block">
+        <thead className="block sticky top-0 z-30 bg-[#1e1e1e] w-full min-w-max">
+          <tr className="flex w-full min-w-max">
             <th className={`sticky left-0 bg-[#1e1e1e] z-20 border border-[#2e2e2e] text-left px-4 py-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap font-sans ${labelColWidth} shrink-0 flex items-center`}>
               {t('heatmapLabel')}
             </th>
@@ -97,8 +97,8 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
             </th>
           </tr>
         </thead>
-        <tbody 
-          className="block relative w-full"
+        <tbody
+          className="block relative w-full min-w-max"
           style={{ height: `${rowVirtualizer.getTotalSize()}px` }}
         >
           {rowVirtualizer.getVirtualItems().map(virtualRow => {
@@ -125,7 +125,7 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
             return (
               <tr 
                 key={word} 
-                className="flex absolute top-0 left-0 w-full hover:bg-[#252525]/30"
+                className="flex absolute top-0 left-0 w-full min-w-max hover:bg-[#252525]/30"
                 style={{
                   height: `${virtualRow.size}px`,
                   transform: `translateY(${virtualRow.start}px)`,
