@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import Database from 'better-sqlite3'
 import { db } from './index.js'
-import { articles, topics, topicKeywords, articleTopicMatches, categories, topicsToCategories } from './schema.js'
+import { articles, topics, topicKeywords, articleTopicMatches, categories } from './schema.js'
 import { getYearHalf } from '../../utils/matching.js'
 import { TOPICS_LIST } from './topicData.js'
 
@@ -100,14 +100,6 @@ async function seed() {
       name_en TEXT NOT NULL
     );
 
-    CREATE TABLE topics_to_categories (
-      topic_id TEXT NOT NULL,
-      category_id TEXT NOT NULL,
-      PRIMARY KEY(topic_id, category_id),
-      FOREIGN KEY(topic_id) REFERENCES topics(id),
-      FOREIGN KEY(category_id) REFERENCES categories(id)
-    );
-
     CREATE TABLE topic_keywords (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       topic_id TEXT NOT NULL,
@@ -129,8 +121,6 @@ async function seed() {
     
     CREATE INDEX idx_category_id ON articles(category_id);
     CREATE INDEX idx_date ON articles(date);
-    CREATE INDEX idx_topic_cat_topic ON topics_to_categories(topic_id);
-    CREATE INDEX idx_topic_cat_cat ON topics_to_categories(category_id);
     CREATE INDEX idx_keywords_topic ON topic_keywords(topic_id);
     CREATE INDEX idx_matches_category ON article_topic_matches(category);
     CREATE INDEX idx_matches_topic ON article_topic_matches(topic_id);
@@ -197,7 +187,6 @@ async function seed() {
 
   const topicsEntries: any[] = []
   const keywordsEntries: any[] = []
-  const topicsToCategoriesEntries: any[] = []
 
   for (const topic of TOPICS_LIST) {
     topicsEntries.push({
@@ -221,13 +210,6 @@ async function seed() {
         language: 'en',
       })
     }
-
-    for (const catId of topic.categories) {
-      topicsToCategoriesEntries.push({
-        topicId: topic.id,
-        categoryId: catId,
-      })
-    }
   }
 
   if (topicsEntries.length > 0) {
@@ -236,10 +218,7 @@ async function seed() {
   if (keywordsEntries.length > 0) {
     await db.insert(topicKeywords).values(keywordsEntries).run()
   }
-  if (topicsToCategoriesEntries.length > 0) {
-    await db.insert(topicsToCategories).values(topicsToCategoriesEntries).run()
-  }
-  console.log(`Seeded ${topicsEntries.length} topics, ${keywordsEntries.length} topic keywords, and ${topicsToCategoriesEntries.length} topic-category links.`)
+  console.log(`Seeded ${topicsEntries.length} topics and ${keywordsEntries.length} topic keywords.`)
 
   // 3. Seed articles
   if (rawArticles.length > 0) {
@@ -319,30 +298,26 @@ async function seed() {
       const combinedText = `${art.title} ${art.description} ${art.bodyText}`
 
       for (const topic of topicsMap.values()) {
-        const artCatId = getSlug(art.category)
-
-        if (topic.categories.has(artCatId)) {
-          let isMatch = false
-          // Only check keywords that match the language of the article!
-          const targetKeywords = art.language === 'de' ? topic.keywordsDe : topic.keywordsEn
-          
-          for (const kw of targetKeywords) {
-            if (checkSingleMatch(combinedText, kw)) {
-              isMatch = true
-              break
-            }
+        let isMatch = false
+        // Only check keywords that match the language of the article!
+        const targetKeywords = art.language === 'de' ? topic.keywordsDe : topic.keywordsEn
+        
+        for (const kw of targetKeywords) {
+          if (checkSingleMatch(combinedText, kw)) {
+            isMatch = true
+            break
           }
+        }
 
-          if (isMatch) {
-            matchEntries.push({
-              articleId: art.id,
-              category: art.category,
-              date: art.date,
-              bucket,
-              sortVal,
-              topicId: topic.id,
-            })
-          }
+        if (isMatch) {
+          matchEntries.push({
+            articleId: art.id,
+            category: art.category,
+            date: art.date,
+            bucket,
+            sortVal,
+            topicId: topic.id,
+          })
         }
       }
     }

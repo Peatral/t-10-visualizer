@@ -19,14 +19,9 @@ export const Trendmap: React.FC = () => {
   const navigate = useNavigate({ from: '/trendmap' })
   const [viewMode, setViewMode] = useState<'absolute' | 'relative'>('absolute')
 
-  // Filter categories to only those containing keywords in the vocabulary sheet, plus 'All'
   const categories = useMemo(() => {
-    const filtered = data.categories.filter(cat => {
-      const lower = cat.toLowerCase()
-      return lower.includes("energy") || lower.includes("food") || lower.includes("housing") || lower.includes("mobility")
-    })
-    return ['All', ...filtered]
-  }, [data.categories])
+    return ['All', ...data.categories]
+  }, [data.categories]);
 
   const selectedCat = searchParams.category || 'All'
 

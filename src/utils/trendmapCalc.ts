@@ -1,5 +1,5 @@
 import { eq, sql, and } from 'drizzle-orm'
-import { articles, topics, articleTopicMatches, topicKeywords, topicsToCategories } from '../server/db/schema.js'
+import { articles, topics, articleTopicMatches, topicKeywords } from '../server/db/schema.js'
 import { getYearHalf } from './matching.js'
 
 export interface ArticleMetadata {
@@ -45,23 +45,14 @@ export async function calculateTrendmapGrid(
   language: 'en' | 'de',
   q?: string
 ): Promise<TrendmapCalculationResult> {
-  const catId = category.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
-
-  // 1. Fetch topics for this category using the junction table
-  let dbTopicsQuery = db.select({
+  // 1. Fetch all topics (category-independent)
+  const dbTopics = await db.select({
     id: topics.id,
     nameDe: topics.nameDe,
     nameEn: topics.nameEn,
   })
   .from(topics)
-
-  if (category !== 'All') {
-    dbTopicsQuery = dbTopicsQuery
-      .innerJoin(topicsToCategories, eq(topics.id, topicsToCategories.topicId))
-      .where(eq(topicsToCategories.categoryId, catId))
-  }
-
-  const dbTopics = await dbTopicsQuery.all()
+  .all()
 
   // Map topic IDs to display labels
   const labelToDisplay: Record<string, string> = {}
@@ -341,7 +332,7 @@ export async function calculateTrendmapGrid(
   })
 
   if (zeroMatchStreak.length > 0) {
-    if (zeroMatchStreak.length > 6) {
+    if (zeroMatchStreak.length >= 3) {
       const startYear = zeroMatchStreak[0].bucket
       const endYear = zeroMatchStreak[zeroMatchStreak.length - 1].bucket
       croppedTimeScale.push({
