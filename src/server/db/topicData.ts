@@ -71,7 +71,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Atommüll-Lager",
     "nameEn": "Nuclear waste storage facility",
     "keywordsDe": [
-      "atommüll-lager"
+      "atommüll-lager",
+      "atommülllager"
     ],
     "keywordsEn": [
       "nuclear waste storage facility"
@@ -169,7 +170,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Biomasse-Energie",
     "nameEn": "Biomass energy",
     "keywordsDe": [
-      "biomasse-energie"
+      "biomasse-energie",
+      "biomasseenergie"
     ],
     "keywordsEn": [
       "biomass energy"
@@ -188,7 +190,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "steinkohle",
       "kohlekraftwerk",
       "kohlekraftwerke",
-      "braunkohle-energie"
+      "braunkohle-energie",
+      "braunkohleenergie"
     ],
     "keywordsEn": [
       "coal",
@@ -210,13 +213,16 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "wasserstoffantrieb",
       "wasserstofftechnologie",
       "brennstoffzelle",
-      "brennstoffzellen"
+      "brennstoffzellen",
+      "wasserstoff-energie",
+      "wasserstoffenergie"
     ],
     "keywordsEn": [
       "hydrogen",
       "h2",
       "hydrogen fuel cell",
-      "hydrogen power"
+      "hydrogen power",
+      "hydrogen energy"
     ],
     "categories": [
       "t-10-energy",
@@ -341,7 +347,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Energie-Effizienz",
     "nameEn": "Energy efficiency",
     "keywordsDe": [
-      "energie-effizienz"
+      "energie-effizienz",
+      "energieeffizienz"
     ],
     "keywordsEn": [
       "energy efficiency"
@@ -369,10 +376,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Energieproduktion/Energiegewinnung",
     "nameEn": "Energy production/energy generation",
     "keywordsDe": [
-      "energieproduktion/energiegewinnung"
+      "energieproduktion",
+      "energiegewinnung"
     ],
     "keywordsEn": [
-      "energy production/energy generation"
+      "energy production",
+      "energy generation"
     ],
     "categories": [
       "t-10-energy"
@@ -454,7 +463,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Erdöl-Energie",
     "nameEn": "Petroleum energy",
     "keywordsDe": [
-      "erdöl-energie"
+      "erdöl-energie",
+      "erdölenergie"
     ],
     "keywordsEn": [
       "petroleum energy"
@@ -483,16 +493,17 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Essen/Food",
     "nameEn": "Food/food",
     "keywordsDe": [
-      "essen/food",
-      "essen (food)"
+      "essen",
+      "food",
+      "essen food"
     ],
     "keywordsEn": [
-      "food/food",
       "food"
     ],
     "categories": [
       "t-10-energy",
-      "t-10-housing"
+      "t-10-housing",
+      "t-10-mobility"
     ]
   },
   {
@@ -500,7 +511,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Flüssigsalz-Speicherung",
     "nameEn": "Liquid salt storage",
     "keywordsDe": [
-      "flüssigsalz-speicherung"
+      "flüssigsalz-speicherung",
+      "flüssigsalzspeicherung"
     ],
     "keywordsEn": [
       "liquid salt storage"
@@ -544,7 +556,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Gas-Energie",
     "nameEn": "Gas energy",
     "keywordsDe": [
-      "gas-energie"
+      "gas-energie",
+      "gasenergie"
     ],
     "keywordsEn": [
       "gas energy"
@@ -574,7 +587,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Geothermie-Energie",
     "nameEn": "Geothermal energy",
     "keywordsDe": [
-      "geothermie-energie"
+      "geothermie-energie",
+      "geothermieenergie"
     ],
     "keywordsEn": [
       "geothermal energy"
@@ -674,7 +688,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Holz-Energie",
     "nameEn": "Wood energy",
     "keywordsDe": [
-      "holz-energie"
+      "holz-energie",
+      "holzenergie"
     ],
     "keywordsEn": [
       "wood energy"
@@ -719,7 +734,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "internet"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "internet"
+    ],
     "categories": [
       "t-10-energy",
       "t-10-mobility"
@@ -767,7 +784,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "KI-Datenzentren",
     "nameEn": "AI data centers",
     "keywordsDe": [
-      "ki-datenzentren"
+      "ki-datenzentren",
+      "kidatenzentren"
     ],
     "keywordsEn": [
       "ai data centers"
@@ -841,10 +859,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Krieg, Konflikte",
     "nameEn": "War, conflicts",
     "keywordsDe": [
-      "krieg, konflikte"
+      "krieg",
+      "konflikte"
     ],
     "keywordsEn": [
-      "war, conflicts"
+      "war",
+      "conflicts"
     ],
     "categories": [
       "t-10-energy"
@@ -1057,7 +1077,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Pflanzenöl-Energie",
     "nameEn": "Vegetable oil energy",
     "keywordsDe": [
-      "pflanzenöl-energie"
+      "pflanzenöl-energie",
+      "pflanzenölenergie"
     ],
     "keywordsEn": [
       "vegetable oil energy"
@@ -1160,7 +1181,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Ressourcen-Transport",
     "nameEn": "Resource transportation",
     "keywordsDe": [
-      "ressourcen-transport"
+      "ressourcen-transport",
+      "ressourcentransport"
     ],
     "keywordsEn": [
       "resource transportation"
@@ -1174,7 +1196,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Ressourcen-Schonung",
     "nameEn": "Resource conservation",
     "keywordsDe": [
-      "ressourcen-schonung"
+      "ressourcen-schonung",
+      "ressourcenschonung"
     ],
     "keywordsEn": [
       "resource conservation"
@@ -1216,7 +1239,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Solar-Energie",
     "nameEn": "Solar energy",
     "keywordsDe": [
-      "solar-energie"
+      "solar-energie",
+      "solarenergie"
     ],
     "keywordsEn": [
       "solar energy"
@@ -1232,7 +1256,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "solar offshore"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "solar offshore"
+    ],
     "categories": [
       "t-10-energy"
     ]
@@ -1242,7 +1268,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Solar-Folie",
     "nameEn": "Solar film",
     "keywordsDe": [
-      "solar-folie"
+      "solar-folie",
+      "solarfolie"
     ],
     "keywordsEn": [
       "solar film"
@@ -1284,7 +1311,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Steinkohle-Energie",
     "nameEn": "Hard coal energy",
     "keywordsDe": [
-      "steinkohle-energie"
+      "steinkohle-energie",
+      "steinkohleenergie"
     ],
     "keywordsEn": [
       "hard coal energy"
@@ -1341,7 +1369,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Strom-Überproduktion",
     "nameEn": "Electricity overproduction",
     "keywordsDe": [
-      "strom-überproduktion"
+      "strom-überproduktion",
+      "stromüberproduktion"
     ],
     "keywordsEn": [
       "electricity overproduction"
@@ -1355,7 +1384,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Strom-Unterproduktion",
     "nameEn": "Electricity underproduction",
     "keywordsDe": [
-      "strom-unterproduktion"
+      "strom-unterproduktion",
+      "stromunterproduktion"
     ],
     "keywordsEn": [
       "electricity underproduction"
@@ -1369,10 +1399,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Stromleitung/elektrischer Transport",
     "nameEn": "Power line/electrical transportation",
     "keywordsDe": [
-      "stromleitung/elektrischer transport"
+      "stromleitung",
+      "elektrischer transport"
     ],
     "keywordsEn": [
-      "power line/electrical transportation"
+      "power line",
+      "electrical transportation"
     ],
     "categories": [
       "t-10-energy"
@@ -1439,10 +1471,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Umwelt",
     "nameEn": "Environment",
     "keywordsDe": [
-      "umwelt"
+      "umwelt",
+      "klima"
     ],
     "keywordsEn": [
-      "environment"
+      "environment",
+      "climate"
     ],
     "categories": [
       "t-10-energy",
@@ -1571,24 +1605,11 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Wasser-Kraft",
     "nameEn": "Water power",
     "keywordsDe": [
-      "wasser-kraft"
+      "wasser-kraft",
+      "wasserkraft"
     ],
     "keywordsEn": [
       "water power"
-    ],
-    "categories": [
-      "t-10-energy"
-    ]
-  },
-  {
-    "id": "wasserstoff-energie",
-    "nameDe": "Wasserstoff-Energie",
-    "nameEn": "Hydrogen energy",
-    "keywordsDe": [
-      "wasserstoff-energie"
-    ],
-    "keywordsEn": [
-      "hydrogen energy"
     ],
     "categories": [
       "t-10-energy"
@@ -1652,13 +1673,16 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Wohnen/Housing",
     "nameEn": "Living/Housing",
     "keywordsDe": [
-      "wohnen/housing"
+      "wohnen",
+      "housing"
     ],
     "keywordsEn": [
-      "living/housing"
+      "living",
+      "housing"
     ],
     "categories": [
-      "t-10-energy"
+      "t-10-energy",
+      "t-10-mobility"
     ]
   },
   {
@@ -1736,10 +1760,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Abwasser / Klärschlamm",
     "nameEn": "Waste water / sewage sludge",
     "keywordsDe": [
-      "abwasser / klärschlamm"
+      "abwasser",
+      "klärschlamm"
     ],
     "keywordsEn": [
-      "waste water / sewage sludge"
+      "waste water",
+      "sewage sludge"
     ],
     "categories": [
       "t-10-food"
@@ -1938,7 +1964,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "schienenverkehr",
       "tram",
       "u-bahn",
+      "ubahn",
       "s-bahn",
+      "sbahn",
       "straßenbahn"
     ],
     "keywordsEn": [
@@ -1952,7 +1980,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "metro"
     ],
     "categories": [
-      "t-10-food"
+      "t-10-food",
+      "t-10-mobility"
     ]
   },
   {
@@ -2058,7 +2087,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Bio-Produkte",
     "nameEn": "Organic products",
     "keywordsDe": [
-      "bio-produkte"
+      "bio-produkte",
+      "bioprodukte"
     ],
     "keywordsEn": [
       "organic products"
@@ -2115,7 +2145,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Blockchain-Technologien",
     "nameEn": "Blockchain technologies",
     "keywordsDe": [
-      "blockchain-technologien"
+      "blockchain-technologien",
+      "blockchaintechnologien"
     ],
     "keywordsEn": [
       "blockchain technologies"
@@ -2172,6 +2203,7 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameEn": "CO2 emissions",
     "keywordsDe": [
       "co2-emissionen",
+      "co2emissionen",
       "co2 emissionen"
     ],
     "keywordsEn": [
@@ -2203,7 +2235,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "depression"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "depression"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -2241,10 +2275,10 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Digitale Sequenzinformationen (DSI)",
     "nameEn": "Digital sequence information (DSI)",
     "keywordsDe": [
-      "digitale sequenzinformationen (dsi)"
+      "digitale sequenzinformationen dsi"
     ],
     "keywordsEn": [
-      "digital sequence information (dsi)"
+      "digital sequence information dsi"
     ],
     "categories": [
       "t-10-food"
@@ -2257,7 +2291,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "discounter"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "discounter"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -2283,7 +2319,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "double digging"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "double digging"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -2322,10 +2360,13 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameEn": "E-Mobility / Electric Vehicles",
     "keywordsDe": [
       "e-auto",
+      "eauto",
       "elektroauto",
       "elektroautos",
       "e-mobil",
+      "emobil",
       "e-mobilität",
+      "emobilität",
       "elektromobilität"
     ],
     "keywordsEn": [
@@ -2333,7 +2374,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "evs",
       "electric vehicle",
       "electric vehicles",
-      "e-mobility"
+      "e-mobility",
+      "emobility"
     ],
     "categories": [
       "t-10-mobility",
@@ -2404,7 +2446,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "el niño"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "el niño"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -2414,7 +2458,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Elefanten-Keulung",
     "nameEn": "Elephant culling",
     "keywordsDe": [
-      "elefanten-keulung"
+      "elefanten-keulung",
+      "elefantenkeulung"
     ],
     "keywordsEn": [
       "elephant culling"
@@ -2515,7 +2560,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Ernährungsplan, konzept",
     "nameEn": "Nutrition plan concept",
     "keywordsDe": [
-      "ernährungsplan, konzept"
+      "ernährungsplan",
+      "konzept"
     ],
     "keywordsEn": [
       "nutrition plan concept"
@@ -2545,7 +2591,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "erosion"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "erosion"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -2583,10 +2631,10 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Essensknappheit (3. weltländer)",
     "nameEn": "Food shortage (3rd world countries)",
     "keywordsDe": [
-      "essensknappheit (3. weltländer)"
+      "essensknappheit 3. weltländer"
     ],
     "keywordsEn": [
-      "food shortage (3rd world countries)"
+      "food shortage 3rd world countries"
     ],
     "categories": [
       "t-10-food"
@@ -2613,23 +2661,30 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "export"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "export"
+    ],
     "categories": [
       "t-10-food"
     ]
   },
   {
-    "id": "extreme-wetterlagen",
+    "id": "wetter",
     "nameDe": "Extreme Wetterlagen",
     "nameEn": "Extreme weather conditions",
     "keywordsDe": [
-      "extreme wetterlagen"
+      "extreme wetterlagen",
+      "wetter",
+      "wetterereignisse"
     ],
     "keywordsEn": [
-      "extreme weather conditions"
+      "extreme weather conditions",
+      "weather",
+      "weather events"
     ],
     "categories": [
-      "t-10-food"
+      "t-10-food",
+      "t-10-mobility"
     ]
   },
   {
@@ -2639,7 +2694,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "fairtrade"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "fairtrade"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -2651,7 +2708,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "fauna"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "fauna"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -2674,12 +2733,13 @@ export const TOPICS_LIST: TopicDefinition[] = [
   {
     "id": "fertigprodukte",
     "nameDe": "Fertigprodukte",
-    "nameEn": "finished products",
+    "nameEn": "Convenience food",
     "keywordsDe": [
       "fertigprodukte"
     ],
     "keywordsEn": [
-      "finished products"
+      "convenience food",
+      "ready meals"
     ],
     "categories": [
       "t-10-food"
@@ -2777,7 +2837,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "fleischlastige ernährung"
     ],
     "keywordsEn": [
-      "meat-heavy diet"
+      "meat-heavy diet",
+      "meatheavy diet"
     ],
     "categories": [
       "t-10-food"
@@ -2804,7 +2865,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "flora"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "flora"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -2829,10 +2892,14 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Foodmix (Kohlenhydrate/Eiweiße/Fette)",
     "nameEn": "Food mix (carbohydrates/proteins/fats)",
     "keywordsDe": [
-      "foodmix (kohlenhydrate/eiweiße/fette)"
+      "foodmix kohlenhydrate",
+      "eiweiße",
+      "fette"
     ],
     "keywordsEn": [
-      "food mix (carbohydrates/proteins/fats)"
+      "food mix carbohydrates",
+      "proteins",
+      "fats"
     ],
     "categories": [
       "t-10-food"
@@ -2885,20 +2952,7 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Futter",
     "nameEn": "feed",
     "keywordsDe": [
-      "futter"
-    ],
-    "keywordsEn": [
-      "feed"
-    ],
-    "categories": [
-      "t-10-food"
-    ]
-  },
-  {
-    "id": "futtermittel",
-    "nameDe": "Futtermittel",
-    "nameEn": "Feed",
-    "keywordsDe": [
+      "futter",
       "futtermittel"
     ],
     "keywordsEn": [
@@ -2913,10 +2967,11 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Garten(-anbau)",
     "nameEn": "garden (cultivation)",
     "keywordsDe": [
-      "garten(-anbau)"
+      "garten-anbau",
+      "gartenanbau"
     ],
     "keywordsEn": [
-      "garden (cultivation)"
+      "garden cultivation"
     ],
     "categories": [
       "t-10-food"
@@ -3100,7 +3155,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "grossproduktion"
     ],
     "keywordsEn": [
-      "large-scale production"
+      "large-scale production",
+      "largescale production"
     ],
     "categories": [
       "t-10-food"
@@ -3225,7 +3281,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "import"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "import"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -3251,7 +3309,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "inflation"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "inflation"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -3289,10 +3349,14 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Kapital, Kapitaleinsatz, Kapital verwertung",
     "nameEn": "Capital, use of capital, utilization of capital",
     "keywordsDe": [
-      "kapital, kapitaleinsatz, kapital verwertung"
+      "kapital",
+      "kapitaleinsatz",
+      "kapital verwertung"
     ],
     "keywordsEn": [
-      "capital, use of capital, utilization of capital"
+      "capital",
+      "use of capital",
+      "utilization of capital"
     ],
     "categories": [
       "t-10-food"
@@ -3458,10 +3522,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Kühlung / Lagerung",
     "nameEn": "Cooling/Storage",
     "keywordsDe": [
-      "kühlung / lagerung"
+      "kühlung",
+      "lagerung"
     ],
     "keywordsEn": [
-      "cooling/storage"
+      "cooling",
+      "storage"
     ],
     "categories": [
       "t-10-food"
@@ -3472,10 +3538,10 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Künstliche Intelligenz (KI)",
     "nameEn": "Artificial Intelligence (AI)",
     "keywordsDe": [
-      "künstliche intelligenz (ki)"
+      "künstliche intelligenz ki"
     ],
     "keywordsEn": [
-      "artificial intelligence (ai)"
+      "artificial intelligence ai"
     ],
     "categories": [
       "t-10-food"
@@ -3529,10 +3595,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Lebensbedingungen - Tiere",
     "nameEn": "Living conditions - animals",
     "keywordsDe": [
-      "lebensbedingungen - tiere"
+      "lebensbedingungen - tiere",
+      "lebensbedingungen  tiere"
     ],
     "keywordsEn": [
-      "living conditions - animals"
+      "living conditions - animals",
+      "living conditions  animals"
     ],
     "categories": [
       "t-10-food"
@@ -3672,7 +3740,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "marketing"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "marketing"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -3755,7 +3825,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "moore"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "moore"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -3807,7 +3879,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Multistakeholder-Ansätze",
     "nameEn": "Multistakeholder approaches",
     "keywordsDe": [
-      "multistakeholder-ansätze"
+      "multistakeholder-ansätze",
+      "multistakeholderansätze"
     ],
     "keywordsEn": [
       "multistakeholder approaches"
@@ -4059,10 +4132,10 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "PFAS (Chemikalien)",
     "nameEn": "PFAS (chemicals)",
     "keywordsDe": [
-      "pfas (chemikalien)"
+      "pfas chemikalien"
     ],
     "keywordsEn": [
-      "pfas (chemicals)"
+      "pfas chemicals"
     ],
     "categories": [
       "t-10-food"
@@ -4102,10 +4175,11 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Phantom-Erholungen (Fischbestände)",
     "nameEn": "Phantom Recreations (Fish Stocks)",
     "keywordsDe": [
-      "phantom-erholungen (fischbestände)"
+      "phantom-erholungen fischbestände",
+      "phantomerholungen fischbestände"
     ],
     "keywordsEn": [
-      "phantom recreations (fish stocks)"
+      "phantom recreations fish stocks"
     ],
     "categories": [
       "t-10-food"
@@ -4116,10 +4190,15 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Plastik / Plastikfrei / Plastikverbrauch",
     "nameEn": "Plastic / plastic-free / plastic consumption",
     "keywordsDe": [
-      "plastik / plastikfrei / plastikverbrauch"
+      "plastik",
+      "plastikfrei",
+      "plastikverbrauch"
     ],
     "keywordsEn": [
-      "plastic / plastic-free / plastic consumption"
+      "plastic",
+      "plastic-free",
+      "plasticfree",
+      "plastic consumption"
     ],
     "categories": [
       "t-10-food"
@@ -4174,7 +4253,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "profit"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "profit"
+    ],
     "categories": [
       "t-10-food",
       "t-10-mobility"
@@ -4187,7 +4268,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "psyche"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "psyche"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -4211,10 +4294,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Rationierung/ Verteilung",
     "nameEn": "Rationing/distribution",
     "keywordsDe": [
-      "rationierung/ verteilung"
+      "rationierung",
+      "verteilung"
     ],
     "keywordsEn": [
-      "rationing/distribution"
+      "rationing",
+      "distribution"
     ],
     "categories": [
       "t-10-food"
@@ -4239,10 +4324,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Regionale Produkte/ Produktion",
     "nameEn": "Regional products/production",
     "keywordsDe": [
-      "regionale produkte/ produktion"
+      "regionale produkte",
+      "produktion"
     ],
     "keywordsEn": [
-      "regional products/production"
+      "regional products",
+      "production"
     ],
     "categories": [
       "t-10-food"
@@ -4295,9 +4382,13 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "S-Metolachlor",
     "nameEn": "S-Metolachlor",
     "keywordsDe": [
-      "s-metolachlor"
+      "s-metolachlor",
+      "smetolachlor"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "s-metolachlor",
+      "smetolachlor"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -4437,7 +4528,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "selbstversorger"
     ],
     "keywordsEn": [
-      "self-catering"
+      "self-catering",
+      "selfcatering"
     ],
     "categories": [
       "t-10-food"
@@ -4448,10 +4540,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Sensorik / Robotik",
     "nameEn": "Sensors / Robotics",
     "keywordsDe": [
-      "sensorik / robotik"
+      "sensorik",
+      "robotik"
     ],
     "keywordsEn": [
-      "sensors / robotics"
+      "sensors",
+      "robotics"
     ],
     "categories": [
       "t-10-food"
@@ -4563,7 +4657,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "stress"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "stress"
+    ],
     "categories": [
       "t-10-food",
       "t-10-mobility"
@@ -4672,28 +4768,18 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Transport",
     "nameEn": "Transportation",
     "keywordsDe": [
-      "transport"
+      "transport",
+      "transportmittel",
+      "transportart"
     ],
     "keywordsEn": [
-      "transportation"
+      "transportation",
+      "means of transport",
+      "type of transport"
     ],
     "categories": [
       "t-10-food",
       "t-10-mobility"
-    ]
-  },
-  {
-    "id": "transportmittel",
-    "nameDe": "Transportmittel",
-    "nameEn": "Means of transport",
-    "keywordsDe": [
-      "transportmittel"
-    ],
-    "keywordsEn": [
-      "means of transport"
-    ],
-    "categories": [
-      "t-10-food"
     ]
   },
   {
@@ -4715,10 +4801,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Treibhauseffekt/ Treibhausgase",
     "nameEn": "Greenhouse effect/greenhouse gases",
     "keywordsDe": [
-      "treibhauseffekt/ treibhausgase"
+      "treibhauseffekt",
+      "treibhausgase"
     ],
     "keywordsEn": [
-      "greenhouse effect/greenhouse gases"
+      "greenhouse effect",
+      "greenhouse gases"
     ],
     "categories": [
       "t-10-food"
@@ -4823,20 +4911,6 @@ export const TOPICS_LIST: TopicDefinition[] = [
     ]
   },
   {
-    "id": "umwelt-klima",
-    "nameDe": "Umwelt/ klima",
-    "nameEn": "Environment/climate",
-    "keywordsDe": [
-      "umwelt/ klima"
-    ],
-    "keywordsEn": [
-      "environment/climate"
-    ],
-    "categories": [
-      "t-10-food"
-    ]
-  },
-  {
     "id": "unbewusster-konsum",
     "nameDe": "unbewusster Konsum",
     "nameEn": "unconscious consumption",
@@ -4913,7 +4987,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "urban farming"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "urban farming"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -4925,7 +5001,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "vegan"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "vegan"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -5005,10 +5083,14 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Versalzung / Versäuerung der Boden/ Meer",
     "nameEn": "Salinization / acidification of the soil/sea",
     "keywordsDe": [
-      "versalzung / versäuerung der boden/ meer"
+      "versalzung",
+      "versäuerung der boden",
+      "meer"
     ],
     "keywordsEn": [
-      "salinization / acidification of the soil/sea"
+      "salinization",
+      "acidification of the soil",
+      "sea"
     ],
     "categories": [
       "t-10-food"
@@ -5049,7 +5131,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "vertical farming"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "vertical farming"
+    ],
     "categories": [
       "t-10-food"
     ]
@@ -5162,7 +5246,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "wasserintensive kulturen"
     ],
     "keywordsEn": [
-      "water-intensive cultures"
+      "water-intensive cultures",
+      "waterintensive cultures"
     ],
     "categories": [
       "t-10-food"
@@ -5233,35 +5318,6 @@ export const TOPICS_LIST: TopicDefinition[] = [
     ],
     "keywordsEn": [
       "disposable product"
-    ],
-    "categories": [
-      "t-10-food"
-    ]
-  },
-  {
-    "id": "wetter",
-    "nameDe": "Wetter",
-    "nameEn": "Weather",
-    "keywordsDe": [
-      "wetter"
-    ],
-    "keywordsEn": [
-      "weather"
-    ],
-    "categories": [
-      "t-10-food",
-      "t-10-mobility"
-    ]
-  },
-  {
-    "id": "wetterereignisse",
-    "nameDe": "Wetterereignisse",
-    "nameEn": "Weather events",
-    "keywordsDe": [
-      "wetterereignisse"
-    ],
-    "keywordsEn": [
-      "weather events"
     ],
     "categories": [
       "t-10-food"
@@ -5385,7 +5441,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "3D-Druck",
     "nameEn": "3D printing",
     "keywordsDe": [
-      "3d-druck"
+      "3d-druck",
+      "3ddruck"
     ],
     "keywordsEn": [
       "3d printing"
@@ -5429,7 +5486,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "airbnb"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "airbnb"
+    ],
     "categories": [
       "t-10-housing"
     ]
@@ -5554,7 +5613,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "autarkes leben"
     ],
     "keywordsEn": [
-      "self-sufficient life"
+      "self-sufficient life",
+      "selfsufficient life"
     ],
     "categories": [
       "t-10-housing"
@@ -5607,10 +5667,10 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Baustoffe(alternativ)",
     "nameEn": "Building materials (alternative)",
     "keywordsDe": [
-      "baustoffe(alternativ)"
+      "baustoffealternativ"
     ],
     "keywordsEn": [
-      "building materials (alternative)"
+      "building materials alternative"
     ],
     "categories": [
       "t-10-housing"
@@ -5694,7 +5754,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "biobasierte materialien"
     ],
     "keywordsEn": [
-      "bio-based materials"
+      "bio-based materials",
+      "biobased materials"
     ],
     "categories": [
       "t-10-housing"
@@ -5707,7 +5768,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "co2"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "co2"
+    ],
     "categories": [
       "t-10-housing"
     ]
@@ -5745,10 +5808,10 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Dämmung (künstlich und natürlich)",
     "nameEn": "Insulation (artificial and natural)",
     "keywordsDe": [
-      "dämmung (künstlich und natürlich)"
+      "dämmung künstlich und natürlich"
     ],
     "keywordsEn": [
-      "insulation (artificial and natural)"
+      "insulation artificial and natural"
     ],
     "categories": [
       "t-10-housing"
@@ -5955,10 +6018,11 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Felder, Acker",
     "nameEn": "Fields, fields",
     "keywordsDe": [
-      "felder, acker"
+      "felder",
+      "acker"
     ],
     "keywordsEn": [
-      "fields, fields"
+      "fields"
     ],
     "categories": [
       "t-10-housing"
@@ -6053,10 +6117,10 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Flächen(unbebaubar)",
     "nameEn": "Areas (undevelopable)",
     "keywordsDe": [
-      "flächen(unbebaubar)"
+      "flächenunbebaubar"
     ],
     "keywordsEn": [
-      "areas (undevelopable)"
+      "areas undevelopable"
     ],
     "categories": [
       "t-10-housing"
@@ -6106,10 +6170,10 @@ export const TOPICS_LIST: TopicDefinition[] = [
   },
   {
     "id": "frischluftschneissen",
-    "nameDe": "Frischluftschneißen",
+    "nameDe": "Frischluftschneisen",
     "nameEn": "Fresh air breeze",
     "keywordsDe": [
-      "frischluftschneißen"
+      "frischluftschneisen"
     ],
     "keywordsEn": [
       "fresh air breeze"
@@ -6165,7 +6229,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Grauwasser-Nutzung",
     "nameEn": "Gray water use",
     "keywordsDe": [
-      "grauwasser-nutzung"
+      "grauwasser-nutzung",
+      "grauwassernutzung"
     ],
     "keywordsEn": [
       "gray water use"
@@ -6249,10 +6314,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Hektik, Trubel",
     "nameEn": "Hectic, hustle and bustle",
     "keywordsDe": [
-      "hektik, trubel"
+      "hektik",
+      "trubel"
     ],
     "keywordsEn": [
-      "hectic, hustle and bustle"
+      "hectic",
+      "hustle and bustle"
     ],
     "categories": [
       "t-10-housing"
@@ -6321,7 +6388,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "hotel"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "hotel"
+    ],
     "categories": [
       "t-10-housing"
     ]
@@ -6402,7 +6471,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Kohlenstoff-Fussabdruck",
     "nameEn": "Carbon footprint",
     "keywordsDe": [
-      "kohlenstoff-fussabdruck"
+      "kohlenstoff-fussabdruck",
+      "kohlenstofffussabdruck"
     ],
     "keywordsEn": [
       "carbon footprint"
@@ -6530,7 +6600,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Leerstehende, renovierungsbedürftige Häuser",
     "nameEn": "Empty houses in need of renovation",
     "keywordsDe": [
-      "leerstehende, renovierungsbedürftige häuser"
+      "leerstehende",
+      "renovierungsbedürftige häuser"
     ],
     "keywordsEn": [
       "empty houses in need of renovation"
@@ -6645,20 +6716,23 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "material"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "material"
+    ],
     "categories": [
       "t-10-housing"
     ]
   },
   {
-    "id": "mehrgeneratoinenhaus",
-    "nameDe": "Mehrgeneratoinenhaus",
+    "id": "mehrgenerationenhaus",
+    "nameDe": "Mehrgenerationenhaus",
     "nameEn": "Multi-generation house",
     "keywordsDe": [
-      "mehrgeneratoinenhaus"
+      "mehrgenerationenhaus"
     ],
     "keywordsEn": [
-      "multi-generation house"
+      "multi-generation house",
+      "multigeneration house"
     ],
     "categories": [
       "t-10-housing"
@@ -6711,7 +6785,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Mikro- und Mini-Appartements",
     "nameEn": "Micro and mini apartments",
     "keywordsDe": [
-      "mikro- und mini-appartements"
+      "mikro- und mini-appartements",
+      "mikro und miniappartements"
     ],
     "keywordsEn": [
       "micro and mini apartments"
@@ -6725,10 +6800,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Mini-Hochhäuser",
     "nameEn": "Mini high-rise buildings",
     "keywordsDe": [
-      "mini-hochhäuser"
+      "mini-hochhäuser",
+      "minihochhäuser"
     ],
     "keywordsEn": [
-      "mini high-rise buildings"
+      "mini high-rise buildings",
+      "mini highrise buildings"
     ],
     "categories": [
       "t-10-housing"
@@ -6838,10 +6915,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Obergrenze ökologischen Schadens Person/Wohneinheit",
     "nameEn": "Upper limit of ecological damage per person/dwelling unit",
     "keywordsDe": [
-      "obergrenze ökologischen schadens person/wohneinheit"
+      "obergrenze ökologischen schadens person",
+      "wohneinheit"
     ],
     "keywordsEn": [
-      "upper limit of ecological damage per person/dwelling unit"
+      "upper limit of ecological damage per person",
+      "dwelling unit"
     ],
     "categories": [
       "t-10-housing"
@@ -6866,10 +6945,10 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "öffentlicher Nahverkehr (ÖPNV)",
     "nameEn": "public transport (public transport)",
     "keywordsDe": [
-      "öffentlicher nahverkehr (öpnv)"
+      "öffentlicher nahverkehr öpnv"
     ],
     "keywordsEn": [
-      "public transport (public transport)"
+      "public transport public transport"
     ],
     "categories": [
       "t-10-housing"
@@ -6926,7 +7005,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "pflanzenkläranlage"
     ],
     "keywordsEn": [
-      "plant-based sewage treatment plant"
+      "plant-based sewage treatment plant",
+      "plantbased sewage treatment plant"
     ],
     "categories": [
       "t-10-housing"
@@ -6968,7 +7048,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "platzsparende wohnideen"
     ],
     "keywordsEn": [
-      "space-saving living ideas"
+      "space-saving living ideas",
+      "spacesaving living ideas"
     ],
     "categories": [
       "t-10-housing"
@@ -7049,10 +7130,10 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Resourcen(fossil)",
     "nameEn": "resources (fossil)",
     "keywordsDe": [
-      "resourcen(fossil)"
+      "resourcenfossil"
     ],
     "keywordsEn": [
-      "resources (fossil)"
+      "resources fossil"
     ],
     "categories": [
       "t-10-housing"
@@ -7077,7 +7158,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Schnellverfahren \"Bau-Turbo\"",
     "nameEn": "Quick process “Construction Turbo”",
     "keywordsDe": [
-      "schnellverfahren \"bau-turbo\""
+      "schnellverfahren \"bau-turbo\"",
+      "schnellverfahren \"bauturbo\""
     ],
     "keywordsEn": [
       "quick process “construction turbo”"
@@ -7107,7 +7189,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "singles"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "singles"
+    ],
     "categories": [
       "t-10-housing"
     ]
@@ -7201,10 +7285,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Starkstromanschluss für E-Auto",
     "nameEn": "High-voltage connection for electric cars",
     "keywordsDe": [
-      "starkstromanschluss für e-auto"
+      "starkstromanschluss für e-auto",
+      "starkstromanschluss für eauto"
     ],
     "keywordsEn": [
-      "high-voltage connection for electric cars"
+      "high-voltage connection for electric cars",
+      "highvoltage connection for electric cars"
     ],
     "categories": [
       "t-10-housing"
@@ -7274,7 +7360,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "sugarcrete"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "sugarcrete"
+    ],
     "categories": [
       "t-10-housing"
     ]
@@ -7284,7 +7372,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Tageslicht-Nutzung",
     "nameEn": "Daylight use",
     "keywordsDe": [
-      "tageslicht-nutzung"
+      "tageslicht-nutzung",
+      "tageslichtnutzung"
     ],
     "keywordsEn": [
       "daylight use"
@@ -7341,10 +7430,10 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Transport (Bau)",
     "nameEn": "Transport (construction)",
     "keywordsDe": [
-      "transport (bau)"
+      "transport bau"
     ],
     "keywordsEn": [
-      "transport (construction)"
+      "transport construction"
     ],
     "categories": [
       "t-10-housing"
@@ -7355,10 +7444,10 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Traum vom (zu großem) Eigenheim",
     "nameEn": "Dream of owning a (too big) home",
     "keywordsDe": [
-      "traum vom (zu großem) eigenheim"
+      "traum vom zu großem eigenheim"
     ],
     "keywordsEn": [
-      "dream of owning a (too big) home"
+      "dream of owning a too big home"
     ],
     "categories": [
       "t-10-housing"
@@ -7442,7 +7531,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "wärmeabsorbierende oberfläche"
     ],
     "keywordsEn": [
-      "heat-absorbing surface"
+      "heat-absorbing surface",
+      "heatabsorbing surface"
     ],
     "categories": [
       "t-10-housing"
@@ -7456,7 +7546,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "wärmeabstrahlende schicht"
     ],
     "keywordsEn": [
-      "heat-radiating layer"
+      "heat-radiating layer",
+      "heatradiating layer"
     ],
     "categories": [
       "t-10-housing"
@@ -7488,7 +7579,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "wg"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "wg"
+    ],
     "categories": [
       "t-10-housing"
     ]
@@ -7529,7 +7622,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "wohlbefinden"
     ],
     "keywordsEn": [
-      "well-being"
+      "well-being",
+      "wellbeing"
     ],
     "categories": [
       "t-10-housing"
@@ -7692,12 +7786,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
   {
     "id": "alter",
     "nameDe": "Alter",
-    "nameEn": "Dude",
+    "nameEn": "Age",
     "keywordsDe": [
       "alter"
     ],
     "keywordsEn": [
-      "dude"
+      "age"
     ],
     "categories": [
       "t-10-mobility"
@@ -7708,10 +7802,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "alternative / erneuerbare Antriebsarten",
     "nameEn": "alternative/renewable drive types",
     "keywordsDe": [
-      "alternative / erneuerbare antriebsarten"
+      "alternative",
+      "erneuerbare antriebsarten"
     ],
     "keywordsEn": [
-      "alternative/renewable drive types"
+      "alternative",
+      "renewable drive types"
     ],
     "categories": [
       "t-10-mobility"
@@ -7766,7 +7862,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "app"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "app"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -7899,7 +7997,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "autogas"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "autogas"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -8095,7 +8195,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "diesel"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "diesel"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -8136,6 +8238,7 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "fahrrad",
       "radverkehr",
       "e-bike",
+      "ebike",
       "velo",
       "fahrräder",
       "radeln"
@@ -8144,6 +8247,7 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "bike",
       "bicycle",
       "e-bike",
+      "ebike",
       "bicycles",
       "bikes"
     ],
@@ -8156,9 +8260,13 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "E-Camper",
     "nameEn": "E-camper",
     "keywordsDe": [
-      "e-camper"
+      "e-camper",
+      "ecamper"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "e-camper",
+      "ecamper"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -8182,10 +8290,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "E-Flugzeug",
     "nameEn": "E-plane",
     "keywordsDe": [
-      "e-flugzeug"
+      "e-flugzeug",
+      "eflugzeug"
     ],
     "keywordsEn": [
-      "e-plane"
+      "e-plane",
+      "eplane"
     ],
     "categories": [
       "t-10-mobility"
@@ -8308,10 +8418,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "E-Scooter",
     "nameEn": "E-scooters",
     "keywordsDe": [
-      "e-scooter"
+      "e-scooter",
+      "escooter"
     ],
     "keywordsEn": [
-      "e-scooters"
+      "e-scooters",
+      "escooters"
     ],
     "categories": [
       "t-10-mobility"
@@ -8444,11 +8556,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     ]
   },
   {
-    "id": "fluggesellsachaft",
-    "nameDe": "Fluggesellsachaft",
+    "id": "fluggesellschaft",
+    "nameDe": "Fluggesellschaft",
     "nameEn": "airline",
     "keywordsDe": [
-      "fluggesellsachaft"
+      "fluggesellschaft",
+      "airline"
     ],
     "keywordsEn": [
       "airline"
@@ -8509,18 +8622,6 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsEn": [
       "liquefied gas"
     ],
-    "categories": [
-      "t-10-mobility"
-    ]
-  },
-  {
-    "id": "food",
-    "nameDe": "Food",
-    "nameEn": "Food",
-    "keywordsDe": [
-      "food"
-    ],
-    "keywordsEn": [],
     "categories": [
       "t-10-mobility"
     ]
@@ -8616,7 +8717,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "gas"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "gas"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -8866,7 +8969,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "hobby"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "hobby"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -8881,18 +8986,6 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsEn": [
       "home office"
     ],
-    "categories": [
-      "t-10-mobility"
-    ]
-  },
-  {
-    "id": "housing",
-    "nameDe": "Housing",
-    "nameEn": "Housing",
-    "keywordsDe": [
-      "housing"
-    ],
-    "keywordsEn": [],
     "categories": [
       "t-10-mobility"
     ]
@@ -8918,7 +9011,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "hybrid"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "hybrid"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -8930,7 +9025,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "hyperloop"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "hyperloop"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -8942,7 +9039,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "image"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "image"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -9137,7 +9236,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "kurzstreckenflüge"
     ],
     "keywordsEn": [
-      "short-haul flights"
+      "short-haul flights",
+      "shorthaul flights"
     ],
     "categories": [
       "t-10-mobility"
@@ -9220,7 +9320,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "lpg"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "lpg"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -9358,7 +9460,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "moped"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "moped"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -9584,7 +9688,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "pte"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "pte"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -9765,7 +9871,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "schnellladende batterien"
     ],
     "keywordsEn": [
-      "fast-charging batteries"
+      "fast-charging batteries",
+      "fastcharging batteries"
     ],
     "categories": [
       "t-10-mobility"
@@ -9834,7 +9941,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "skateboard"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "skateboard"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -9846,7 +9955,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "social media"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "social media"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -10012,7 +10123,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "suv"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "suv"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -10024,7 +10137,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "taxi"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "taxi"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -10086,20 +10201,6 @@ export const TOPICS_LIST: TopicDefinition[] = [
     ]
   },
   {
-    "id": "transportart-transportmittel",
-    "nameDe": "Transportart / Transportmittel",
-    "nameEn": "Type of transport/means of transport",
-    "keywordsDe": [
-      "transportart / transportmittel"
-    ],
-    "keywordsEn": [
-      "type of transport/means of transport"
-    ],
-    "categories": [
-      "t-10-mobility"
-    ]
-  },
-  {
     "id": "transportschiffsegel",
     "nameDe": "Transportschiffsegel",
     "nameEn": "Transport ship sails",
@@ -10120,7 +10221,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "trucking"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "trucking"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -10132,7 +10235,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "trends"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "trends"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -10156,7 +10261,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "U-Bahn",
     "nameEn": "Subway",
     "keywordsDe": [
-      "u-bahn"
+      "u-bahn",
+      "ubahn"
     ],
     "keywordsEn": [
       "subway"
@@ -10170,7 +10276,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "U-Boot",
     "nameEn": "Submarine",
     "keywordsDe": [
-      "u-boot"
+      "u-boot",
+      "uboot"
     ],
     "keywordsEn": [
       "submarine"
@@ -10382,7 +10489,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "videos"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "videos"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -10434,10 +10543,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Warentransport/Lastentransport",
     "nameEn": "Transport of goods/loads",
     "keywordsDe": [
-      "warentransport/lastentransport"
+      "warentransport",
+      "lastentransport"
     ],
     "keywordsEn": [
-      "transport of goods/loads"
+      "transport of goods",
+      "loads"
     ],
     "categories": [
       "t-10-mobility"
@@ -10506,7 +10617,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "website"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "website"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -10546,7 +10659,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsDe": [
       "wind"
     ],
-    "keywordsEn": [],
+    "keywordsEn": [
+      "wind"
+    ],
     "categories": [
       "t-10-mobility"
     ]
@@ -10624,40 +10739,13 @@ export const TOPICS_LIST: TopicDefinition[] = [
   {
     "id": "zoll",
     "nameDe": "Zoll",
-    "nameEn": "inches",
+    "nameEn": "Customs",
     "keywordsDe": [
       "zoll"
     ],
     "keywordsEn": [
-      "inches"
-    ],
-    "categories": [
-      "t-10-mobility"
-    ]
-  },
-  {
-    "id": "zug",
-    "nameDe": "Zug",
-    "nameEn": "train",
-    "keywordsDe": [
-      "zug",
-      "bahn",
-      "bahnen",
-      "schienenverkehr",
-      "tram",
-      "u-bahn",
-      "s-bahn",
-      "straßenbahn"
-    ],
-    "keywordsEn": [
-      "train",
-      "trains",
-      "rail",
-      "railway",
-      "railways",
-      "tram",
-      "subway",
-      "metro"
+      "customs",
+      "customs duty"
     ],
     "categories": [
       "t-10-mobility"
