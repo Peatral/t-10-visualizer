@@ -5,7 +5,7 @@ import { db } from './index.js'
 import { articles, topics, topicKeywords, articleTopicMatches, categories, trendmapCache, topicsToCategories } from './schema.js'
 import { calculateTrendmapGrid } from '../../utils/trendmapCalc.js'
 import { getYearHalf } from '../../utils/matching.js'
-import { SYNONYMS_DICT, CUSTOM_TOPIC_GROUPS } from './topicData.js'
+import { TOPICS_LIST } from './topicData.js'
 
 type NewArticle = typeof articles.$inferInsert
 
@@ -55,7 +55,6 @@ async function seed() {
 
   const publicDir = path.resolve(process.cwd(), 'public')
   const articlesJsonPath = path.join(publicDir, 'articles.json')
-  const trendmapJsonPath = path.join(publicDir, 'trendmap.json')
   const articlesDir = path.join(publicDir, 'articles')
 
   // Create tables and FTS5 virtual table
@@ -184,7 +183,7 @@ async function seed() {
     console.log(`Seeded ${categoryEntries.length} unique categories.`)
   }
 
-  // 2. Seed translations & themenwolke from trendmap.json
+  // 2. Seed topics from TOPICS_LIST
   const topicsMap = new Map<string, { 
     id: string, 
     nameDe: string, 
@@ -194,163 +193,62 @@ async function seed() {
     keywordsEn: Set<string> 
   }>()
 
-  function hash(str: string) {
-    let h = 0
-    for (let i = 0; i < str.length; i++) {
-      h = (h << 5) - h + str.charCodeAt(i)
-      h |= 0
-    }
-    return h
+  for (const topic of TOPICS_LIST) {
+    topicsMap.set(topic.id, {
+      id: topic.id,
+      nameDe: topic.nameDe,
+      nameEn: topic.nameEn,
+      categories: new Set(topic.categories),
+      keywordsDe: new Set(topic.keywordsDe),
+      keywordsEn: new Set(topic.keywordsEn)
+    })
   }
 
-  function resolveCategoryId(catName: string): string {
-    const c = catName.toLowerCase()
-    if (c.includes("energy")) return "t-10-energy"
-    if (c.includes("food")) return "t-10-food"
-    if (c.includes("housing")) return "t-10-housing"
-    if (c.includes("mobility")) return "t-10-mobility"
-    return getSlug(catName)
-  }
+  const topicsEntries: any[] = []
+  const keywordsEntries: any[] = []
+  const topicsToCategoriesEntries: any[] = []
 
-  if (fs.existsSync(trendmapJsonPath)) {
-    console.log('Parsing translations and themenwolke to build topics...')
-    const trendmapData = JSON.parse(fs.readFileSync(trendmapJsonPath, 'utf8'))
-
-    Object.entries(trendmapData.themenwolkeWords || {}).forEach(([cat, words]) => {
-      if (!Array.isArray(words)) return
-
-      words.forEach(word => {
-        const w = String(word).trim()
-        if (!w) return
-
-        let topicId = ""
-        let nameDe = ""
-        let nameEn = ""
-        let kwsDe = new Set<string>()
-        let kwsEn = new Set<string>()
-
-        let matchedGroup = null
-        const checkWordLower = w.toLowerCase()
-        const transLower = (trendmapData.translations[w] || "").toLowerCase()
-
-        for (const group of CUSTOM_TOPIC_GROUPS) {
-          if (group.keywordsDe.includes(checkWordLower) || group.keywordsEn.includes(checkWordLower) || (transLower && (group.keywordsDe.includes(transLower) || group.keywordsEn.includes(transLower)))) {
-            matchedGroup = group
-            break
-          }
-        }
-
-        const resolvedCatId = resolveCategoryId(cat)
-        let topicCats = new Set<string>()
-
-        if (matchedGroup) {
-          topicId = matchedGroup.id
-          nameDe = matchedGroup.nameDe
-          nameEn = matchedGroup.nameEn
-          matchedGroup.keywordsDe.forEach(k => kwsDe.add(k))
-          matchedGroup.keywordsEn.forEach(k => kwsEn.add(k))
-
-          // Link custom topics to multiple relevant categories from the data file
-          matchedGroup.categories.forEach(c => topicCats.add(c))
-        } else {
-          // Default topic
-          topicId = w.toLowerCase()
-            .replace(/ä/g, "ae")
-            .replace(/ö/g, "oe")
-            .replace(/ü/g, "ue")
-            .replace(/ß/g, "ss")
-            .replace(/[^a-z0-9]+/g, "-")
-            .replace(/^-+|-+$/g, "")
-          
-          if (!topicId) {
-            topicId = `topic-${Math.abs(hash(w))}`
-          }
-
-          nameDe = w
-          nameEn = trendmapData.translations[w] || w
-          
-          kwsDe.add(w.toLowerCase())
-          const trans = trendmapData.translations[w]
-          if (trans && trans.toLowerCase() !== w.toLowerCase()) {
-            kwsEn.add(trans.toLowerCase())
-          }
-
-          // Merge any other synonyms if matching known terms in SYNONYMS_DICT
-          const wordsToCheck = [checkWordLower, transLower].filter(Boolean)
-          wordsToCheck.forEach(term => {
-            if (SYNONYMS_DICT[term]) {
-              SYNONYMS_DICT[term].de.forEach(syn => kwsDe.add(syn))
-              SYNONYMS_DICT[term].en.forEach(syn => kwsEn.add(syn))
-            }
-          })
-
-          topicCats = new Set([resolvedCatId])
-        }
-
-        const existing = topicsMap.get(topicId)
-        if (existing) {
-          kwsDe.forEach(k => existing.keywordsDe.add(k))
-          kwsEn.forEach(k => existing.keywordsEn.add(k))
-          topicCats.forEach(c => existing.categories.add(c))
-        } else {
-          topicsMap.set(topicId, {
-            id: topicId,
-            nameDe,
-            nameEn,
-            categories: topicCats,
-            keywordsDe: kwsDe,
-            keywordsEn: kwsEn
-          })
-        }
-      })
+  for (const topic of TOPICS_LIST) {
+    topicsEntries.push({
+      id: topic.id,
+      nameDe: topic.nameDe,
+      nameEn: topic.nameEn,
     })
 
-    const topicsEntries: any[] = []
-    const keywordsEntries: any[] = []
-    const topicsToCategoriesEntries: any[] = []
-
-    for (const topic of topicsMap.values()) {
-      topicsEntries.push({
-        id: topic.id,
-        nameDe: topic.nameDe,
-        nameEn: topic.nameEn,
+    for (const kw of topic.keywordsDe) {
+      keywordsEntries.push({
+        topicId: topic.id,
+        keyword: kw,
+        language: 'de',
       })
-
-      for (const kw of topic.keywordsDe) {
-        keywordsEntries.push({
-          topicId: topic.id,
-          keyword: kw,
-          language: 'de',
-        })
-      }
-
-      for (const kw of topic.keywordsEn) {
-        keywordsEntries.push({
-          topicId: topic.id,
-          keyword: kw,
-          language: 'en',
-        })
-      }
-
-      for (const catId of topic.categories) {
-        topicsToCategoriesEntries.push({
-          topicId: topic.id,
-          categoryId: catId,
-        })
-      }
     }
 
-    if (topicsEntries.length > 0) {
-      await db.insert(topics).values(topicsEntries).run()
+    for (const kw of topic.keywordsEn) {
+      keywordsEntries.push({
+        topicId: topic.id,
+        keyword: kw,
+        language: 'en',
+      })
     }
-    if (keywordsEntries.length > 0) {
-      await db.insert(topicKeywords).values(keywordsEntries).run()
+
+    for (const catId of topic.categories) {
+      topicsToCategoriesEntries.push({
+        topicId: topic.id,
+        categoryId: catId,
+      })
     }
-    if (topicsToCategoriesEntries.length > 0) {
-      await db.insert(topicsToCategories).values(topicsToCategoriesEntries).run()
-    }
-    console.log(`Seeded ${topicsEntries.length} topics, ${keywordsEntries.length} topic keywords, and ${topicsToCategoriesEntries.length} topic-category links.`)
   }
+
+  if (topicsEntries.length > 0) {
+    await db.insert(topics).values(topicsEntries).run()
+  }
+  if (keywordsEntries.length > 0) {
+    await db.insert(topicKeywords).values(keywordsEntries).run()
+  }
+  if (topicsToCategoriesEntries.length > 0) {
+    await db.insert(topicsToCategories).values(topicsToCategoriesEntries).run()
+  }
+  console.log(`Seeded ${topicsEntries.length} topics, ${keywordsEntries.length} topic keywords, and ${topicsToCategoriesEntries.length} topic-category links.`)
 
   // 3. Seed articles
   if (rawArticles.length > 0) {
