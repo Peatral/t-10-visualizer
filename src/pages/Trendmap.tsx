@@ -36,15 +36,30 @@ export const Trendmap: React.FC = () => {
     enabled: !!selectedCat,
   })
 
+  // Construct a lookup map of articles in the category for fast drill-down resolution
+  const articleLookup = useMemo(() => {
+    const map = new Map<string, Article>()
+    if (calcResult?.categoryArticles) {
+      calcResult.categoryArticles.forEach(art => {
+        map.set(art.id, art as Article)
+      })
+    }
+    return map
+  }, [calcResult])
+
   const handleCellClick = (displayKey: string, displayLabel: string, bucket: string) => {
     if (!calcResult) return
-    const matches = (calcResult.cellMatches[displayKey] && calcResult.cellMatches[displayKey][bucket]) || []
-    if (matches.length === 0) return
+    const matchIds = (calcResult.cellMatches[displayKey] && calcResult.cellMatches[displayKey][bucket]) || []
+    if (matchIds.length === 0) return
+    
+    const matches = matchIds
+      .map(id => articleLookup.get(id))
+      .filter((a): a is Article => !!a)
     
     // Sort matching list by date descending (newest first)
     const sorted = [...matches].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     
-    setMatchingArticles(sorted as Article[])
+    setMatchingArticles(sorted)
     setSelectedArticle(sorted[0] || null)
     setPanelTitle(`${t('articlesCount', { count: sorted.length })}: "${displayLabel}" [${bucket}]`)
     setPanelOpen(true)
@@ -55,8 +70,11 @@ export const Trendmap: React.FC = () => {
     // Gather all matching articles in this row across all time buckets
     const matches: Article[] = []
     const bucketRecords = calcResult.cellMatches[displayKey] || {}
-    Object.values(bucketRecords).forEach(articles => {
-      matches.push(...(articles as Article[]))
+    Object.values(bucketRecords).forEach(matchIds => {
+      matchIds.forEach(id => {
+        const art = articleLookup.get(id)
+        if (art) matches.push(art)
+      })
     })
     
     if (matches.length === 0) return

@@ -4,5 +4,5 @@ import * as schema from './schema.js'
 import path from 'path'
 
 const dbPath = path.resolve(process.cwd(), 'sqlite.db')
-const sqlite = new Database(dbPath)
+const sqlite = new Database(dbPath, { readonly: !!process.env.VERCEL })
 export const db = drizzle(sqlite, { schema })

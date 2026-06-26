@@ -1,5 +1,5 @@
-import { sqliteTable, text, index, integer, sqliteView } from 'drizzle-orm/sqlite-core'
-import { relations, sql } from 'drizzle-orm'
+import { sqliteTable, text, index, integer } from 'drizzle-orm/sqlite-core'
+import { relations } from 'drizzle-orm'
 
 export const categories = sqliteTable('categories', {
   id: text('id').primaryKey(),
@@ -34,15 +34,25 @@ export const articlesRelations = relations(articles, ({ one }) => ({
 export const themenwolke = sqliteTable('themenwolke', {
   category: text('category').notNull(),
   word: text('word').notNull(),
-})
+}, (table) => [
+  index('idx_themenwolke_category').on(table.category),
+])
 
 export const translations = sqliteTable('translations', {
   key: text('key').primaryKey(),
   value: text('value').notNull(),
 })
 
-// Native Drizzle view declaration using SQL instr operations
-export const articleKeywordMatches = sqliteView('article_keyword_matches', {
+export const trendmapCache = sqliteTable('trendmap_cache', {
+  category: text('category').notNull(),
+  language: text('language').notNull(),
+  resultJson: text('result_json').notNull(),
+}, (table) => [
+  index('idx_cache_lookup').on(table.category, table.language),
+])
+
+// Relational matching Table populated at seed time for sub-millisecond query speed
+export const articleKeywordMatches = sqliteTable('article_keyword_matches', {
   articleId: text('article_id').notNull(),
   category: text('category').notNull(),
   date: text('date').notNull(),
@@ -50,18 +60,6 @@ export const articleKeywordMatches = sqliteView('article_keyword_matches', {
   sortVal: integer('sort_val').notNull(),
   germanWord: text('german_word').notNull(),
   englishWord: text('english_word').notNull(),
-}).as(sql`
-  SELECT
-    a.id AS article_id,
-    a.category AS category,
-    a.date AS date,
-    (substr(a.date, 1, 4) || '-' || (CASE WHEN substr(a.date, 6, 2) < '07' THEN 'H1' ELSE 'H2' END)) AS bucket,
-    (cast(substr(a.date, 1, 4) as integer) * 2 + (CASE WHEN substr(a.date, 6, 2) < '07' THEN 0 ELSE 1 END)) AS sort_val,
-    t.word AS german_word,
-    coalesce(tr.value, t.word) AS english_word
-  FROM articles a
-  JOIN themenwolke t ON (a.category LIKE '%' || t.category || '%')
-  LEFT JOIN translations tr ON t.word = tr.key
-  WHERE instr(lower(a.title || ' ' || a.description || ' ' || a.body_text), lower(t.word)) > 0
-     OR (tr.value IS NOT NULL AND instr(lower(a.title || ' ' || a.description || ' ' || a.body_text), lower(tr.value)) > 0)
-`)
+}, (table) => [
+  index('idx_matches_category').on(table.category),
+])

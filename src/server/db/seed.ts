@@ -2,7 +2,9 @@ import fs from 'fs'
 import path from 'path'
 import Database from 'better-sqlite3'
 import { db } from './index.js'
-import { articles, themenwolke, translations, categories } from './schema.js'
+import { articles, themenwolke, translations, categories, trendmapCache } from './schema.js'
+import { calculateTrendmapGrid } from '../../utils/trendmapCalc.js'
+import { eq, and } from 'drizzle-orm'
 
 type NewArticle = typeof articles.$inferInsert
 
@@ -37,7 +39,8 @@ async function seed() {
   
   console.log('Creating tables, triggers, and FTS5 virtual tables...')
   sqlite.exec(`
-    DROP VIEW IF EXISTS article_keyword_matches;
+    DROP TABLE IF EXISTS trendmap_cache;
+    DROP TABLE IF EXISTS article_keyword_matches;
     DROP TRIGGER IF EXISTS articles_ai;
     DROP TRIGGER IF EXISTS articles_ad;
     DROP TRIGGER IF EXISTS articles_au;
@@ -73,9 +76,28 @@ async function seed() {
       key TEXT PRIMARY KEY,
       value TEXT NOT NULL
     );
+
+    CREATE TABLE trendmap_cache (
+      category TEXT NOT NULL,
+      language TEXT NOT NULL,
+      result_json TEXT NOT NULL
+    );
+
+    CREATE TABLE article_keyword_matches (
+      article_id TEXT NOT NULL,
+      category TEXT NOT NULL,
+      date TEXT NOT NULL,
+      bucket TEXT NOT NULL,
+      sort_val INTEGER NOT NULL,
+      german_word TEXT NOT NULL,
+      english_word TEXT NOT NULL
+    );
     
     CREATE INDEX idx_category_id ON articles(category_id);
     CREATE INDEX idx_date ON articles(date);
+    CREATE INDEX idx_matches_category ON article_keyword_matches(category);
+    CREATE INDEX idx_themenwolke_category ON themenwolke(category);
+    CREATE INDEX idx_cache_lookup ON trendmap_cache(category, language);
 
     -- FTS5 Virtual Table for full-text search
     CREATE VIRTUAL TABLE articles_fts USING fts5(
@@ -100,24 +122,6 @@ async function seed() {
       INSERT INTO articles_fts(id, title, description, body_text)
       VALUES (new.id, new.title, new.description, new.body_text);
     END;
-
-    -- Dynamic keyword matching View using optimized instr operations
-    CREATE VIEW article_keyword_matches AS
-    SELECT
-      a.id AS article_id,
-      a.category AS category,
-      a.date AS date,
-      (substr(a.date, 1, 4) || '-' || (CASE WHEN substr(a.date, 6, 2) < '07' THEN 'H1' ELSE 'H2' END)) AS bucket,
-      (cast(substr(a.date, 1, 4) as integer) * 2 + (CASE WHEN substr(a.date, 6, 2) < '07' THEN 0 ELSE 1 END)) AS sort_val,
-      t.word AS german_word,
-      coalesce(tr.value, t.word) AS english_word
-    FROM articles a
-    JOIN themenwolke t ON (a.category LIKE '%' || t.category || '%')
-    LEFT JOIN translations tr ON t.word = tr.key
-    WHERE (
-      instr(lower(a.title || ' ' || a.description || ' ' || a.body_text), lower(t.word)) > 0
-      OR (tr.value IS NOT NULL AND instr(lower(a.title || ' ' || a.description || ' ' || a.body_text), lower(tr.value)) > 0)
-    );
   `)
 
   // 1. Seed translations & themenwolke from trendmap.json
@@ -211,11 +215,52 @@ async function seed() {
       count += currentBatch.length
     }
 
-    console.log(`Seeded ${count} articles and updated FTS5 search index successfully.`)
-  }
+    console.log('Populating article_keyword_matches table using SQL join matching...')
+    sqlite.exec(`
+      INSERT INTO article_keyword_matches (article_id, category, date, bucket, sort_val, german_word, english_word)
+      SELECT
+        a.id AS article_id,
+        a.category AS category,
+        a.date AS date,
+        (substr(a.date, 1, 4) || '-' || (CASE WHEN substr(a.date, 6, 2) < '07' THEN 'H1' ELSE 'H2' END)) AS bucket,
+        (cast(substr(a.date, 1, 4) as integer) * 2 + (CASE WHEN substr(a.date, 6, 2) < '07' THEN 0 ELSE 1 END)) AS sort_val,
+        t.word AS german_word,
+        coalesce(tr.value, t.word) AS english_word
+      FROM articles a
+      JOIN themenwolke t ON (a.category LIKE '%' || t.category || '%')
+      LEFT JOIN translations tr ON t.word = tr.key
+      WHERE instr(lower(a.title || ' ' || a.description || ' ' || a.body_text), lower(t.word)) > 0
+         OR (tr.value IS NOT NULL AND instr(lower(a.title || ' ' || a.description || ' ' || a.body_text), lower(tr.value)) > 0)
+    `)
+    console.log('Populated article_keyword_matches successfully.')
 
-  sqlite.close()
-  console.log('Seeding complete.')
+    console.log('Pre-populating trendmapCache table for all categories and languages...')
+    const languages: Array<'en' | 'de'> = ['en', 'de']
+    for (const cat of uniqueCategoryNames) {
+      for (const lang of languages) {
+        console.log(`Precomputing trendmap grid cache for: "${cat}" [${lang}]...`)
+        try {
+          const result = await calculateTrendmapGrid(db, cat, lang)
+          await db.delete(trendmapCache)
+            .where(and(eq(trendmapCache.category, cat), eq(trendmapCache.language, lang)))
+            .run()
+          await db.insert(trendmapCache)
+            .values({
+              category: cat,
+              language: lang,
+              resultJson: JSON.stringify(result),
+            })
+            .run()
+        } catch (cacheErr) {
+          console.error(`Failed to precompute cache for "${cat}" [${lang}]:`, cacheErr)
+        }
+      }
+    }
+    console.log('Trendmap cache pre-population complete.')
+
+    sqlite.close()
+    console.log('Seeding complete.')
+  }
 }
 
 seed().catch(err => {
