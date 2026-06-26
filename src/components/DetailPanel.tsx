@@ -344,8 +344,27 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
                     </div>
                   ) : (() => {
                     const rawText = detailData?.bodyText || '';
+                    const isGolemCookieWall = rawText.includes('Besuchen Sie Golem.de wie gewohnt mit Werbung und Tracking') || rawText.includes('Golem pur ab 3 Euro');
                     const isJapanTimesExpired = rawText.includes('The article you have been looking for has expired') || rawText.includes('newswire licensing terms');
                     const isKyodoExpired = rawText.includes('Sorry, this article was first published more than three months ago');
+
+                    if (isGolemCookieWall) {
+                      return (
+                        <div className="bg-[#2a1b1b] border border-[#5c2d2d] p-4 text-sm text-gray-300 font-sans">
+                          <p className="font-semibold text-amber-400 mb-2">Content Scrape Notice:</p>
+                          <p className="mb-3">The full text of this Golem.de article could not be scraped due to cookie banner / paywall protections. Please read the full article directly on the source website:</p>
+                          <a 
+                            href={selectedArticle.link} 
+                            target="_blank" 
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#3f51b5] text-white hover:bg-[#4d62cd] font-medium text-xs transition-colors"
+                          >
+                            Open on Golem.de <ArrowUpRight className="w-3.5 h-3.5" />
+                          </a>
+                        </div>
+                      )
+                    }
+
                     if (isJapanTimesExpired) {
                       return (
                         <div className="bg-[#2a1b1b] border border-[#5c2d2d] p-4 text-sm text-gray-300 font-sans">
