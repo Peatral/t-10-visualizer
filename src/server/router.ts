@@ -27,6 +27,7 @@ export interface ArticleMetadata {
 
 export interface TrendmapCalculationResult {
   labelToDisplay: Record<string, string>
+  topicKeywords: Record<string, string[]>
   categoryArticles: Array<ArticleMetadata & { bucket: string; sortVal: number }>
   croppedTimeScale: Array<{ bucket: string; sortVal: number; isGap?: boolean; gapStart?: string; gapEnd?: string; spanCount?: number }>
   topDisplayKeys: string[]

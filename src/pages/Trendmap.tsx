@@ -110,14 +110,6 @@ export const Trendmap: React.FC = () => {
     setPanelOpen(true)
   }
 
-  // Convert localized display keys back to display labels for table headers
-  const gridTranslations: Record<string, string> = {}
-  if (calcResult) {
-    calcResult.topDisplayKeys.forEach(key => {
-      gridTranslations[key] = calcResult.labelToDisplay[key] || key
-    })
-  }
-
   const showLoading = isCalcLoading || !calcResult
 
   return (
@@ -196,7 +188,7 @@ export const Trendmap: React.FC = () => {
             grid={calcResult.grid} 
             displayGrid={viewMode === 'relative' ? calcResult.relativeGrid : undefined}
             weightGrid={viewMode === 'relative' ? calcResult.relativeWeights : undefined}
-            translations={gridTranslations} 
+            topicKeywords={calcResult.topicKeywords}
             maxCellCount={calcResult.maxCellCount} 
             maxDisplayWeight={viewMode === 'relative' ? calcResult.maxRelativeWeight : undefined}
             handleCellClick={handleCellClick} 

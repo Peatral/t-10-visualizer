@@ -24,24 +24,42 @@ export const articles = sqliteTable('articles', {
   index('idx_date').on(table.date),
 ])
 
-export const articlesRelations = relations(articles, ({ one }) => ({
+export const articlesRelations = relations(articles, ({ one, many }) => ({
   categoryRel: one(categories, {
     fields: [articles.categoryId],
     references: [categories.id],
   }),
+  topicMatches: many(articleTopicMatches),
 }))
 
-export const themenwolke = sqliteTable('themenwolke', {
+export const topics = sqliteTable('topics', {
+  id: text('id').primaryKey(),
   category: text('category').notNull(),
-  word: text('word').notNull(),
+  nameDe: text('name_de').notNull(),
+  nameEn: text('name_en').notNull(),
 }, (table) => [
-  index('idx_themenwolke_category').on(table.category),
+  index('idx_topics_category').on(table.category),
 ])
 
-export const translations = sqliteTable('translations', {
-  key: text('key').primaryKey(),
-  value: text('value').notNull(),
-})
+export const topicsRelations = relations(topics, ({ many }) => ({
+  articleMatches: many(articleTopicMatches),
+  keywords: many(topicKeywords),
+}))
+
+export const topicKeywords = sqliteTable('topic_keywords', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  topicId: text('topic_id').notNull().references(() => topics.id),
+  keyword: text('keyword').notNull(),
+}, (table) => [
+  index('idx_keywords_topic').on(table.topicId),
+])
+
+export const topicKeywordsRelations = relations(topicKeywords, ({ one }) => ({
+  topic: one(topics, {
+    fields: [topicKeywords.topicId],
+    references: [topics.id],
+  }),
+}))
 
 export const trendmapCache = sqliteTable('trendmap_cache', {
   category: text('category').notNull(),
@@ -51,15 +69,25 @@ export const trendmapCache = sqliteTable('trendmap_cache', {
   index('idx_cache_lookup').on(table.category, table.language),
 ])
 
-// Relational matching Table populated at seed time for sub-millisecond query speed
-export const articleKeywordMatches = sqliteTable('article_keyword_matches', {
-  articleId: text('article_id').notNull(),
+export const articleTopicMatches = sqliteTable('article_topic_matches', {
+  articleId: text('article_id').notNull().references(() => articles.id),
   category: text('category').notNull(),
   date: text('date').notNull(),
   bucket: text('bucket').notNull(),
   sortVal: integer('sort_val').notNull(),
-  germanWord: text('german_word').notNull(),
-  englishWord: text('english_word').notNull(),
+  topicId: text('topic_id').notNull().references(() => topics.id),
 }, (table) => [
   index('idx_matches_category').on(table.category),
+  index('idx_matches_topic').on(table.topicId),
 ])
+
+export const articleTopicMatchesRelations = relations(articleTopicMatches, ({ one }) => ({
+  article: one(articles, {
+    fields: [articleTopicMatches.articleId],
+    references: [articles.id],
+  }),
+  topic: one(topics, {
+    fields: [articleTopicMatches.topicId],
+    references: [topics.id],
+  }),
+}))

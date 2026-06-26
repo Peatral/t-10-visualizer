@@ -7,7 +7,7 @@ interface HeatmapTableProps {
   grid: Record<string, Record<string, number>>
   displayGrid?: Record<string, Record<string, string | number>> // optional formatted string or relative fraction
   weightGrid?: Record<string, Record<string, number>> // raw weights for relative mode color density styling
-  translations: Record<string, string>
+  topicKeywords?: Record<string, string[]>
   maxCellCount: number
   maxDisplayWeight?: number // max value for relative density styling
   handleCellClick: (word: string, displayLabel: string, bucket: string) => void
@@ -21,14 +21,14 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
   grid,
   displayGrid,
   weightGrid,
-  translations,
+  topicKeywords,
   maxCellCount,
   maxDisplayWeight,
   handleCellClick,
   handleRowClick,
   handleColumnClick
 }) => {
-  const { t, language } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <div className="flex-grow overflow-auto bg-[#1e1e1e]">
@@ -83,8 +83,11 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
         </thead>
         <tbody>
           {topWords.map(word => {
-            const translation = translations[word] || ""
-            const displayLabel = language === 'en' && translation ? translation : word
+            const keywords = topicKeywords?.[word] || []
+            const firstKeyword = keywords[0] || word
+            const displayLabel = firstKeyword.length <= 3 
+              ? firstKeyword.toUpperCase() 
+              : (firstKeyword.charAt(0).toUpperCase() + firstKeyword.slice(1))
 
             let wordTotal = 0
             croppedTimeScale.forEach(col => {
@@ -92,6 +95,8 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
                 wordTotal += grid[word]?.[col.bucket] || 0
               }
             })
+
+            const keywordsTooltip = keywords.length > 0 ? `Keywords: ${keywords.join(', ')}` : ''
 
             return (
               <tr key={word} className="hover:bg-[#252525]/30">
@@ -102,7 +107,7 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
                       ? 'bg-[#1a1a1a] text-[#03a9f4] cursor-pointer hover:bg-[#252525] hover:text-cyan-400' 
                       : 'bg-[#151515] text-gray-500'
                   }`}
-                  title={wordTotal > 0 ? `Show all ${wordTotal} articles matching '${displayLabel}'` : undefined}
+                  title={`${keywordsTooltip}${wordTotal > 0 ? ` | Click to show all ${wordTotal} articles` : ''}`}
                 >
                   {displayLabel}
                 </td>

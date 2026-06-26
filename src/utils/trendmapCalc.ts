@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm'
-import { articles, themenwolke, translations, articleKeywordMatches } from '../server/db/schema.js'
+import { articles, topics, articleTopicMatches, topicKeywords } from '../server/db/schema.js'
 import { getYearHalf } from './matching.js'
 
 export interface ArticleMetadata {
@@ -13,6 +13,7 @@ export interface ArticleMetadata {
 
 export interface TrendmapCalculationResult {
   labelToDisplay: Record<string, string>
+  topicKeywords: Record<string, string[]>
   categoryArticles: Array<ArticleMetadata & { bucket: string; sortVal: number }>
   croppedTimeScale: Array<{ bucket: string; sortVal: number; isGap?: boolean; gapStart?: string; gapEnd?: string; spanCount?: number }>
   topDisplayKeys: string[]
@@ -25,48 +26,52 @@ export interface TrendmapCalculationResult {
 }
 
 export async function calculateTrendmapGrid(db: any, category: string, language: 'en' | 'de'): Promise<TrendmapCalculationResult> {
-  // 1. Fetch vocabulary candidates for this category to build capitalization lookup
-  let themenwolkeKey = 'Energy'
-  const lower = category.toLowerCase()
-  if (lower.includes('energy')) themenwolkeKey = 'Energy'
-  else if (lower.includes('food')) themenwolkeKey = 'Food'
-  else if (lower.includes('housing')) themenwolkeKey = 'Housing'
-  else if (lower.includes('mobility')) themenwolkeKey = 'Mobility'
-
-  const dbWords = await db.select({ word: themenwolke.word })
-    .from(themenwolke)
-    .where(eq(themenwolke.category, themenwolkeKey))
-    .all()
-  const candidates = dbWords.map((w: any) => w.word)
-
-  // Fetch translations to assist display labels mapping
-  const dbTranslations = await db.select().from(translations).all()
-  const transMap: Record<string, string> = {}
-  dbTranslations.forEach((item: any) => {
-    transMap[item.key] = item.value
+  // 1. Fetch topics for this category to build display lookup
+  const dbTopics = await db.select({
+    id: topics.id,
+    nameDe: topics.nameDe,
+    nameEn: topics.nameEn,
   })
+  .from(topics)
+  .where(eq(topics.category, category))
+  .all()
 
-  // Map candidates to display labels
+  // Map topic IDs to display labels
   const labelToDisplay: Record<string, string> = {}
-  candidates.forEach((word: string) => {
-    const translation = transMap[word] || ''
-    const display = (language === 'en' && translation) ? translation : word
-    const key = display.toLowerCase()
-    labelToDisplay[key] = display
+  dbTopics.forEach((t: any) => {
+    const display = language === 'en' ? t.nameEn : t.nameDe
+    labelToDisplay[t.id] = display
   })
 
-  // 2. Fetch matched rows from the database view natively using Drizzle select builder
-  const displayCol = language === 'en' ? articleKeywordMatches.englishWord : articleKeywordMatches.germanWord
-  const dbMatches = await db.select({
-    articleId: articleKeywordMatches.articleId,
-    category: articleKeywordMatches.category,
-    date: articleKeywordMatches.date,
-    bucket: articleKeywordMatches.bucket,
-    sortVal: articleKeywordMatches.sortVal,
-    displayKey: displayCol,
+  // Fetch topic keywords mapping
+  const dbKeywords = await db.select({
+    topicId: topicKeywords.topicId,
+    keyword: topicKeywords.keyword
   })
-  .from(articleKeywordMatches)
-  .where(eq(articleKeywordMatches.category, category))
+  .from(topicKeywords)
+  .all()
+
+  const topicKeywordsMap: Record<string, string[]> = {}
+  dbKeywords.forEach((k: any) => {
+    if (!topicKeywordsMap[k.topicId]) {
+      topicKeywordsMap[k.topicId] = []
+    }
+    if (!topicKeywordsMap[k.topicId].includes(k.keyword)) {
+      topicKeywordsMap[k.topicId].push(k.keyword)
+    }
+  })
+
+  // 2. Fetch matched rows natively using Drizzle select builder
+  const dbMatches = await db.select({
+    articleId: articleTopicMatches.articleId,
+    category: articleTopicMatches.category,
+    date: articleTopicMatches.date,
+    bucket: articleTopicMatches.bucket,
+    sortVal: articleTopicMatches.sortVal,
+    displayKey: articleTopicMatches.topicId,
+  })
+  .from(articleTopicMatches)
+  .where(eq(articleTopicMatches.category, category))
   .all()
 
   // 3. Fetch target articles metadata in category (no bodyText column loaded!)
@@ -300,6 +305,7 @@ export async function calculateTrendmapGrid(db: any, category: string, language:
 
   return {
     labelToDisplay,
+    topicKeywords: topicKeywordsMap,
     categoryArticles: strippedArticles,
     croppedTimeScale,
     topDisplayKeys,
