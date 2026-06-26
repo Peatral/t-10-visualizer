@@ -1,8 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 import Database from 'better-sqlite3'
-import { db } from './index'
-import { articles, themenwolke, translations, categories } from './schema'
+import { db } from './index.js'
+import { articles, themenwolke, translations, categories } from './schema.js'
 
 type NewArticle = typeof articles.$inferInsert
 

@@ -1,9 +1,9 @@
 import { initTRPC } from '@trpc/server'
 import { z } from 'zod'
-import { db } from './db'
-import { articles, themenwolke, translations, articleKeywordMatches } from './db/schema'
+import { db } from './db/index.js'
+import { articles, themenwolke, translations, articleKeywordMatches } from './db/schema.js'
 import { eq, desc, asc, and, sql } from 'drizzle-orm'
-import { getYearHalf } from '../utils/matching'
+import { getYearHalf } from '../utils/matching.js'
 
 const t = initTRPC.create()
 

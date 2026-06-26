@@ -1,6 +1,6 @@
 import { createHTTPHandler } from '@trpc/server/adapters/standalone'
-import http from 'http'
-import { appRouter } from '../src/server/router'
+import type { IncomingMessage, ServerResponse } from 'http'
+import { appRouter } from '../src/server/router.js'
 
 const handler = createHTTPHandler({
   router: appRouter,
@@ -8,10 +8,10 @@ const handler = createHTTPHandler({
   basePath: '/api/trpc/',
 })
 
-export default async function (req: http.IncomingMessage, res: http.ServerResponse) {
+export default async function (req: IncomingMessage, res: ServerResponse) {
   return new Promise<void>((resolve, reject) => {
     const oldEnd = res.end
-    res.end = function (this: http.ServerResponse, ...args: unknown[]) {
+    res.end = function (this: ServerResponse, ...args: unknown[]) {
       oldEnd.apply(this, args as never)
       resolve()
       return this
