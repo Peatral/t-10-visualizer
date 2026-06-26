@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { eq, sql, and } from 'drizzle-orm'
 import { articles, topics, articleTopicMatches, topicKeywords, topicsToCategories } from '../server/db/schema.js'
 import { getYearHalf } from './matching.js'
 
@@ -25,19 +25,43 @@ export interface TrendmapCalculationResult {
   maxRelativeWeight: number
 }
 
-export async function calculateTrendmapGrid(db: any, category: string, language: 'en' | 'de'): Promise<TrendmapCalculationResult> {
+async function getMatchingTopicIdsForQuery(db: any, q: string): Promise<string[]> {
+  const cleanQ = q.trim().toLowerCase()
+  const rows = await db.selectDistinct({ topicId: topics.id })
+    .from(topics)
+    .leftJoin(topicKeywords, eq(topics.id, topicKeywords.topicId))
+    .where(
+      sql`LOWER(topics.name_de) LIKE ${`%${cleanQ}%`} OR 
+          LOWER(topics.name_en) LIKE ${`%${cleanQ}%`} OR 
+          LOWER(topic_keywords.keyword) LIKE ${`%${cleanQ}%`}`
+    )
+    .all()
+  return rows.map((r: any) => r.topicId)
+}
+
+export async function calculateTrendmapGrid(
+  db: any,
+  category: string,
+  language: 'en' | 'de',
+  q?: string
+): Promise<TrendmapCalculationResult> {
   const catId = category.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
 
   // 1. Fetch topics for this category using the junction table
-  const dbTopics = await db.select({
+  let dbTopicsQuery = db.select({
     id: topics.id,
     nameDe: topics.nameDe,
     nameEn: topics.nameEn,
   })
   .from(topics)
-  .innerJoin(topicsToCategories, eq(topics.id, topicsToCategories.topicId))
-  .where(eq(topicsToCategories.categoryId, catId))
-  .all()
+
+  if (category !== 'All') {
+    dbTopicsQuery = dbTopicsQuery
+      .innerJoin(topicsToCategories, eq(topics.id, topicsToCategories.topicId))
+      .where(eq(topicsToCategories.categoryId, catId))
+  }
+
+  const dbTopics = await dbTopicsQuery.all()
 
   // Map topic IDs to display labels
   const labelToDisplay: Record<string, string> = {}
@@ -64,53 +88,45 @@ export async function calculateTrendmapGrid(db: any, category: string, language:
     }
   })
 
-  // 2. Fetch matched rows natively using Drizzle select builder
-  const dbMatches = await db.select({
-    articleId: articleTopicMatches.articleId,
-    category: articleTopicMatches.category,
-    date: articleTopicMatches.date,
-    bucket: articleTopicMatches.bucket,
-    sortVal: articleTopicMatches.sortVal,
-    displayKey: articleTopicMatches.topicId,
-  })
-  .from(articleTopicMatches)
-  .where(eq(articleTopicMatches.category, category))
-  .all()
+  // Resolve matching topic IDs for search query if present
+  let matchingTopicIds: string[] = []
+  if (q && q.trim()) {
+    matchingTopicIds = await getMatchingTopicIdsForQuery(db, q)
+  }
 
-  // 3. Fetch target articles metadata in category (no bodyText column loaded!)
-  const categoryDbArticles = await db.select({
-    id: articles.id,
-    title: articles.title,
-    description: articles.description,
-    date: articles.date,
-    link: articles.link,
-    category: articles.category,
+  // 2. Query min and max dates in category to build timescale
+  const dateConditions: any[] = []
+  if (category !== 'All') {
+    dateConditions.push(eq(articles.category, category))
+  }
+
+  if (q && q.trim()) {
+    if (matchingTopicIds.length > 0) {
+      const topicList = matchingTopicIds.map(id => `'${id.replace(/'/g, "''")}'`).join(',')
+      dateConditions.push(
+        sql`${articles.id} IN (SELECT article_id FROM article_topic_matches WHERE topic_id IN (${sql.raw(topicList)}))`
+      )
+    } else {
+      dateConditions.push(sql`1=0`)
+    }
+  }
+
+  let dateQuery = db.select({
+    minDate: sql<string>`min(date)`,
+    maxDate: sql<string>`max(date)`
   })
   .from(articles)
-  .where(eq(articles.category, category))
-  .all()
 
-  const categoryArticles = categoryDbArticles.map((a: any) => {
-    const { bucket, sortVal } = getYearHalf(a.date)
-    return {
-      id: a.id,
-      title: a.title,
-      description: a.description,
-      date: a.date,
-      link: a.link,
-      category: a.category,
-      bucket,
-      sortVal,
-    }
-  })
+  if (dateConditions.length > 0) {
+    dateQuery = dateQuery.where(and(...dateConditions))
+  }
 
-  // Min / max sort value for timeline scale
+  const { minDate, maxDate } = await dateQuery.get() || { minDate: null, maxDate: null }
+
   let minSort = Infinity
   let maxSort = -Infinity
-  categoryArticles.forEach((a: any) => {
-    if (a.sortVal < minSort) minSort = a.sortVal
-    if (a.sortVal > maxSort) maxSort = a.sortVal
-  })
+  if (minDate) minSort = getYearHalf(minDate).sortVal
+  if (maxDate) maxSort = getYearHalf(maxDate).sortVal
 
   const timeScale: { bucket: string; sortVal: number }[] = []
   if (minSort !== Infinity && maxSort !== -Infinity) {
@@ -124,14 +140,42 @@ export async function calculateTrendmapGrid(db: any, category: string, language:
     }
   }
 
-  // Count articles per slot
+  // 3. Query total articles per bucket in category for baseline
+  const bucketConditions: any[] = []
+  if (category !== 'All') {
+    bucketConditions.push(eq(articles.category, category))
+  }
+
+  if (q && q.trim()) {
+    if (matchingTopicIds.length > 0) {
+      const topicList = matchingTopicIds.map(id => `'${id.replace(/'/g, "''")}'`).join(',')
+      bucketConditions.push(
+        sql`${articles.id} IN (SELECT article_id FROM article_topic_matches WHERE topic_id IN (${sql.raw(topicList)}))`
+      )
+    } else {
+      bucketConditions.push(sql`1=0`)
+    }
+  }
+
+  let bucketCountsQuery = db.select({
+    bucket: sql<string>`strftime('%Y', date) || '-' || (CASE WHEN strftime('%m', date) <= '06' THEN 'H1' ELSE 'H2' END)`,
+    count: sql<number>`count(*)`
+  })
+  .from(articles)
+  .groupBy(sql`strftime('%Y', date) || '-' || (CASE WHEN strftime('%m', date) <= '06' THEN 'H1' ELSE 'H2' END)`)
+
+  if (bucketConditions.length > 0) {
+    bucketCountsQuery = bucketCountsQuery.where(and(...bucketConditions))
+  }
+
+  const bucketCounts = await bucketCountsQuery.all()
   const totalArticlesPerSlot: Record<string, number> = {}
   timeScale.forEach(t => {
     totalArticlesPerSlot[t.bucket] = 0
   })
-  categoryArticles.forEach((art: any) => {
-    if (totalArticlesPerSlot[art.bucket] !== undefined) {
-      totalArticlesPerSlot[art.bucket]++
+  bucketCounts.forEach((r: any) => {
+    if (totalArticlesPerSlot[r.bucket] !== undefined) {
+      totalArticlesPerSlot[r.bucket] = r.count
     }
   })
 
@@ -154,11 +198,42 @@ export async function calculateTrendmapGrid(db: any, category: string, language:
     smoothedBaseline[slot.bucket] = (weightedSum / (weightSum || 1)) + 2.0
   })
 
+  // 4. Fetch matched aggregated cell counts directly using group by
+  const matchesConditions: any[] = []
+  if (category !== 'All') {
+    matchesConditions.push(eq(articleTopicMatches.category, category))
+  }
+
+  if (q && q.trim()) {
+    if (matchingTopicIds.length > 0) {
+      const topicList = matchingTopicIds.map(id => `'${id.replace(/'/g, "''")}'`).join(',')
+      matchesConditions.push(
+        sql`${articleTopicMatches.topicId} IN (${sql.raw(topicList)})`
+      )
+    } else {
+      matchesConditions.push(sql`1=0`)
+    }
+  }
+
+  let matchesCountQuery = db.select({
+    topicId: articleTopicMatches.topicId,
+    bucket: articleTopicMatches.bucket,
+    count: sql<number>`count(distinct article_id)`
+  })
+  .from(articleTopicMatches)
+  .groupBy(articleTopicMatches.topicId, articleTopicMatches.bucket)
+
+  if (matchesConditions.length > 0) {
+    matchesCountQuery = matchesCountQuery.where(and(...matchesConditions))
+  }
+
+  const dbMatches = await matchesCountQuery.all()
+
   // Count matches for sorting
   const matchCounts: Record<string, number> = {}
-  dbMatches.forEach((match: any) => {
-    const key = match.displayKey.toLowerCase()
-    matchCounts[key] = (matchCounts[key] || 0) + 1
+  dbMatches.forEach((row: any) => {
+    const key = row.topicId.toLowerCase()
+    matchCounts[key] = (matchCounts[key] || 0) + row.count
   })
 
   const topDisplayKeys = Object.entries(matchCounts)
@@ -178,26 +253,13 @@ export async function calculateTrendmapGrid(db: any, category: string, language:
     })
   })
 
-  // Map article ID to article metadata for quick lookup
-  const articleLookup = new Map<string, ArticleMetadata>()
-  categoryDbArticles.forEach((art: any) => {
-    articleLookup.set(art.id, art)
-  })
-
-  dbMatches.forEach((match: any) => {
-    const key = match.displayKey.toLowerCase()
-    const art = articleLookup.get(match.articleId)
-    if (art && grid[key] && grid[key][match.bucket] !== undefined) {
-      
-      // Only increment and push if we haven't seen this article in this cell yet
-      if (!cellMatches[key][match.bucket].includes(match.articleId)) {
-        grid[key][match.bucket]++
-        cellMatches[key][match.bucket].push(match.articleId)
-        if (grid[key][match.bucket] > maxCellCount) {
-          maxCellCount = grid[key][match.bucket]
-        }
+  dbMatches.forEach((row: any) => {
+    const key = row.topicId.toLowerCase()
+    if (grid[key] && grid[key][row.bucket] !== undefined) {
+      grid[key][row.bucket] = row.count
+      if (row.count > maxCellCount) {
+        maxCellCount = row.count
       }
-      
     }
   })
 
@@ -295,25 +357,14 @@ export async function calculateTrendmapGrid(db: any, category: string, language:
     }
   }
 
-  const strippedArticles = categoryArticles.map((a: any) => ({
-    id: a.id,
-    title: a.title,
-    description: a.description,
-    date: a.date,
-    link: a.link,
-    category: a.category,
-    bucket: a.bucket,
-    sortVal: a.sortVal,
-  }))
-
   return {
     labelToDisplay,
     topicKeywords: topicKeywordsMap,
-    categoryArticles: strippedArticles,
+    categoryArticles: [],
     croppedTimeScale,
     topDisplayKeys,
     grid,
-    cellMatches,
+    cellMatches: {},
     maxCellCount,
     relativeGrid,
     relativeWeights,

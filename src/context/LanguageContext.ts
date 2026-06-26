@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import type { Language } from './LanguageContextProvider'
 
-export type TranslationKey = 'dashboardTitle' | 'overview' | 'datasetStatus' | 'visualizations' | 'heatmapTitle' | 'heatmapDesc' | 'timelineTitle' | 'timelineDesc' | 'recentArticles' | 'published' | 'category' | 'title' | 'statistics' | 'totalArticles' | 'indexedRecords' | 'categoryDist' | 'detailTitle' | 'source' | 'fullContent' | 'selectArticle' | 'articlesCount' | 'listView' | 'timelineView' | 'heatmapHelp' | 'timelineHelp' | 'timelineGroup' | 'heatmapLabel' | 'totalLabel' | 'categoryLabel' | 'noWords' | 'searchTitle' | 'searchPlaceholder' | 'searchArticles' | 'sortBy' | 'newest' | 'oldest' | 'searchFullText' | 'searchEmpty' | 'relativeMode' | 'absoluteMode' | 'relativeModeDesc'
+export type TranslationKey = 'dashboardTitle' | 'overview' | 'datasetStatus' | 'visualizations' | 'heatmapTitle' | 'heatmapDesc' | 'timelineTitle' | 'timelineDesc' | 'recentArticles' | 'published' | 'category' | 'title' | 'statistics' | 'totalArticles' | 'indexedRecords' | 'categoryDist' | 'detailTitle' | 'source' | 'fullContent' | 'selectArticle' | 'articlesCount' | 'listView' | 'timelineView' | 'heatmapHelp' | 'timelineHelp' | 'timelineGroup' | 'heatmapLabel' | 'totalLabel' | 'categoryLabel' | 'noWords' | 'searchTitle' | 'searchPlaceholder' | 'trendmapSearchPlaceholder' | 'searchArticles' | 'sortBy' | 'newest' | 'oldest' | 'searchFullText' | 'searchEmpty' | 'relativeMode' | 'absoluteMode' | 'relativeModeDesc'
 
 export interface LanguageContextProps {
   language: Language

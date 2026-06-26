@@ -16,9 +16,16 @@ const indexRoute = createRoute({
   component: Dashboard,
 })
 
+const trendmapSchema = z.object({
+  q: z.string().optional().catch(''),
+  category: z.string().optional().catch(''),
+  fulltext: z.boolean().optional().catch(false),
+})
+
 const trendmapRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/trendmap',
+  validateSearch: (search) => trendmapSchema.parse(search),
   component: Trendmap,
 })
 

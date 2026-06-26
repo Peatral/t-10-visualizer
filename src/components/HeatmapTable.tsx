@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useRef } from 'react'
+import { useVirtualizer } from '@tanstack/react-virtual'
 import { useTranslation } from '../context'
 
 interface HeatmapTableProps {
@@ -31,13 +32,26 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
   handleColumnClick
 }) => {
   const { t } = useTranslation()
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  // Set up row virtualization
+  const rowVirtualizer = useVirtualizer({
+    count: topWords.length,
+    getScrollElement: () => scrollContainerRef.current,
+    estimateSize: () => 38, // Estimated height of each table row (py-2.5 + borders + text)
+    overscan: 15,
+  })
+
+  // Fixed widths for grid alignment in flex layout
+  const labelColWidth = 'w-[180px]'
+  const dataColWidth = 'w-[72px]'
 
   return (
-    <div className="flex-grow overflow-auto bg-[#1e1e1e]">
-      <table className="w-full border-collapse">
-        <thead>
-          <tr>
-            <th className="sticky left-0 bg-[#1e1e1e] z-20 border border-[#2e2e2e] text-left px-4 py-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap font-sans">
+    <div ref={scrollContainerRef} className="flex-grow overflow-auto bg-[#1e1e1e] relative">
+      <table className="w-full border-collapse block">
+        <thead className="block sticky top-0 z-30 bg-[#1e1e1e]">
+          <tr className="flex w-full">
+            <th className={`sticky left-0 bg-[#1e1e1e] z-20 border border-[#2e2e2e] text-left px-4 py-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap font-sans ${labelColWidth} shrink-0 flex items-center`}>
               {t('heatmapLabel')}
             </th>
             {croppedTimeScale.map(col => {
@@ -45,12 +59,12 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
                 return (
                   <th
                     key={col.bucket}
-                    className="border border-[#2e2e2e] text-center px-1 py-2 text-[9px] font-medium tracking-wide text-gray-500 bg-[#171717] min-w-[60px] max-w-[80px] font-mono leading-tight select-none"
+                    className={`border border-[#2e2e2e] text-center px-1 py-2 text-[9px] font-medium tracking-wide text-gray-505 bg-[#171717] ${dataColWidth} shrink-0 flex items-center justify-center font-mono leading-tight select-none text-gray-550`}
                     title={`Gap of ${col.spanCount} empty slots`}
                   >
                     <div className="flex flex-col items-center">
                       <span>{col.gapStart}</span>
-                      <span className="text-[8px] text-gray-650 opacity-60">...</span>
+                      <span className="text-[8px] opacity-60">...</span>
                       <span>{col.gapEnd}</span>
                     </div>
                   </th>
@@ -67,7 +81,7 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
                 <th 
                    key={col.bucket} 
                    onClick={() => colTotal > 0 && handleColumnClick(col.bucket)}
-                   className={`border border-[#2e2e2e] text-center px-2 py-3 text-[10px] font-bold uppercase tracking-wider min-w-[70px] font-sans transition-colors ${
+                   className={`border border-[#2e2e2e] text-center px-2 py-3 text-[10px] font-bold uppercase tracking-wider ${dataColWidth} shrink-0 flex items-center justify-center font-sans transition-colors ${
                      colTotal > 0 
                        ? 'text-cyan-400 cursor-pointer hover:bg-[#252525] hover:text-cyan-300' 
                        : 'text-gray-600'
@@ -78,13 +92,19 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
                 </th>
               )
             })}
-            <th className="border border-[#2e2e2e] text-center px-3 py-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider text-gray-400 bg-[#252525] font-sans">
+            <th className={`border border-[#2e2e2e] text-center px-3 py-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider text-gray-400 bg-[#252525] font-sans ${dataColWidth} shrink-0 flex items-center justify-center`}>
               {t('totalLabel')}
             </th>
           </tr>
         </thead>
-        <tbody>
-          {topWords.map(word => {
+        <tbody 
+          className="block relative w-full"
+          style={{ height: `${rowVirtualizer.getTotalSize()}px` }}
+        >
+          {rowVirtualizer.getVirtualItems().map(virtualRow => {
+            const word = topWords[virtualRow.index]
+            if (!word) return null
+
             const keywords = topicKeywords?.[word] || []
             const displayLabel = labelToDisplay?.[word] || (() => {
               const firstKeyword = keywords[0] || word
@@ -103,24 +123,31 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
             const keywordsTooltip = keywords.length > 0 ? `Keywords: ${keywords.join(', ')}` : ''
 
             return (
-              <tr key={word} className="hover:bg-[#252525]/30">
+              <tr 
+                key={word} 
+                className="flex absolute top-0 left-0 w-full hover:bg-[#252525]/30"
+                style={{
+                  height: `${virtualRow.size}px`,
+                  transform: `translateY(${virtualRow.start}px)`,
+                }}
+              >
                 <td 
                   onClick={() => wordTotal > 0 && handleRowClick(word, displayLabel)}
-                  className={`sticky left-0 z-10 border border-[#2e2e2e] text-left px-4 py-2.5 text-xs font-semibold font-sans whitespace-nowrap transition-colors ${
+                  className={`sticky left-0 z-10 border border-[#2e2e2e] text-left px-4 py-2.5 text-xs font-semibold font-sans whitespace-nowrap transition-colors ${labelColWidth} shrink-0 flex items-center ${
                     wordTotal > 0 
                       ? 'bg-[#1a1a1a] text-[#03a9f4] cursor-pointer hover:bg-[#252525] hover:text-cyan-400' 
                       : 'bg-[#151515] text-gray-500'
                   }`}
                   title={`${keywordsTooltip}${wordTotal > 0 ? ` | Click to show all ${wordTotal} articles` : ''}`}
                 >
-                  {displayLabel}
+                  <span className="truncate">{displayLabel}</span>
                 </td>
                 {croppedTimeScale.map(col => {
                   if (col.isGap) {
                     return (
                       <td
                         key={col.bucket}
-                        className="border border-[#2e2e2e] select-none"
+                        className={`border border-[#2e2e2e] select-none ${dataColWidth} shrink-0 flex items-center justify-center`}
                         style={{
                           background: 'repeating-linear-gradient(45deg, #171717, #171717 6px, #262626 6px, #262626 12px)'
                         }}
@@ -151,7 +178,7 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
                       style={{ 
                         backgroundColor: hasCount ? `rgba(3, 169, 244, ${opacity})` : 'transparent' 
                       }}
-                      className={`border border-[#2e2e2e] text-center text-xs font-bold font-mono transition-transform duration-75 ${
+                      className={`border border-[#2e2e2e] text-center text-xs font-bold font-mono transition-all duration-75 ${dataColWidth} shrink-0 flex items-center justify-center ${
                         hasCount 
                           ? 'text-white cursor-pointer hover:scale-[1.08] hover:shadow-lg hover:z-20 hover:relative' 
                           : 'text-gray-700 bg-[#151515]/30'
@@ -164,7 +191,7 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
                 })}
                 <td 
                   onClick={() => wordTotal > 0 && handleRowClick(word, displayLabel)}
-                  className={`border border-[#2e2e2e] text-center text-xs font-bold font-mono transition-colors ${
+                  className={`border border-[#2e2e2e] text-center text-xs font-bold font-mono transition-colors ${dataColWidth} shrink-0 flex items-center justify-center ${
                     wordTotal > 0 
                       ? 'text-cyan-400 bg-[#1b1b1b] cursor-pointer hover:bg-[#252525] hover:text-cyan-300' 
                       : 'text-gray-600 bg-[#151515]/50'

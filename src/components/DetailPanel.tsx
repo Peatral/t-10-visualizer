@@ -23,6 +23,7 @@ interface DetailPanelProps {
   title: string
   defaultView?: 'list' | 'mini-timeline'
   hideList?: boolean
+  isLoading?: boolean
 }
 
 export const DetailPanel: React.FC<DetailPanelProps> = ({
@@ -33,7 +34,8 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
   onSelectArticle,
   title,
   defaultView = 'list',
-  hideList = false
+  hideList = false,
+  isLoading = false
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [panelHeight, setPanelHeight] = useState(380)
@@ -245,7 +247,13 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
 
       {/* Panel Body */}
       {!isCollapsed && (
-        <div className="flex-grow flex overflow-hidden">
+        <div className="flex-grow flex overflow-hidden relative">
+          {isLoading && (
+            <div className="absolute inset-0 z-50 bg-[#1e1e1e]/85 flex flex-col items-center justify-center text-gray-500 gap-3">
+              <div className="w-8 h-8 border-3 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-cyan-400">Loading articles...</span>
+            </div>
+          )}
           {/* Left Column: List or Mini-Timeline (Only shown when hideList is false) */}
           {!hideList && (
             <>

@@ -1,7 +1,7 @@
 import { initTRPC } from '@trpc/server'
 import { z } from 'zod'
 import { db } from './db/index.js'
-import { articles, trendmapCache, topics, articleTopicMatches } from './db/schema.js'
+import { articles, topics, articleTopicMatches, topicKeywords } from './db/schema.js'
 import { eq, desc, asc, and, sql } from 'drizzle-orm'
 import { calculateTrendmapGrid } from '../utils/trendmapCalc.js'
 
@@ -14,6 +14,20 @@ function formatFtsQuery(q: string): string {
     .filter(word => word.length > 0)
     .map(word => `${word.replace(/[*"']/g, '')}*`)
     .join(' AND ')
+}
+
+async function getMatchingTopicIdsForQuery(db: any, q: string): Promise<string[]> {
+  const cleanQ = q.trim().toLowerCase()
+  const rows = await db.selectDistinct({ topicId: topics.id })
+    .from(topics)
+    .leftJoin(topicKeywords, eq(topics.id, topicKeywords.topicId))
+    .where(
+      sql`LOWER(topics.name_de) LIKE ${`%${cleanQ}%`} OR 
+          LOWER(topics.name_en) LIKE ${`%${cleanQ}%`} OR 
+          LOWER(topic_keywords.keyword) LIKE ${`%${cleanQ}%`}`
+    )
+    .all()
+  return rows.map((r: any) => r.topicId)
 }
 
 export interface ArticleMetadata {
@@ -122,48 +136,142 @@ export const appRouter = t.router({
       recentArticles: recent,
     }
   }),
-
-  // Server-side Trendmap grid calculation using database view article_keyword_matches
+  // Server-side Trendmap grid calculation on the fly
   getTrendmapGrid: t.procedure
     .input(z.object({
       category: z.string(),
       language: z.enum(['en', 'de']),
+      q: z.string().optional(),
     }))
     .query(async ({ input }): Promise<TrendmapCalculationResult> => {
-      const { category, language } = input
-
-      // Try to load cached result first
-      const cached = await db.select({ resultJson: trendmapCache.resultJson })
-        .from(trendmapCache)
-        .where(and(eq(trendmapCache.category, category), eq(trendmapCache.language, language)))
-        .get()
-
-      if (cached) {
-        return JSON.parse(cached.resultJson) as TrendmapCalculationResult
-      }
-
-      const result = await calculateTrendmapGrid(db, category, language)
-
-      // Save to cache asynchronously/synchronously
-      try {
-        await db.delete(trendmapCache)
-          .where(and(eq(trendmapCache.category, category), eq(trendmapCache.language, language)))
-          .run()
-        await db.insert(trendmapCache)
-          .values({
-            category,
-            language,
-            resultJson: JSON.stringify(result),
-          })
-          .run()
-      } catch (err) {
-        console.error('Failed to write to trendmapCache:', err)
-      }
-
-      return result
+      const { category, language, q } = input
+      return await calculateTrendmapGrid(db, category, language, q)
     }),
 
-  // Get details for a single article by ID
+  getTrendmapCellArticles: t.procedure
+    .input(z.object({
+      category: z.string(),
+      topicId: z.string(),
+      bucket: z.string(),
+      q: z.string().optional(),
+      includeFullText: z.boolean().optional(),
+    }))
+    .query(async ({ input }) => {
+      const { category, topicId, bucket } = input
+      const [yearStr, half] = bucket.split('-')
+      const year = parseInt(yearStr, 10)
+      const startDate = half === 'H1' ? `${year}-01-01` : `${year}-07-01`
+      const endDate = half === 'H1' ? `${year}-06-30` : `${year}-12-31`
+
+      const conditions = [
+        eq(articleTopicMatches.topicId, topicId),
+        sql`articles.date >= ${startDate}`,
+        sql`articles.date <= ${endDate}`
+      ]
+      if (category !== 'All') {
+        conditions.push(eq(articles.category, category))
+      }
+
+      return await db.select({
+        id: articles.id,
+        title: articles.title,
+        description: articles.description,
+        date: articles.date,
+        link: articles.link,
+        category: articles.category,
+      })
+      .from(articles)
+      .innerJoin(articleTopicMatches, eq(articles.id, articleTopicMatches.articleId))
+      .where(and(...conditions))
+      .groupBy(articles.id)
+      .orderBy(desc(articles.date))
+      .all()
+    }),
+
+  getTrendmapRowArticles: t.procedure
+    .input(z.object({
+      category: z.string(),
+      topicId: z.string(),
+      q: z.string().optional(),
+      includeFullText: z.boolean().optional(),
+    }))
+    .query(async ({ input }) => {
+      const { category, topicId } = input
+
+      const conditions = [
+        eq(articleTopicMatches.topicId, topicId)
+      ]
+      if (category !== 'All') {
+        conditions.push(eq(articles.category, category))
+      }
+
+      return await db.select({
+        id: articles.id,
+        title: articles.title,
+        description: articles.description,
+        date: articles.date,
+        link: articles.link,
+        category: articles.category,
+      })
+      .from(articles)
+      .innerJoin(articleTopicMatches, eq(articles.id, articleTopicMatches.articleId))
+      .where(and(...conditions))
+      .groupBy(articles.id)
+      .orderBy(desc(articles.date))
+      .all()
+    }),
+
+  getTrendmapColumnArticles: t.procedure
+    .input(z.object({
+      category: z.string(),
+      bucket: z.string(),
+      q: z.string().optional(),
+      includeFullText: z.boolean().optional(),
+    }))
+    .query(async ({ input }) => {
+      const { category, bucket, q } = input
+      const [yearStr, half] = bucket.split('-')
+      const year = parseInt(yearStr, 10)
+      const startDate = half === 'H1' ? `${year}-01-01` : `${year}-07-01`
+      const endDate = half === 'H1' ? `${year}-06-30` : `${year}-12-31`
+
+      let matchingTopicIds: string[] = []
+      if (q && q.trim()) {
+        matchingTopicIds = await getMatchingTopicIdsForQuery(db, q)
+      }
+
+      const conditions = [
+        sql`articles.date >= ${startDate}`,
+        sql`articles.date <= ${endDate}`
+      ]
+      if (category !== 'All') {
+        conditions.push(eq(articles.category, category))
+      }
+
+      if (q && q.trim()) {
+        if (matchingTopicIds.length > 0) {
+          const topicList = matchingTopicIds.map(id => `'${id.replace(/'/g, "''")}'`).join(',')
+          conditions.push(
+            sql`articles.id IN (SELECT article_id FROM article_topic_matches WHERE topic_id IN (${sql.raw(topicList)}))`
+          )
+        } else {
+          conditions.push(sql`1=0`)
+        }
+      }
+
+      return await db.select({
+        id: articles.id,
+        title: articles.title,
+        description: articles.description,
+        date: articles.date,
+        link: articles.link,
+        category: articles.category,
+      })
+      .from(articles)
+      .where(and(...conditions))
+      .orderBy(desc(articles.date))
+      .all()
+    }),  // Get details for a single article by ID
   getArticleDetail: t.procedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
