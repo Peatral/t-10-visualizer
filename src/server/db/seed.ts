@@ -5,6 +5,7 @@ import { db } from './index.js'
 import { articles, topics, topicKeywords, articleTopicMatches, categories, trendmapCache, topicsToCategories } from './schema.js'
 import { calculateTrendmapGrid } from '../../utils/trendmapCalc.js'
 import { getYearHalf } from '../../utils/matching.js'
+import { SYNONYMS_DICT, CUSTOM_TOPIC_GROUPS } from './topicData.js'
 
 type NewArticle = typeof articles.$inferInsert
 
@@ -23,6 +24,30 @@ function getSafeFilename(url: string): string {
 
 function getSlug(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+}
+
+function detectArticleLanguage(link: string, title: string, bodyText: string): 'de' | 'en' {
+  const url = link.toLowerCase()
+  if (url.includes('.de') || url.includes('golem') || url.includes('heise') || url.includes('spiegel') || url.includes('zeit') || url.includes('welt.de') || url.includes('faz.net')) {
+    return 'de'
+  }
+  const deWords = ['der', 'die', 'das', 'ist', 'und', 'in', 'mit', 'für', 'von', 'eine', 'ein', 'zu', 'den', 'dem']
+  const enWords = ['the', 'is', 'and', 'in', 'with', 'for', 'of', 'a', 'an', 'to', 'on', 'at', 'that', 'this']
+  
+  const text = (title + ' ' + bodyText).toLowerCase()
+  let deCount = 0
+  let enCount = 0
+  
+  deWords.forEach(w => {
+    const regex = new RegExp(`\\b${w}\\b`)
+    if (regex.test(text)) deCount++
+  })
+  enWords.forEach(w => {
+    const regex = new RegExp(`\\b${w}\\b`)
+    if (regex.test(text)) enCount++
+  })
+  
+  return deCount > enCount ? 'de' : 'en'
 }
 
 async function seed() {
@@ -68,6 +93,7 @@ async function seed() {
       category_id TEXT,
       category TEXT NOT NULL,
       body_text TEXT NOT NULL,
+      language TEXT NOT NULL DEFAULT 'en',
       FOREIGN KEY(category_id) REFERENCES categories(id)
     );
 
@@ -89,6 +115,7 @@ async function seed() {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       topic_id TEXT NOT NULL,
       keyword TEXT NOT NULL,
+      language TEXT NOT NULL,
       FOREIGN KEY(topic_id) REFERENCES topics(id)
     );
 
@@ -158,130 +185,14 @@ async function seed() {
   }
 
   // 2. Seed translations & themenwolke from trendmap.json
-  const topicsMap = new Map<string, { id: string, nameDe: string, nameEn: string, categories: Set<string>, keywords: Set<string> }>()
-
-  const SYNONYMS_DICT: Record<string, string[]> = {
-    "ki": ["ai", "artificial intelligence", "künstliche intelligenz", "artifical intelligence", "machine learning", "deep learning", "maschinelles lernen"],
-    "ai": ["ki", "artificial intelligence", "künstliche intelligenz", "artifical intelligence", "machine learning", "deep learning", "maschinelles lernen"],
-    "artificial intelligence": ["ki", "ai", "künstliche intelligenz", "artifical intelligence"],
-    "künstliche intelligenz": ["ki", "ai", "artificial intelligence", "artifical intelligence"],
-    
-    "pv": ["photovoltaik", "photovoltaics", "solar", "solaranlage", "solaranlagen", "solarstrom", "solar power", "balkonkraftwerk", "balkonkraftwerke"],
-    "photovoltaik": ["pv", "photovoltaics", "solar", "solaranlage", "solaranlagen", "solarstrom", "solar power"],
-    "solar": ["pv", "photovoltaik", "photovoltaics", "solaranlage", "solaranlagen", "solarstrom", "solar power"],
-    
-    "e-auto": ["elektroauto", "elektroautos", "e-mobil", "e-mobilität", "elektromobilität", "ev", "evs", "electric vehicle", "electric vehicles", "e-mobility"],
-    "elektroauto": ["e-auto", "elektroautos", "e-mobil", "e-mobilität", "elektromobilität", "ev", "evs", "electric vehicle", "electric vehicles", "e-mobility"],
-    "e-mobilität": ["e-auto", "elektroauto", "elektroautos", "e-mobil", "elektromobilität", "ev", "evs", "electric vehicle", "electric vehicles", "e-mobility"],
-    
-    "wärmepumpe": ["wärmepumpen", "waermepumpe", "waermepumpen", "heat pump", "heat pumps"],
-    "heat pump": ["wärmepumpe", "wärmepumpen", "waermepumpe", "waermepumpen", "heat pumps"],
-    
-    "windenergie": ["windkraft", "windrad", "windräder", "windkraftanlage", "windkraftanlagen", "wind energy", "wind power", "wind turbine", "wind turbines"],
-    "windkraft": ["windenergie", "windrad", "windräder", "windkraftanlage", "windkraftanlagen", "wind energy", "wind power", "wind turbine", "wind turbines"],
-    
-    "auto": ["pkw", "car", "autos", "pkws", "cars", "personenkraftwagen", "automobil", "automobile", "pkw-maut"],
-    "pkw": ["auto", "car", "autos", "pkws", "cars", "personenkraftwagen", "automobil", "automobile"],
-    "car": ["auto", "pkw", "autos", "pkws", "cars", "personenkraftwagen", "automobil", "automobile"],
-    
-    "bus": ["busse", "busses"],
-    "busse": ["bus", "busses"],
-    "bahn": ["bahnen", "zug", "train", "schienenverkehr", "rail", "railway", "trains", "tram", "u-bahn", "s-bahn", "straßenbahn"],
-    "zug": ["bahn", "bahnen", "train", "schienenverkehr", "rail", "railway", "trains", "tram", "u-bahn", "s-bahn", "straßenbahn"],
-    "train": ["bahn", "bahnen", "zug", "schienenverkehr", "rail", "railway", "trains", "tram", "u-bahn", "s-bahn", "straßenbahn"],
-    "öpnv": ["öffis", "öffentlicher nahverkehr", "public transport", "public transportation"],
-    "public transport": ["öpnv", "öffis", "öffentlicher nahverkehr", "public transportation"],
-    
-    "fahrrad": ["radverkehr", "bike", "bicycle", "e-bike", "velo", "fahrräder", "radeln", "bicycles", "bikes"],
-    "bike": ["fahrrad", "radverkehr", "bicycle", "e-bike", "velo", "fahrräder", "radeln", "bicycles", "bikes"],
-    
-    "wasserstoff": ["h2", "hydrogen", "wasserstoffantrieb", "wasserstofftechnologie", "brennstoffzelle", "brennstoffzellen"],
-    "h2": ["wasserstoff", "hydrogen", "wasserstoffantrieb", "wasserstofftechnologie"],
-    "hydrogen": ["wasserstoff", "h2", "wasserstoffantrieb", "wasserstofftechnologie"],
-    
-    "batterie": ["batterien", "akku", "akkus", "akkumulator", "battery", "batteries", "stromspeicher", "energiespeicher", "elektrischer speicher", "chemischer speicher"],
-    "battery": ["batterie", "batterien", "akku", "akkus", "battery", "batteries", "stromspeicher", "energiespeicher"],
-    
-    "kohle": ["braunkohle", "steinkohle", "coal", "kohlekraftwerk", "kohlekraftwerke", "braunkohle-energie"],
-    "coal": ["kohle", "braunkohle", "steinkohle", "kohlekraftwerk", "kohlekraftwerke"],
-    
-    "kernkraft": ["atomkraft", "nuclear", "atomenergie", "kernenergie", "nuclear energy", "nuclear power", "akw", "kkw"],
-    "nuclear": ["kernkraft", "atomkraft", "atomenergie", "kernenergie", "nuclear energy", "nuclear power", "akw", "kkw"]
-  }
-
-  const CUSTOM_TOPIC_GROUPS: Array<{
-    id: string;
-    nameDe: string;
-    nameEn: string;
-    keywords: string[];
-  }> = [
-    {
-      id: "ki",
-      nameDe: "KI / Künstliche Intelligenz",
-      nameEn: "AI / Artificial Intelligence",
-      keywords: ["ki", "ai", "artificial intelligence", "künstliche intelligenz", "artifical intelligence", "machine learning", "deep learning", "maschinelles lernen"]
-    },
-    {
-      id: "pv",
-      nameDe: "PV / Photovoltaik",
-      nameEn: "PV / Photovoltaics",
-      keywords: ["pv", "photovoltaik", "photovoltaics", "solar", "solaranlage", "solaranlagen", "solarstrom", "solar power", "balkonkraftwerk", "balkonkraftwerke"]
-    },
-    {
-      id: "e-mobilitaet",
-      nameDe: "E-Mobilität / Elektroautos",
-      nameEn: "E-Mobility / Electric Vehicles",
-      keywords: ["e-auto", "elektroauto", "elektroautos", "e-mobil", "e-mobilität", "elektromobilität", "ev", "evs", "electric vehicle", "electric vehicles", "e-mobility"]
-    },
-    {
-      id: "waermepumpe",
-      nameDe: "Wärmepumpe",
-      nameEn: "Heat pump",
-      keywords: ["wärmepumpe", "wärmepumpen", "waermepumpe", "waermepumpen", "heat pump", "heat pumps"]
-    },
-    {
-      id: "windenergie",
-      nameDe: "Windenergie / Windkraft",
-      nameEn: "Wind energy / Wind power",
-      keywords: ["windenergie", "windkraft", "windrad", "windräder", "windkraftanlage", "windkraftanlagen", "wind energy", "wind power", "wind turbine", "wind turbines"]
-    },
-    {
-      id: "auto",
-      nameDe: "Auto / PKW",
-      nameEn: "Car / Automobile",
-      keywords: ["auto", "pkw", "car", "autos", "pkw-maut", "pkws", "cars", "personenkraftwagen", "automobil", "automobile"]
-    },
-    {
-      id: "fahrrad",
-      nameDe: "Fahrrad / Radverkehr",
-      nameEn: "Bicycle / Cycling",
-      keywords: ["fahrrad", "radverkehr", "bike", "bicycle", "e-bike", "velo", "fahrräder", "radeln", "bicycles", "bikes"]
-    },
-    {
-      id: "wasserstoff",
-      nameDe: "Wasserstoff",
-      nameEn: "Hydrogen",
-      keywords: ["wasserstoff", "h2", "hydrogen", "wasserstoffantrieb", "wasserstofftechnologie", "brennstoffzelle", "brennstoffzellen"]
-    },
-    {
-      id: "batterie",
-      nameDe: "Batterie / Speicher",
-      nameEn: "Battery / Storage",
-      keywords: ["batterie", "batterien", "akku", "akkus", "akkumulator", "battery", "batteries", "stromspeicher", "energiespeicher", "elektrischer speicher", "chemischer speicher"]
-    },
-    {
-      id: "kohle",
-      nameDe: "Kohleenergie",
-      nameEn: "Coal energy",
-      keywords: ["kohle", "braunkohle", "steinkohle", "coal", "kohlekraftwerk", "kohlekraftwerke", "braunkohle-energie"]
-    },
-    {
-      id: "kernkraft",
-      nameDe: "Kernkraft / Atomkraft",
-      nameEn: "Nuclear power / Nuclear energy",
-      keywords: ["kernkraft", "atomkraft", "nuclear", "atomenergie", "kernenergie", "nuclear energy", "nuclear power", "akw", "kkw"]
-    }
-  ]
+  const topicsMap = new Map<string, { 
+    id: string, 
+    nameDe: string, 
+    nameEn: string, 
+    categories: Set<string>, 
+    keywordsDe: Set<string>, 
+    keywordsEn: Set<string> 
+  }>()
 
   function hash(str: string) {
     let h = 0
@@ -315,14 +226,15 @@ async function seed() {
         let topicId = ""
         let nameDe = ""
         let nameEn = ""
-        let keywordsArr: string[] = []
+        let kwsDe = new Set<string>()
+        let kwsEn = new Set<string>()
 
         let matchedGroup = null
         const checkWordLower = w.toLowerCase()
         const transLower = (trendmapData.translations[w] || "").toLowerCase()
 
         for (const group of CUSTOM_TOPIC_GROUPS) {
-          if (group.keywords.includes(checkWordLower) || (transLower && group.keywords.includes(transLower))) {
+          if (group.keywordsDe.includes(checkWordLower) || group.keywordsEn.includes(checkWordLower) || (transLower && (group.keywordsDe.includes(transLower) || group.keywordsEn.includes(transLower)))) {
             matchedGroup = group
             break
           }
@@ -335,32 +247,11 @@ async function seed() {
           topicId = matchedGroup.id
           nameDe = matchedGroup.nameDe
           nameEn = matchedGroup.nameEn
-          keywordsArr = [...matchedGroup.keywords]
+          matchedGroup.keywordsDe.forEach(k => kwsDe.add(k))
+          matchedGroup.keywordsEn.forEach(k => kwsEn.add(k))
 
-          // Link custom topics to multiple relevant categories
-          if (topicId === "ki") {
-            topicCats = new Set(["t-10-mobility", "t-10-energy", "t-10-food", "t-10-housing"])
-          } else if (topicId === "pv") {
-            topicCats = new Set(["t-10-energy", "t-10-housing"])
-          } else if (topicId === "e-mobilitaet") {
-            topicCats = new Set(["t-10-mobility", "t-10-energy"])
-          } else if (topicId === "waermepumpe") {
-            topicCats = new Set(["t-10-energy", "t-10-housing"])
-          } else if (topicId === "windenergie") {
-            topicCats = new Set(["t-10-energy"])
-          } else if (topicId === "auto") {
-            topicCats = new Set(["t-10-mobility"])
-          } else if (topicId === "fahrrad") {
-            topicCats = new Set(["t-10-mobility"])
-          } else if (topicId === "wasserstoff") {
-            topicCats = new Set(["t-10-energy", "t-10-mobility"])
-          } else if (topicId === "batterie") {
-            topicCats = new Set(["t-10-energy", "t-10-mobility", "t-10-housing"])
-          } else if (topicId === "kohle") {
-            topicCats = new Set(["t-10-energy"])
-          } else if (topicId === "kernkraft") {
-            topicCats = new Set(["t-10-energy"])
-          }
+          // Link custom topics to multiple relevant categories from the data file
+          matchedGroup.categories.forEach(c => topicCats.add(c))
         } else {
           // Default topic
           topicId = w.toLowerCase()
@@ -378,21 +269,18 @@ async function seed() {
           nameDe = w
           nameEn = trendmapData.translations[w] || w
           
-          keywordsArr = [w.toLowerCase()]
+          kwsDe.add(w.toLowerCase())
           const trans = trendmapData.translations[w]
           if (trans && trans.toLowerCase() !== w.toLowerCase()) {
-            keywordsArr.push(trans.toLowerCase())
+            kwsEn.add(trans.toLowerCase())
           }
 
-          // Merge any other synonyms if matching known terms
+          // Merge any other synonyms if matching known terms in SYNONYMS_DICT
           const wordsToCheck = [checkWordLower, transLower].filter(Boolean)
           wordsToCheck.forEach(term => {
             if (SYNONYMS_DICT[term]) {
-              SYNONYMS_DICT[term].forEach(syn => {
-                if (!keywordsArr.includes(syn)) {
-                  keywordsArr.push(syn)
-                }
-              })
+              SYNONYMS_DICT[term].de.forEach(syn => kwsDe.add(syn))
+              SYNONYMS_DICT[term].en.forEach(syn => kwsEn.add(syn))
             }
           })
 
@@ -401,7 +289,8 @@ async function seed() {
 
         const existing = topicsMap.get(topicId)
         if (existing) {
-          keywordsArr.forEach(k => existing.keywords.add(k))
+          kwsDe.forEach(k => existing.keywordsDe.add(k))
+          kwsEn.forEach(k => existing.keywordsEn.add(k))
           topicCats.forEach(c => existing.categories.add(c))
         } else {
           topicsMap.set(topicId, {
@@ -409,7 +298,8 @@ async function seed() {
             nameDe,
             nameEn,
             categories: topicCats,
-            keywords: new Set(keywordsArr)
+            keywordsDe: kwsDe,
+            keywordsEn: kwsEn
           })
         }
       })
@@ -426,10 +316,19 @@ async function seed() {
         nameEn: topic.nameEn,
       })
 
-      for (const kw of topic.keywords) {
+      for (const kw of topic.keywordsDe) {
         keywordsEntries.push({
           topicId: topic.id,
           keyword: kw,
+          language: 'de',
+        })
+      }
+
+      for (const kw of topic.keywordsEn) {
+        keywordsEntries.push({
+          topicId: topic.id,
+          keyword: kw,
+          language: 'en',
         })
       }
 
@@ -474,6 +373,8 @@ async function seed() {
         }
       }
 
+      const lang = detectArticleLanguage(art.link, art.title, bodyText)
+
       currentBatch.push({
         id: art.id,
         title: art.title,
@@ -482,7 +383,8 @@ async function seed() {
         link: art.link,
         categoryId: getSlug(art.category),
         category: art.category,
-        bodyText: bodyText
+        bodyText: bodyText,
+        language: lang
       })
 
       if (currentBatch.length >= batchSize) {
@@ -497,7 +399,7 @@ async function seed() {
       count += currentBatch.length
     }
 
-    console.log('Matching articles with topics using exact word boundaries...')
+    console.log('Matching articles with topics using exact word boundaries and language mapping...')
     
     const dbArticles = await db.select({
       id: articles.id,
@@ -506,6 +408,7 @@ async function seed() {
       title: articles.title,
       description: articles.description,
       bodyText: articles.bodyText,
+      language: articles.language
     }).from(articles).all()
 
     const regexCache = new Map<string, RegExp>()
@@ -531,7 +434,10 @@ async function seed() {
 
         if (topic.categories.has(artCatId)) {
           let isMatch = false
-          for (const kw of topic.keywords) {
+          // Only check keywords that match the language of the article!
+          const targetKeywords = art.language === 'de' ? topic.keywordsDe : topic.keywordsEn
+          
+          for (const kw of targetKeywords) {
             if (checkSingleMatch(combinedText, kw)) {
               isMatch = true
               break
@@ -564,7 +470,6 @@ async function seed() {
   const categoriesList = await db.select().from(categories).all()
   console.log('Pre-populating trendmapCache table for all categories and languages...')
   for (const cat of categoriesList) {
-    // Only pre-calculate trendmaps for the 4 core categories which contain words
     const lower = cat.id.toLowerCase()
     if (lower.includes("energy") || lower.includes("food") || lower.includes("housing") || lower.includes("mobility")) {
       for (const lang of ['en', 'de'] as const) {

@@ -189,6 +189,7 @@ export const Trendmap: React.FC = () => {
             displayGrid={viewMode === 'relative' ? calcResult.relativeGrid : undefined}
             weightGrid={viewMode === 'relative' ? calcResult.relativeWeights : undefined}
             topicKeywords={calcResult.topicKeywords}
+            labelToDisplay={calcResult.labelToDisplay}
             maxCellCount={calcResult.maxCellCount} 
             maxDisplayWeight={viewMode === 'relative' ? calcResult.maxRelativeWeight : undefined}
             handleCellClick={handleCellClick} 

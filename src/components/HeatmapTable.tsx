@@ -8,6 +8,7 @@ interface HeatmapTableProps {
   displayGrid?: Record<string, Record<string, string | number>> // optional formatted string or relative fraction
   weightGrid?: Record<string, Record<string, number>> // raw weights for relative mode color density styling
   topicKeywords?: Record<string, string[]>
+  labelToDisplay?: Record<string, string>
   maxCellCount: number
   maxDisplayWeight?: number // max value for relative density styling
   handleCellClick: (word: string, displayLabel: string, bucket: string) => void
@@ -22,6 +23,7 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
   displayGrid,
   weightGrid,
   topicKeywords,
+  labelToDisplay,
   maxCellCount,
   maxDisplayWeight,
   handleCellClick,
@@ -63,14 +65,14 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
 
               return (
                 <th 
-                  key={col.bucket} 
-                  onClick={() => colTotal > 0 && handleColumnClick(col.bucket)}
-                  className={`border border-[#2e2e2e] text-center px-2 py-3 text-[10px] font-bold uppercase tracking-wider min-w-[70px] font-sans transition-colors ${
-                    colTotal > 0 
-                      ? 'text-cyan-400 cursor-pointer hover:bg-[#252525] hover:text-cyan-300' 
-                      : 'text-gray-600'
-                  }`}
-                  title={colTotal > 0 ? `Show all ${colTotal} articles in ${col.bucket}` : undefined}
+                   key={col.bucket} 
+                   onClick={() => colTotal > 0 && handleColumnClick(col.bucket)}
+                   className={`border border-[#2e2e2e] text-center px-2 py-3 text-[10px] font-bold uppercase tracking-wider min-w-[70px] font-sans transition-colors ${
+                     colTotal > 0 
+                       ? 'text-cyan-400 cursor-pointer hover:bg-[#252525] hover:text-cyan-300' 
+                       : 'text-gray-600'
+                   }`}
+                   title={colTotal > 0 ? `Show all ${colTotal} articles in ${col.bucket}` : undefined}
                 >
                   {col.bucket}
                 </th>
@@ -84,10 +86,12 @@ export const HeatmapTable: React.FC<HeatmapTableProps> = ({
         <tbody>
           {topWords.map(word => {
             const keywords = topicKeywords?.[word] || []
-            const firstKeyword = keywords[0] || word
-            const displayLabel = firstKeyword.length <= 3 
-              ? firstKeyword.toUpperCase() 
-              : (firstKeyword.charAt(0).toUpperCase() + firstKeyword.slice(1))
+            const displayLabel = labelToDisplay?.[word] || (() => {
+              const firstKeyword = keywords[0] || word
+              return firstKeyword.length <= 3 
+                ? firstKeyword.toUpperCase() 
+                : (firstKeyword.charAt(0).toUpperCase() + firstKeyword.slice(1))
+            })()
 
             let wordTotal = 0
             croppedTimeScale.forEach(col => {

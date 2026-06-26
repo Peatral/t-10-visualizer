@@ -46,7 +46,7 @@ export async function calculateTrendmapGrid(db: any, category: string, language:
     labelToDisplay[t.id] = display
   })
 
-  // Fetch topic keywords mapping
+  // Fetch all topic keywords mapping (independent of query language)
   const dbKeywords = await db.select({
     topicId: topicKeywords.topicId,
     keyword: topicKeywords.keyword

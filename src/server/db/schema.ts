@@ -20,6 +20,7 @@ export const articles = sqliteTable('articles', {
   categoryId: text('category_id').references(() => categories.id),
   category: text('category').notNull(),
   bodyText: text('body_text').notNull(),
+  language: text('language').notNull().default('en'),
 }, (table) => [
   index('idx_category_id').on(table.categoryId),
   index('idx_date').on(table.date),
@@ -69,6 +70,7 @@ export const topicKeywords = sqliteTable('topic_keywords', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   topicId: text('topic_id').notNull().references(() => topics.id),
   keyword: text('keyword').notNull(),
+  language: text('language').notNull(),
 }, (table) => [
   index('idx_keywords_topic').on(table.topicId),
 ])
