@@ -2,5 +2,10 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/trpc" },
     { "source": "/((?!src/|node_modules/|api/|@|.*\\.).*)", "destination": "/index.html" }
-  ]
+  ],
+  "functions": {
+    "api/trpc.ts": {
+      "includeFiles": "sqlite.db"
+    }
+  }
 }
