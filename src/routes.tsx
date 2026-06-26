@@ -28,9 +28,19 @@ const timelineRoute = createRoute({
   component: Timeline,
 })
 
+import { z } from 'zod'
+
+const searchSchema = z.object({
+  q: z.string().optional().catch(''),
+  category: z.string().optional().catch('All'),
+  sort: z.enum(['newest', 'oldest']).optional().catch('newest'),
+  fulltext: z.boolean().optional().catch(false),
+})
+
 const searchRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/search',
+  validateSearch: (search) => searchSchema.parse(search),
   component: Search,
 })
 

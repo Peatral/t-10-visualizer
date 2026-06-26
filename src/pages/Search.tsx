@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { Search as SearchIcon, Filter, Clock, Info } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
+import { useSearch, useNavigate } from '@tanstack/react-router'
 import { useData } from '../context'
 import { useTranslation } from '../context'
 import { fetchArticleBodies } from '../services/dataSource'
@@ -10,16 +11,28 @@ import type { Article } from '../types'
 export const Search: React.FC = () => {
   const data = useData()
   const { t } = useTranslation()
+  const searchParams = useSearch({ from: '/search' })
+  const navigate = useNavigate({ from: '/search' })
 
-  // State controls
-  const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCat, setSelectedCat] = useState('All')
-  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest')
-  const [includeFullText, setIncludeFullText] = useState(false)
+  // Search parameters
+  const searchQuery = searchParams.q || ''
+  const selectedCat = searchParams.category || 'All'
+  const sortOrder = searchParams.sort || 'newest'
+  const includeFullText = searchParams.fulltext || false
+
+  const updateSearch = (updates: Partial<typeof searchParams>) => {
+    navigate({
+      search: (prev) => ({
+        ...prev,
+        ...updates,
+      }),
+      replace: true,
+    })
+  }
 
   // Details overlay panel states
-  const [panelOpen, setPanelOpen] = useState(false)
-  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null)
+  const [panelOpen, setPanelOpen] = React.useState(false)
+  const [selectedArticle, setSelectedArticle] = React.useState<Article | null>(null)
 
   // Fetch full text corpus if full text search is enabled
   const { data: bodies, isLoading: isBodiesLoading } = useQuery({
@@ -96,7 +109,7 @@ export const Search: React.FC = () => {
             <input
               type="text"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => updateSearch({ q: e.target.value || undefined })}
               placeholder={t('searchPlaceholder')}
               className="w-full bg-[#252525] border border-[#2e2e2e] text-white px-3 py-2 pl-9 text-sm focus:outline-none focus:border-cyan-500 placeholder-gray-500"
             />
@@ -108,7 +121,7 @@ export const Search: React.FC = () => {
             <Filter className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
             <select
               value={selectedCat}
-              onChange={(e) => setSelectedCat(e.target.value)}
+              onChange={(e) => updateSearch({ category: e.target.value !== 'All' ? e.target.value : undefined })}
               className="w-full bg-[#252525] border border-[#2e2e2e] text-white px-3 py-2 text-sm focus:outline-none focus:border-cyan-500 cursor-pointer"
             >
               {categories.map(cat => (
@@ -124,7 +137,7 @@ export const Search: React.FC = () => {
             <Clock className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
             <select
               value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value as 'newest' | 'oldest')}
+              onChange={(e) => updateSearch({ sort: e.target.value as 'newest' | 'oldest' })}
               className="w-full bg-[#252525] border border-[#2e2e2e] text-white px-3 py-2 text-sm focus:outline-none focus:border-cyan-500 cursor-pointer"
             >
               <option value="newest">{t('newest')}</option>
@@ -138,7 +151,7 @@ export const Search: React.FC = () => {
               <input
                 type="checkbox"
                 checked={includeFullText}
-                onChange={(e) => setIncludeFullText(e.target.checked)}
+                onChange={(e) => updateSearch({ fulltext: e.target.checked || undefined })}
                 className="bg-[#252525] border border-[#2e2e2e] text-cyan-500 focus:ring-0 focus:ring-offset-0 cursor-pointer"
               />
               <span>{t('searchFullText')}</span>
