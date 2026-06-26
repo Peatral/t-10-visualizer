@@ -39,12 +39,20 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
   const [panelHeight, setPanelHeight] = useState(380)
   const [leftColWidth, setLeftColWidth] = useState(35) // percentage
   const [viewMode, setViewMode] = useState<'list' | 'mini-timeline'>(defaultView)
-  const { t } = useTranslation()
+  const { t, language } = useTranslation()
   const trpc = useTRPC()
 
   // On-demand body text loading
   const { data: detailData, isLoading: isDetailLoading } = useQuery(
     trpc.getArticleDetail.queryOptions(
+      { id: selectedArticle?.id || '' },
+      { enabled: !!selectedArticle?.id }
+    )
+  )
+
+  // On-demand topics loading in parallel
+  const { data: topicsData } = useQuery(
+    trpc.getArticleTopics.queryOptions(
       { id: selectedArticle?.id || '' },
       { enabled: !!selectedArticle?.id }
     )
@@ -316,8 +324,26 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
                 <div>
                   <h2 className="text-xl font-bold text-white mb-1 leading-snug">{selectedArticle.title}</h2>
                   <div className="text-cyan-400 text-xs font-semibold mb-2">Published: {selectedArticle.date}</div>
-                  <div className="text-xs uppercase bg-[#3f51b5]/30 text-indigo-300 w-fit px-2 py-0.5 font-medium font-sans">
-                    {selectedArticle.category}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <div className="text-xs uppercase bg-[#3f51b5]/30 text-indigo-300 w-fit px-2 py-0.5 font-medium font-sans">
+                      {selectedArticle.category}
+                    </div>
+                    {topicsData && topicsData.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5">
+                        {topicsData.map((topic: any) => {
+                          const label = language === 'en' ? topic.nameEn : topic.nameDe
+                          return (
+                            <span 
+                              key={topic.topicId}
+                              className="text-[10px] font-semibold bg-[#2a3c2c]/40 text-green-400 border border-[#3c5a3e]/30 px-2 py-0.5"
+                              title={`Topic ID: ${topic.topicId}`}
+                            >
+                              {label}
+                            </span>
+                          )
+                        })}
+                      </div>
+                    )}
                   </div>
                 </div>
 

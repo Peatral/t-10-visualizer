@@ -1,7 +1,7 @@
 import { initTRPC } from '@trpc/server'
 import { z } from 'zod'
 import { db } from './db/index.js'
-import { articles, trendmapCache } from './db/schema.js'
+import { articles, trendmapCache, topics, articleTopicMatches } from './db/schema.js'
 import { eq, desc, asc, and, sql } from 'drizzle-orm'
 import { calculateTrendmapGrid } from '../utils/trendmapCalc.js'
 
@@ -177,6 +177,22 @@ export const appRouter = t.router({
         throw new Error(`Article not found: ${input.id}`)
       }
       return result
+    }),
+
+  // Get topics matched to a specific article by ID
+  getArticleTopics: t.procedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input }) => {
+      return await db
+        .select({
+          topicId: topics.id,
+          nameDe: topics.nameDe,
+          nameEn: topics.nameEn,
+        })
+        .from(articleTopicMatches)
+        .innerJoin(topics, eq(articleTopicMatches.topicId, topics.id))
+        .where(eq(articleTopicMatches.articleId, input.id))
+        .all()
     }),
 
   // Search articles using SQLite indexes and FTS5 full-text index
