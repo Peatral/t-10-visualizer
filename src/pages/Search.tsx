@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
-import { Search as SearchIcon, Filter, Clock, Info } from 'lucide-react'
+import { Info } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { useSearch, useNavigate } from '@tanstack/react-router'
 import { useDebounce } from 'use-debounce'
@@ -8,6 +8,8 @@ import { useData } from '../context'
 import { useTranslation } from '../context'
 import { useTRPC } from '../utils/trpc'
 import { DetailPanel } from '../components/DetailPanel'
+import { SmartSearchInput } from '../components/SmartSearchInput'
+import { parseSearchQuery } from '../utils/searchParser'
 import type { Article } from '../types'
 
 export const Search = () => {
@@ -16,11 +18,6 @@ export const Search = () => {
   const searchParams = useSearch({ from: '/search' })
   const navigate = useNavigate({ from: '/search' })
   const trpc = useTRPC()
-
-  // Search parameters from URL
-  const selectedCat = searchParams.category || 'All'
-  const sortOrder = searchParams.sort || 'newest'
-  const includeFullText = searchParams.fulltext || false
 
   // Local state for immediate typing feedback
   const [localQuery, setLocalQuery] = useState(searchParams.q || '')
@@ -51,33 +48,30 @@ export const Search = () => {
     setLocalQuery(value)
   }
 
-  const updateSearch = (updates: Partial<typeof searchParams>) => {
-    navigate({
-      search: (prev) => ({
-        ...prev,
-        ...updates,
-      }),
-      replace: true,
-    })
-  }
-
   // Details overlay panel states
   const [panelOpen, setPanelOpen] = useState(false)
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null)
 
-  // List of unique categories for the dropdown filter
+  // List of unique categories
   const categories = useMemo(() => {
-    return ['All', ...data.categories]
+    return [...data.categories]
   }, [data.categories])
 
+  // Parse the query string into structured filters on the client
+  const parsedFilters = useMemo(() => {
+    return parseSearchQuery(debouncedQuery)
+  }, [debouncedQuery])
 
   // Run SQLite index & FTS5 search on the serverless backend using useQuery + queryOptions
   const { data: filteredArticles = [], isLoading: isSearchLoading } = useQuery(
     trpc.searchArticles.queryOptions({
-      q: debouncedQuery,
-      category: selectedCat,
-      sort: sortOrder,
-      includeFullText,
+      q: parsedFilters.q,
+      category: parsedFilters.category,
+      sort: parsedFilters.sort,
+      before: parsedFilters.before,
+      after: parsedFilters.after,
+      topic: parsedFilters.topic,
+      includeFullText: true, // Always enable full text search
     })
   )
 
@@ -108,63 +102,23 @@ export const Search = () => {
           <div className="text-xs text-gray-400 font-medium font-mono bg-[#151515] px-3 py-1 border border-[#2e2e2e]">
             {filteredArticles.length} / {data.totalArticlesCount} {t('listView').toLowerCase()}
           </div>
-
         </div>
 
-        {/* Toolbar / Filters Row */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-          {/* Query input */}
-          <div className="md:col-span-5 relative">
-            <input
-              type="text"
-              value={localQuery}
-              onChange={(e) => handleQueryChange(e.target.value)}
-              placeholder={t('searchPlaceholder')}
-              className="w-full bg-[#252525] border border-[#2e2e2e] text-white px-3 py-2 pl-9 text-sm focus:outline-none focus:border-cyan-500 placeholder-gray-500"
-            />
-            <SearchIcon className="w-4 h-4 text-gray-500 absolute left-3 top-3 pointer-events-none" />
-          </div>
-
-          {/* Category Filter */}
-          <div className="md:col-span-3 flex items-center gap-2">
-            <Filter className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-            <select
-              value={selectedCat}
-              onChange={(e) => updateSearch({ category: e.target.value !== 'All' ? e.target.value : undefined })}
-              className="w-full bg-[#252525] border border-[#2e2e2e] text-white px-3 py-2 text-sm focus:outline-none focus:border-cyan-500 cursor-pointer"
-            >
-              {categories.map(cat => (
-                <option key={cat} value={cat}>
-                  {cat === 'All' ? (t('overview') === 'Overview' ? 'All Categories' : 'Alle Kategorien') : cat}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Sort Order */}
-          <div className="md:col-span-2 flex items-center gap-2">
-            <Clock className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-            <select
-              value={sortOrder}
-              onChange={(e) => updateSearch({ sort: e.target.value as 'newest' | 'oldest' })}
-              className="w-full bg-[#252525] border border-[#2e2e2e] text-white px-3 py-2 text-sm focus:outline-none focus:border-cyan-500 cursor-pointer"
-            >
-              <option value="newest">{t('newest')}</option>
-              <option value="oldest">{t('oldest')}</option>
-            </select>
-          </div>
-
-          {/* Full Text Toggle */}
-          <div className="md:col-span-2 flex items-center justify-end">
-            <label className="flex items-center gap-2 text-xs font-semibold text-gray-400 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={includeFullText}
-                onChange={(e) => updateSearch({ fulltext: e.target.checked || undefined })}
-                className="bg-[#252525] border border-[#2e2e2e] text-cyan-500 focus:ring-0 focus:ring-offset-0 cursor-pointer"
-              />
-              <span>{t('searchFullText')}</span>
-            </label>
+        {/* Unified Search Input and modifier hints */}
+        <div className="space-y-3">
+          <SmartSearchInput
+            value={localQuery}
+            onChange={handleQueryChange}
+            categories={categories}
+          />
+          
+          <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-[10px] font-semibold text-gray-500 uppercase tracking-wider select-none font-mono">
+            <span className="text-cyan-500 font-bold">Search Modifiers:</span>
+            <span>category:name</span>
+            <span>topic:id</span>
+            <span>after:YYYY-MM-DD</span>
+            <span>before:YYYY-MM-DD</span>
+            <span>sort:newest|oldest</span>
           </div>
         </div>
       </div>

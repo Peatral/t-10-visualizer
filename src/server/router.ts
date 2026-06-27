@@ -303,6 +303,16 @@ export const appRouter = t.router({
         .all()
     }),
 
+  getAllTopics: t.procedure.query(async () => {
+    return await db.select({
+      id: topics.id,
+      nameDe: topics.nameDe,
+      nameEn: topics.nameEn,
+    })
+    .from(topics)
+    .all()
+  }),
+
   // Search articles using SQLite indexes and FTS5 full-text index
   searchArticles: t.procedure
     .input(
@@ -311,39 +321,56 @@ export const appRouter = t.router({
         category: z.string().optional(),
         sort: z.enum(['newest', 'oldest']).optional(),
         includeFullText: z.boolean().optional(),
+        before: z.string().optional(),
+        after: z.string().optional(),
+        topic: z.string().optional(),
       })
     )
-    .query(async ({ input }) => {
+    .query(async ({ input }): Promise<ArticleMetadata[]> => {
       const q = (input.q || '').trim()
       const category = input.category || 'All'
       const sort = input.sort || 'newest'
-      const includeFullText = input.includeFullText || false
+      const includeFullText = input.includeFullText !== false // default to true
+      const { before, after, topic } = input
 
-      // If no query string, do simple standard select with category filter and sort
-      if (!q) {
-        const query = db.select({
-          id: articles.id,
-          title: articles.title,
-          description: articles.description,
-          date: articles.date,
-          link: articles.link,
-          category: articles.category,
-        })
-        .from(articles)
+      const conditions: any[] = []
 
-        if (category !== 'All') {
-          query.where(eq(articles.category, category))
-        }
-
-        query.orderBy(sort === 'newest' ? desc(articles.date) : asc(articles.date))
-        return await query.all()
+      // Category filter
+      if (category !== 'All') {
+        conditions.push(eq(articles.category, category))
       }
 
-      // If query is present, use FTS5 virtual table via Drizzle
-      const ftsQuery = formatFtsQuery(q)
-      const matchClause = includeFullText ? ftsQuery : `{title description} : ${ftsQuery}`
+      // Date range filters
+      if (before && before.trim()) {
+        conditions.push(sql`${articles.date} <= ${before.trim()}`)
+      }
+      if (after && after.trim()) {
+        conditions.push(sql`${articles.date} >= ${after.trim()}`)
+      }
 
-      const query = db.select({
+      // Topic filter
+      if (topic && topic.trim()) {
+        const matchingTopicIds = await getMatchingTopicIdsForQuery(db, topic)
+        if (matchingTopicIds.length > 0) {
+          const topicList = matchingTopicIds.map((id: string) => `'${id.replace(/'/g, "''")}'`).join(',')
+          conditions.push(
+            sql`${articles.id} IN (SELECT article_id FROM article_topic_matches WHERE topic_id IN (${sql.raw(topicList)}))`
+          )
+        } else {
+          conditions.push(sql`1=0`)
+        }
+      }
+
+      // FTS5 search query
+      if (q) {
+        const ftsQuery = formatFtsQuery(q)
+        const matchClause = includeFullText ? ftsQuery : `{title description} : ${ftsQuery}`
+        conditions.push(
+          sql`${articles.id} IN (SELECT id FROM articles_fts WHERE articles_fts MATCH ${matchClause})`
+        )
+      }
+
+      let query: any = db.select({
         id: articles.id,
         title: articles.title,
         description: articles.description,
@@ -352,14 +379,12 @@ export const appRouter = t.router({
         category: articles.category,
       })
       .from(articles)
-      .where(
-        and(
-          category !== 'All' ? eq(articles.category, category) : undefined,
-          sql`articles.id IN (SELECT id FROM articles_fts WHERE articles_fts MATCH ${matchClause})`
-        )
-      )
-      .orderBy(sort === 'newest' ? desc(articles.date) : asc(articles.date))
 
+      if (conditions.length > 0) {
+        query = query.where(and(...conditions))
+      }
+
+      query.orderBy(sort === 'newest' ? desc(articles.date) : asc(articles.date))
       return await query.all()
     }),
 })

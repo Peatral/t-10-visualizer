@@ -47,7 +47,15 @@ const translations = {
     searchEmpty: "No articles matched your search query.",
     relativeMode: "Relative Mode",
     absoluteMode: "Absolute Mode",
-    relativeModeDesc: "Shows keyword mentions weighted against total articles in each period (using gaussian smoothing to stabilize low-data eras)."
+    relativeModeDesc: "Shows keyword mentions weighted against total articles in each period (using gaussian smoothing to stabilize low-data eras).",
+    smartSearchPlaceholder: "Search articles... (e.g. charging category:mobility after:2025-01-01 topic:ki)",
+    searchModifiers: "Search Modifiers",
+    searchHelpNav: "Use ↑↓ to navigate, Enter to select",
+    modifierCategoryDesc: "Filter by category",
+    modifierTopicDesc: "Filter by topic keyword",
+    modifierAfterDesc: "Show articles published after date (YYYY-MM-DD)",
+    modifierBeforeDesc: "Show articles published before date (YYYY-MM-DD)",
+    modifierSortDesc: "Sort order (newest, oldest)"
   },
   de: {
     dashboardTitle: "T-10 Analyse-Dashboard",
@@ -91,7 +99,15 @@ const translations = {
     searchEmpty: "Keine Artikel entsprechen Ihrer Suchanfrage.",
     relativeMode: "Relativer Modus",
     absoluteMode: "Absoluter Modus",
-    relativeModeDesc: "Zeigt Keyword-Nennungen im Verhältnis zur Gesamtzahl der Artikel in dem Zeitraum (mit Gauß-Glättung zur Stabilisierung datenarmem Ären)."
+    relativeModeDesc: "Zeigt Keyword-Nennungen im Verhältnis zur Gesamtzahl der Artikel in dem Zeitraum (mit Gauß-Glättung zur Stabilisierung datenarmem Ären).",
+    smartSearchPlaceholder: "Artikel suchen... (z. B. Ladeinfrastruktur category:mobility after:2025-01-01 topic:ki)",
+    searchModifiers: "Suchmodifikatoren",
+    searchHelpNav: "Verwenden Sie ↑↓ zum Navigieren, Enter zum Auswählen",
+    modifierCategoryDesc: "Nach Kategorie filtern",
+    modifierTopicDesc: "Nach Themenschlüsselwort filtern",
+    modifierAfterDesc: "Artikel nach Datum anzeigen (JJJJ-MM-TT)",
+    modifierBeforeDesc: "Artikel vor Datum anzeigen (JJJJ-MM-TT)",
+    modifierSortDesc: "Sortierreihenfolge (newest, oldest)"
   }
 }
 
