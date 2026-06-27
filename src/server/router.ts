@@ -22,7 +22,9 @@ async function getMatchingTopicIdsForQuery(db: any, q: string): Promise<string[]
     .from(topics)
     .leftJoin(topicKeywords, eq(topics.id, topicKeywords.topicId))
     .where(
-      sql`LOWER(topics.name_de) LIKE ${`%${cleanQ}%`} OR 
+      sql`LOWER(topics.id) = ${cleanQ} OR
+          LOWER(topics.id) LIKE ${`%${cleanQ}%`} OR
+          LOWER(topics.name_de) LIKE ${`%${cleanQ}%`} OR 
           LOWER(topics.name_en) LIKE ${`%${cleanQ}%`} OR 
           LOWER(topic_keywords.keyword) LIKE ${`%${cleanQ}%`}`
     )

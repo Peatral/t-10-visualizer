@@ -28,8 +28,7 @@ export const SEARCH_MODIFIERS: ModifierDefinition[] = [
     insertText: 'category:',
     icon: (cls) => <Layers className={cls} />,
     getValues: (val, { categories }) => {
-      const list = ['All', ...categories];
-      return list
+      return categories
         .filter(cat => cat.toLowerCase().includes(val))
         .map(cat => ({
           type: 'value',
