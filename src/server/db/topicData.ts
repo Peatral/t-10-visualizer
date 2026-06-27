@@ -301,20 +301,6 @@ export const TOPICS_LIST: TopicDefinition[] = [
     ]
   },
   {
-    "id": "elektrischer-motor",
-    "nameDe": "Elektrischer Motor",
-    "nameEn": "Electric motor",
-    "keywordsDe": [
-      "elektrischer motor"
-    ],
-    "keywordsEn": [
-      "electric motor"
-    ],
-    "categories": [
-      "t-10-energy"
-    ]
-  },
-  {
     "id": "elektrische-heizung",
     "nameDe": "elektrische Heizung",
     "nameEn": "electric heating",
@@ -337,21 +323,6 @@ export const TOPICS_LIST: TopicDefinition[] = [
     ],
     "keywordsEn": [
       "energy balance"
-    ],
-    "categories": [
-      "t-10-energy"
-    ]
-  },
-  {
-    "id": "energie-effizienz",
-    "nameDe": "Energie-Effizienz",
-    "nameEn": "Energy efficiency",
-    "keywordsDe": [
-      "energie-effizienz",
-      "energieeffizienz"
-    ],
-    "keywordsEn": [
-      "energy efficiency"
     ],
     "categories": [
       "t-10-energy"
@@ -1235,21 +1206,6 @@ export const TOPICS_LIST: TopicDefinition[] = [
     ]
   },
   {
-    "id": "solar-energie",
-    "nameDe": "Solar-Energie",
-    "nameEn": "Solar energy",
-    "keywordsDe": [
-      "solar-energie",
-      "solarenergie"
-    ],
-    "keywordsEn": [
-      "solar energy"
-    ],
-    "categories": [
-      "t-10-energy"
-    ]
-  },
-  {
     "id": "solar-offshore",
     "nameDe": "Solar Offshore",
     "nameEn": "Solar offshore",
@@ -1944,13 +1900,15 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Artenvielfalt",
     "nameEn": "Biodiversity",
     "keywordsDe": [
-      "artenvielfalt"
+      "artenvielfalt",
+      "biodiversität"
     ],
     "keywordsEn": [
       "biodiversity"
     ],
     "categories": [
-      "t-10-food"
+      "t-10-food",
+      "t-10-housing"
     ]
   },
   {
@@ -2109,21 +2067,6 @@ export const TOPICS_LIST: TopicDefinition[] = [
     ],
     "categories": [
       "t-10-food"
-    ]
-  },
-  {
-    "id": "biodiversitaet",
-    "nameDe": "Biodiversität",
-    "nameEn": "Biodiversity",
-    "keywordsDe": [
-      "biodiversität"
-    ],
-    "keywordsEn": [
-      "biodiversity"
-    ],
-    "categories": [
-      "t-10-food",
-      "t-10-housing"
     ]
   },
   {
@@ -2532,13 +2475,15 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Erderwärmung",
     "nameEn": "Global warming",
     "keywordsDe": [
-      "erderwärmung"
+      "erderwärmung",
+      "globale erwärmung"
     ],
     "keywordsEn": [
       "global warming"
     ],
     "categories": [
-      "t-10-food"
+      "t-10-food",
+      "t-10-mobility"
     ]
   },
   {
@@ -3528,20 +3473,6 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "keywordsEn": [
       "cooling",
       "storage"
-    ],
-    "categories": [
-      "t-10-food"
-    ]
-  },
-  {
-    "id": "kuenstliche-intelligenz-ki",
-    "nameDe": "Künstliche Intelligenz (KI)",
-    "nameEn": "Artificial Intelligence (AI)",
-    "keywordsDe": [
-      "künstliche intelligenz ki"
-    ],
-    "keywordsEn": [
-      "artificial intelligence ai"
     ],
     "categories": [
       "t-10-food"
@@ -5906,13 +5837,15 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Energieeffizienz",
     "nameEn": "Energy efficiency",
     "keywordsDe": [
-      "energieeffizienz"
+      "energieeffizienz",
+      "energie-effizienz"
     ],
     "keywordsEn": [
       "energy efficiency"
     ],
     "categories": [
-      "t-10-housing"
+      "t-10-housing",
+      "t-10-energy"
     ]
   },
   {
@@ -7215,13 +7148,15 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Solarenergie",
     "nameEn": "Solar energy",
     "keywordsDe": [
-      "solarenergie"
+      "solarenergie",
+      "solar-energie"
     ],
     "keywordsEn": [
       "solar energy"
     ],
     "categories": [
-      "t-10-housing"
+      "t-10-housing",
+      "t-10-energy"
     ]
   },
   {
@@ -7963,20 +7898,6 @@ export const TOPICS_LIST: TopicDefinition[] = [
     ]
   },
   {
-    "id": "auto-sharing",
-    "nameDe": "Auto sharing",
-    "nameEn": "Car sharing",
-    "keywordsDe": [
-      "auto sharing"
-    ],
-    "keywordsEn": [
-      "car sharing"
-    ],
-    "categories": [
-      "t-10-mobility"
-    ]
-  },
-  {
     "id": "autobahnen",
     "nameDe": "Autobahnen",
     "nameEn": "Highways",
@@ -8179,7 +8100,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Carsharing",
     "nameEn": "Car sharing",
     "keywordsDe": [
-      "carsharing"
+      "carsharing",
+      "auto sharing"
     ],
     "keywordsEn": [
       "car sharing"
@@ -8334,13 +8256,15 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Elektromotor",
     "nameEn": "Electric motor",
     "keywordsDe": [
-      "elektromotor"
+      "elektromotor",
+      "elektrischer motor"
     ],
     "keywordsEn": [
       "electric motor"
     ],
     "categories": [
-      "t-10-mobility"
+      "t-10-mobility",
+      "t-10-energy"
     ]
   },
   {
@@ -8879,20 +8803,6 @@ export const TOPICS_LIST: TopicDefinition[] = [
     ]
   },
   {
-    "id": "globale-erwaermung",
-    "nameDe": "globale Erwärmung",
-    "nameEn": "global warming",
-    "keywordsDe": [
-      "globale erwärmung"
-    ],
-    "keywordsEn": [
-      "global warming"
-    ],
-    "categories": [
-      "t-10-mobility"
-    ]
-  },
-  {
     "id": "grossgeraete",
     "nameDe": "Großgeräte",
     "nameEn": "Large appliances",
@@ -9113,7 +9023,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "künstlicher intelligenz",
       "künstliches intelligenz",
       "maschinelles lernen",
-      "k.i."
+      "k.i.",
+      "künstliche intelligenz ki"
     ],
     "keywordsEn": [
       "ai",
@@ -9121,7 +9032,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "artifical intelligence",
       "machine learning",
       "deep learning",
-      "a.i."
+      "a.i.",
+      "artificial intelligence ai"
     ],
     "categories": [
       "t-10-mobility",
@@ -10779,4 +10691,4 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "t-10-mobility"
     ]
   }
-];
+]
