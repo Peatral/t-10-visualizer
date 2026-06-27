@@ -1,37 +1,32 @@
-import React from 'react'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { TrendingUp, Calendar, ArrowRight } from 'lucide-react'
-import { useQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { useTranslation } from '../context'
 import { useTRPC } from '../utils/trpc'
 import { StatPanel } from '../components/StatPanel'
-import { RecentArticlesFeed } from '../components/RecentArticlesFeed'
-import type { Article } from '../types'
+import { RecentArticlesFeed, type FeedArticle } from '../components/RecentArticlesFeed'
+import { createFileRoute } from '@tanstack/react-router'
+import { LoadingSpinner } from '../components/LoadingSpinner'
 
-export const Dashboard: React.FC = () => {
+export const Route = createFileRoute('/')({
+  component: Dashboard,
+  pendingComponent: () => <LoadingSpinner text='Loading dashboard...' />,
+})
+
+function Dashboard() {
   const { t } = useTranslation()
   const trpcUtils = useTRPC()
   const navigate = useNavigate()
 
-  const { data: dashboardData, isLoading } = useQuery(
+  const { data: dashboardData } = useSuspenseQuery(
     trpcUtils.getDashboardData.queryOptions()
   )
 
-  const handleArticleClick = (art: Article) => {
-    navigate({ to: '/article/$articleId', params: { articleId: art.id } })
-  }
-
-  if (isLoading || !dashboardData) {
-    return (
-      <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-4 bg-[#121212]">
-        <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
-        <span className="text-sm font-semibold tracking-wider uppercase text-gray-500 animate-pulse">Loading dashboard...</span>
-      </div>
-    )
+  const handleArticleClick = (art: FeedArticle) => {
+    navigate({ to: '/articles/$articleId', params: { articleId: art.id } })
   }
 
   const { totalArticles, categoryCounts, recentArticles } = dashboardData
-
 
   return (
     <div className="h-full overflow-y-auto bg-[#121212] select-none text-left font-sans">
@@ -116,4 +111,3 @@ export const Dashboard: React.FC = () => {
     </div>
   )
 }
-export default Dashboard

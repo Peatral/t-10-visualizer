@@ -10,7 +10,7 @@ interface CategoryBadgeProps {
 
 export const CategoryBadge: React.FC<CategoryBadgeProps> = ({ category, variant = 'small' }) => {
   const navigate = useNavigate();
-  const searchParams = useSearch({ strict: false }) as any;
+  const searchParams = useSearch({ strict: false });
   const currentQ = searchParams?.q || '';
 
   const handleClick = (e: React.MouseEvent) => {

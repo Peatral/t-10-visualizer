@@ -1,13 +1,15 @@
 import React from 'react'
 import { Activity } from 'lucide-react'
 import { useTranslation } from '../context'
-import type { Article } from '../types'
+import type { Article } from '../server/db/schema'
 import { CategoryBadge } from './CategoryBadge'
 import { PublishedDateBadge } from './PublishedDateBadge'
 
+export type FeedArticle = Pick<Article, "id" | "date" | "title" | "category">
+
 interface RecentArticlesFeedProps {
-  articles: Article[]
-  onArticleClick: (article: Article) => void
+  articles: FeedArticle[]
+  onArticleClick: (article: FeedArticle) => void
 }
 
 export const RecentArticlesFeed: React.FC<RecentArticlesFeedProps> = ({ articles, onArticleClick }) => {

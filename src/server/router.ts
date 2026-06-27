@@ -1,59 +1,11 @@
 import { initTRPC } from '@trpc/server'
 import { z } from 'zod'
 import { db } from './db/index.js'
-import { articles, topics, articleTopicMatches, topicKeywords } from './db/schema.js'
+import { articles, topics, articleTopicMatches, type Article } from './db/schema.js'
 import { eq, desc, asc, and, sql } from 'drizzle-orm'
-import { calculateTrendmapGrid } from '../utils/trendmapCalc.js'
+import { calculateTrendmapGrid, formatFtsQuery, getMatchingTopicIdsForQuery, type TrendmapCalculationResult } from '../utils/trendmapCalc.js'
 
 const t = initTRPC.create()
-
-function formatFtsQuery(q: string): string {
-  return q
-    .trim()
-    .split(/\s+/)
-    .filter(word => word.length > 0)
-    .map(word => `${word.replace(/[*"']/g, '')}*`)
-    .join(' AND ')
-}
-
-async function getMatchingTopicIdsForQuery(db: any, q: string): Promise<string[]> {
-  const cleanQ = q.trim().toLowerCase()
-  const rows = await db.selectDistinct({ topicId: topics.id })
-    .from(topics)
-    .leftJoin(topicKeywords, eq(topics.id, topicKeywords.topicId))
-    .where(
-      sql`LOWER(topics.id) = ${cleanQ} OR
-          LOWER(topics.id) LIKE ${`%${cleanQ}%`} OR
-          LOWER(topics.name_de) LIKE ${`%${cleanQ}%`} OR 
-          LOWER(topics.name_en) LIKE ${`%${cleanQ}%`} OR 
-          LOWER(topic_keywords.keyword) LIKE ${`%${cleanQ}%`}`
-    )
-    .all()
-  return rows.map((r: any) => r.topicId)
-}
-
-export interface ArticleMetadata {
-  id: string
-  title: string
-  description: string
-  date: string
-  link: string
-  category: string
-}
-
-export interface TrendmapCalculationResult {
-  labelToDisplay: Record<string, string>
-  topicKeywords: Record<string, string[]>
-  categoryArticles: Array<ArticleMetadata & { bucket: string; sortVal: number }>
-  croppedTimeScale: Array<{ bucket: string; sortVal: number; isGap?: boolean; gapStart?: string; gapEnd?: string; spanCount?: number }>
-  topDisplayKeys: string[]
-  grid: Record<string, Record<string, number>>
-  cellMatches: Record<string, Record<string, string[]>>
-  maxCellCount: number
-  relativeGrid: Record<string, Record<string, string>>
-  relativeWeights: Record<string, Record<string, number>>
-  maxRelativeWeight: number
-}
 
 export const appRouter = t.router({
   // Get main metadata configuration payload (no heavy articles list, no keyword vocabulary, no translations)
@@ -141,7 +93,7 @@ export const appRouter = t.router({
   // Server-side Trendmap grid calculation on the fly
   getTrendmapGrid: t.procedure
     .input(z.object({
-      category: z.string(),
+      category: z.string().optional(),
       language: z.enum(['en', 'de']),
       q: z.string().optional(),
       before: z.string().optional(),
@@ -150,7 +102,7 @@ export const appRouter = t.router({
     }))
     .query(async ({ input }): Promise<TrendmapCalculationResult> => {
       const { category, language, q, before, after, topic } = input
-      return await calculateTrendmapGrid(db, category, language, q, before, after, topic)
+      return await calculateTrendmapGrid(db, language, category, q, before, after, topic)
     }),
 
   getTrendmapCellArticles: t.procedure
@@ -331,9 +283,9 @@ export const appRouter = t.router({
         topic: z.string().optional(),
       })
     )
-    .query(async ({ input }): Promise<ArticleMetadata[]> => {
-      const q = (input.q || '').trim()
-      const category = input.category || 'All'
+    .query(async ({ input }): Promise<Article[]> => {
+      const q = input.q?.replace(/([a-zA-Z0-9_-]+):$/, '').trim() || ''
+      const category = input.category
       const sort = input.sort || 'newest'
       const includeFullText = input.includeFullText !== false // default to true
       const { before, after, topic } = input
@@ -341,7 +293,7 @@ export const appRouter = t.router({
       const conditions: any[] = []
 
       // Category filter
-      if (category !== 'All') {
+      if (category !== undefined) {
         conditions.push(eq(articles.category, category))
       }
 

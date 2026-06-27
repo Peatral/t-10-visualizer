@@ -109,7 +109,8 @@ export function parseSearchQuery(queryStr: string): ParsedSearchQuery {
   if (!queryStr) return result;
 
   const keysStr = SEARCH_MODIFIERS.map(m => m.key).join('|');
-  // Regex to match key:value, key:"value with spaces", or key:'value with spaces'
+  
+  // 1. Match fully formed modifiers (key:value)
   const filterRegex = new RegExp(`\\b(${keysStr}):(?:"([^"]*)"|'([^']*)'|([^\\s]+))`, 'gi');
   
   let match;
@@ -137,7 +138,16 @@ export function parseSearchQuery(queryStr: string): ParsedSearchQuery {
     cleanParts.push(remainingText);
   }
   
-  result.q = cleanParts.join(' ').trim();
+  // 2. NEW: Clean up any dangling modifiers that didn't have values
+  // This looks for "topic:", "category:", etc., followed by a space or the end of the string
+  const danglingModifierRegex = new RegExp(`\\b(${keysStr}):(?=\\s|$)`, 'gi');
+  
+  result.q = cleanParts
+    .join(' ')
+    .replace(danglingModifierRegex, '') // Strip dangling modifiers
+    .replace(/\s+/g, ' ')               // Remove duplicate spaces left behind
+    .trim();
+    
   return result;
 }
 

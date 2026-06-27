@@ -83,3 +83,5 @@ export const articleTopicMatchesRelations = relations(articleTopicMatches, ({ on
     references: [topics.id],
   }),
 }))
+
+export type Article = typeof articles.$inferSelect;

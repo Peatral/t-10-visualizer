@@ -1,26 +1,20 @@
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { RouterProvider } from '@tanstack/react-router'
-import { DataContext, LanguageProvider } from './context'
-import { router } from './routes'
-import { trpc, trpcClient, useTRPC } from './utils/trpc'
+import { createRootRoute, Outlet } from '@tanstack/react-router'
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+import { useQuery } from '@tanstack/react-query'
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5, // 5 minutes
-    },
-  },
-})
+import { useTRPC } from '../utils/trpc'
+import { DataContext, LanguageProvider } from '../context'
+import Navbar from '../components/Navbar'
 
-function VisualizerApp() {
+import '../index.css'
+
+const RootLayout = () => {
   const trpcUtils = useTRPC()
   
+  // Fetch global data right at the root of the router
   const { data, error, isLoading } = useQuery(
     trpcUtils.getDataPayload.queryOptions()
   )
-
 
   if (error) {
     return (
@@ -45,22 +39,22 @@ function VisualizerApp() {
     )
   }
 
+  // Once data is loaded, wrap the layout in your providers
   return (
     <DataContext.Provider value={data}>
       <LanguageProvider>
-        <RouterProvider router={router} />
+        <div className="h-full w-full flex flex-col bg-[#121212] text-[#e0e0e0]">
+          <Navbar />
+          <main className="flex-grow overflow-hidden relative">
+            <Outlet />
+          </main>
+        </div>
+        <TanStackRouterDevtools position="bottom-right" />
       </LanguageProvider>
     </DataContext.Provider>
   )
 }
 
-export default function App() {
-  return (
-    <trpc.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
-        <VisualizerApp />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </trpc.Provider>
-  )
-}
+export const Route = createRootRoute({
+  component: RootLayout,
+})

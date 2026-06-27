@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { DataSet } from 'vis-data';
 import { Timeline as VisTimeline } from 'vis-timeline';
-import type { Article } from '../types';
+import type { Article } from '../server/db/schema';
 
 interface SearchTimelineViewProps {
   articles: Article[];
@@ -84,7 +84,7 @@ export const SearchTimelineView: React.FC<SearchTimelineViewProps> = ({ articles
         timelineInstance.current = null;
       }
     };
-  }, [articles]);
+  }, [articles, onArticleClick]);
 
   return (
     <div className="h-full relative overflow-hidden bg-[#121212]">

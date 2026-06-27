@@ -29,6 +29,7 @@ const translations = {
     articlesCount: "Articles ({count})",
     listView: "List",
     timelineView: "Timeline",
+    heatmapView: "Heatmap",
     heatmapHelp: "Click any active cell, keyword row, or column header to view articles.",
     timelineHelp: "Zoom with mouse wheel, drag horizontally to scroll. Click events to view article bodies.",
     timelineGroup: "Timeline Group:",
@@ -109,7 +110,8 @@ const translations = {
     modifierAfterDesc: "Artikel nach Datum anzeigen (JJJJ-MM-TT)",
     modifierBeforeDesc: "Artikel vor Datum anzeigen (JJJJ-MM-TT)",
     modifierSortDesc: "Sortierreihenfolge (newest, oldest)",
-    viewingArticle: "Artikel anzeigen: {id}"
+    viewingArticle: "Artikel anzeigen: {id}",
+    heatmapView: "Heatmap",
   }
 }
 

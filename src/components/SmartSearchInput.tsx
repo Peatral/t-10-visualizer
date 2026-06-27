@@ -39,7 +39,7 @@ export const SmartSearchInput: React.FC<SmartSearchInputProps> = ({
     const currentWord = words[words.length - 1] || '';
 
     // Check if we are currently typing a value inside a filter (e.g. category:mo)
-    const filterValueMatch = currentWord.match(/^([a-zA-Z\-]+):(.*)/i);
+    const filterValueMatch = currentWord.match(/^([a-zA-Z-]+):(.*)/i);
 
     if (filterValueMatch) {
       const filterKey = filterValueMatch[1].toLowerCase() as ModifierKey;
@@ -63,7 +63,7 @@ export const SmartSearchInput: React.FC<SmartSearchInputProps> = ({
         insertText: m.insertText,
         icon: m.icon("w-3.5 h-3.5 text-gray-400")
       }));
-  }, [value, categories, topics, isOpen, t]);
+  }, [value, categories, topics, t]);
 
   // Reset selected index when suggestions change
   useEffect(() => {

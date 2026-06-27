@@ -3,7 +3,7 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import { CategoryBadge } from './CategoryBadge';
 import { PublishedDateBadge } from './PublishedDateBadge';
 import { useTranslation } from '../context';
-import type { Article } from '../types';
+import type { Article } from '../server/db/schema';
 
 interface SearchListViewProps {
   articles: Article[];

@@ -12,7 +12,7 @@ interface TopicTagProps {
 export const TopicTag: React.FC<TopicTagProps> = ({ nameDe, nameEn, topicId }) => {
   const { language } = useTranslation();
   const navigate = useNavigate();
-  const searchParams = useSearch({ strict: false }) as any;
+  const searchParams = useSearch({ strict: false });
   const currentQ = searchParams?.q || '';
   const label = language === 'de' ? nameDe : nameEn;
 

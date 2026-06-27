@@ -25,22 +25,25 @@ export interface TrendmapCalculationResult {
   maxRelativeWeight: number
 }
 
-function formatFtsQuery(q: string): string {
+export function formatFtsQuery(q: string): string {
   return q
     .trim()
+    .replace(/:/g, ' ') 
     .split(/\s+/)
     .filter(word => word.length > 0)
     .map(word => `${word.replace(/[*"']/g, '')}*`)
     .join(' AND ')
 }
 
-async function getMatchingTopicIdsForQuery(db: any, q: string): Promise<string[]> {
+export async function getMatchingTopicIdsForQuery(db: any, q: string): Promise<string[]> {
   const cleanQ = q.trim().toLowerCase()
   const rows = await db.selectDistinct({ topicId: topics.id })
     .from(topics)
     .leftJoin(topicKeywords, eq(topics.id, topicKeywords.topicId))
     .where(
-      sql`LOWER(topics.name_de) LIKE ${`%${cleanQ}%`} OR 
+      sql`LOWER(topics.id) = ${cleanQ} OR
+          LOWER(topics.id) LIKE ${`%${cleanQ}%`} OR
+          LOWER(topics.name_de) LIKE ${`%${cleanQ}%`} OR 
           LOWER(topics.name_en) LIKE ${`%${cleanQ}%`} OR 
           LOWER(topic_keywords.keyword) LIKE ${`%${cleanQ}%`}`
     )
@@ -50,8 +53,8 @@ async function getMatchingTopicIdsForQuery(db: any, q: string): Promise<string[]
 
 export async function calculateTrendmapGrid(
   db: any,
-  category: string,
   language: 'en' | 'de',
+  category?: string,
   q?: string,
   before?: string,
   after?: string,
@@ -93,7 +96,7 @@ export async function calculateTrendmapGrid(
 
   // Build unified search conditions on articles table
   const searchConditions: any[] = []
-  if (category !== 'All') {
+  if (category !== undefined) {
     searchConditions.push(eq(articles.category, category))
   }
   if (before && before.trim()) {
