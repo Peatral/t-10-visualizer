@@ -25,6 +25,15 @@ export interface TrendmapCalculationResult {
   maxRelativeWeight: number
 }
 
+function formatFtsQuery(q: string): string {
+  return q
+    .trim()
+    .split(/\s+/)
+    .filter(word => word.length > 0)
+    .map(word => `${word.replace(/[*"']/g, '')}*`)
+    .join(' AND ')
+}
+
 async function getMatchingTopicIdsForQuery(db: any, q: string): Promise<string[]> {
   const cleanQ = q.trim().toLowerCase()
   const rows = await db.selectDistinct({ topicId: topics.id })
@@ -43,7 +52,10 @@ export async function calculateTrendmapGrid(
   db: any,
   category: string,
   language: 'en' | 'de',
-  q?: string
+  q?: string,
+  before?: string,
+  after?: string,
+  topic?: string
 ): Promise<TrendmapCalculationResult> {
   // 1. Fetch all topics (category-independent)
   const dbTopics = await db.select({
@@ -79,37 +91,44 @@ export async function calculateTrendmapGrid(
     }
   })
 
-  // Resolve matching topic IDs for search query if present
-  let matchingTopicIds: string[] = []
-  if (q && q.trim()) {
-    matchingTopicIds = await getMatchingTopicIdsForQuery(db, q)
-  }
-
-  // 2. Query min and max dates in category to build timescale
-  const dateConditions: any[] = []
+  // Build unified search conditions on articles table
+  const searchConditions: any[] = []
   if (category !== 'All') {
-    dateConditions.push(eq(articles.category, category))
+    searchConditions.push(eq(articles.category, category))
   }
-
-  if (q && q.trim()) {
+  if (before && before.trim()) {
+    searchConditions.push(sql`${articles.date} <= ${before.trim()}`)
+  }
+  if (after && after.trim()) {
+    searchConditions.push(sql`${articles.date} >= ${after.trim()}`)
+  }
+  if (topic && topic.trim()) {
+    const matchingTopicIds = await getMatchingTopicIdsForQuery(db, topic)
     if (matchingTopicIds.length > 0) {
-      const topicList = matchingTopicIds.map(id => `'${id.replace(/'/g, "''")}'`).join(',')
-      dateConditions.push(
+      const topicList = matchingTopicIds.map((id: string) => `'${id.replace(/'/g, "''")}'`).join(',')
+      searchConditions.push(
         sql`${articles.id} IN (SELECT article_id FROM article_topic_matches WHERE topic_id IN (${sql.raw(topicList)}))`
       )
     } else {
-      dateConditions.push(sql`1=0`)
+      searchConditions.push(sql`1=0`)
     }
   }
+  if (q && q.trim()) {
+    const ftsQuery = formatFtsQuery(q)
+    searchConditions.push(
+      sql`${articles.id} IN (SELECT id FROM articles_fts WHERE articles_fts MATCH ${ftsQuery})`
+    )
+  }
 
+  // 2. Query min and max dates in matching subset to build timescale
   let dateQuery = db.select({
-    minDate: sql<string>`min(date)`,
-    maxDate: sql<string>`max(date)`
+    minDate: sql<string>`min(articles.date)`,
+    maxDate: sql<string>`max(articles.date)`
   })
   .from(articles)
 
-  if (dateConditions.length > 0) {
-    dateQuery = dateQuery.where(and(...dateConditions))
+  if (searchConditions.length > 0) {
+    dateQuery = dateQuery.where(and(...searchConditions))
   }
 
   const { minDate, maxDate } = await dateQuery.get() || { minDate: null, maxDate: null }
@@ -131,32 +150,16 @@ export async function calculateTrendmapGrid(
     }
   }
 
-  // 3. Query total articles per bucket in category for baseline
-  const bucketConditions: any[] = []
-  if (category !== 'All') {
-    bucketConditions.push(eq(articles.category, category))
-  }
-
-  if (q && q.trim()) {
-    if (matchingTopicIds.length > 0) {
-      const topicList = matchingTopicIds.map(id => `'${id.replace(/'/g, "''")}'`).join(',')
-      bucketConditions.push(
-        sql`${articles.id} IN (SELECT article_id FROM article_topic_matches WHERE topic_id IN (${sql.raw(topicList)}))`
-      )
-    } else {
-      bucketConditions.push(sql`1=0`)
-    }
-  }
-
+  // 3. Query total articles per bucket in matching subset for baseline
   let bucketCountsQuery = db.select({
-    bucket: sql<string>`strftime('%Y', date) || '-' || (CASE WHEN strftime('%m', date) <= '06' THEN 'H1' ELSE 'H2' END)`,
+    bucket: sql<string>`strftime('%Y', articles.date) || '-' || (CASE WHEN strftime('%m', articles.date) <= '06' THEN 'H1' ELSE 'H2' END)`,
     count: sql<number>`count(*)`
   })
   .from(articles)
-  .groupBy(sql`strftime('%Y', date) || '-' || (CASE WHEN strftime('%m', date) <= '06' THEN 'H1' ELSE 'H2' END)`)
+  .groupBy(sql`strftime('%Y', articles.date) || '-' || (CASE WHEN strftime('%m', articles.date) <= '06' THEN 'H1' ELSE 'H2' END)`)
 
-  if (bucketConditions.length > 0) {
-    bucketCountsQuery = bucketCountsQuery.where(and(...bucketConditions))
+  if (searchConditions.length > 0) {
+    bucketCountsQuery = bucketCountsQuery.where(and(...searchConditions))
   }
 
   const bucketCounts = await bucketCountsQuery.all()
@@ -190,32 +193,17 @@ export async function calculateTrendmapGrid(
   })
 
   // 4. Fetch matched aggregated cell counts directly using group by
-  const matchesConditions: any[] = []
-  if (category !== 'All') {
-    matchesConditions.push(eq(articleTopicMatches.category, category))
-  }
-
-  if (q && q.trim()) {
-    if (matchingTopicIds.length > 0) {
-      const topicList = matchingTopicIds.map(id => `'${id.replace(/'/g, "''")}'`).join(',')
-      matchesConditions.push(
-        sql`${articleTopicMatches.topicId} IN (${sql.raw(topicList)})`
-      )
-    } else {
-      matchesConditions.push(sql`1=0`)
-    }
-  }
-
   let matchesCountQuery = db.select({
     topicId: articleTopicMatches.topicId,
     bucket: articleTopicMatches.bucket,
     count: sql<number>`count(distinct article_id)`
   })
   .from(articleTopicMatches)
+  .innerJoin(articles, eq(articles.id, articleTopicMatches.articleId))
   .groupBy(articleTopicMatches.topicId, articleTopicMatches.bucket)
 
-  if (matchesConditions.length > 0) {
-    matchesCountQuery = matchesCountQuery.where(and(...matchesConditions))
+  if (searchConditions.length > 0) {
+    matchesCountQuery = matchesCountQuery.where(and(...searchConditions))
   }
 
   const dbMatches = await matchesCountQuery.all()

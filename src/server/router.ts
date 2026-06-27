@@ -142,10 +142,13 @@ export const appRouter = t.router({
       category: z.string(),
       language: z.enum(['en', 'de']),
       q: z.string().optional(),
+      before: z.string().optional(),
+      after: z.string().optional(),
+      topic: z.string().optional(),
     }))
     .query(async ({ input }): Promise<TrendmapCalculationResult> => {
-      const { category, language, q } = input
-      return await calculateTrendmapGrid(db, category, language, q)
+      const { category, language, q, before, after, topic } = input
+      return await calculateTrendmapGrid(db, category, language, q, before, after, topic)
     }),
 
   getTrendmapCellArticles: t.procedure

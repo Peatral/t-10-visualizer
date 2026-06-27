@@ -1,8 +1,8 @@
 import React from 'react';
-import { Layers, MessageSquare, Calendar, Shuffle } from 'lucide-react';
+import { Layers, MessageSquare, Calendar } from 'lucide-react';
 import type { TranslationKey } from '../context/LanguageContext';
 
-export type ModifierKey = 'category' | 'topic' | 'before' | 'after' | 'sort';
+export type ModifierKey = 'category' | 'topic' | 'before' | 'after';
 
 export interface SuggestionItem {
   type: 'filter' | 'value';
@@ -94,23 +94,6 @@ export const SEARCH_MODIFIERS: ModifierDefinition[] = [
         icon: <Calendar className="w-3.5 h-3.5 text-amber-400" />
       }
     ]
-  },
-  {
-    key: 'sort',
-    sublabelKey: 'modifierSortDesc',
-    insertText: 'sort:',
-    icon: (cls) => <Shuffle className={cls} />,
-    getValues: (val, _) => {
-      return ['newest', 'oldest']
-        .filter(s => s.startsWith(val))
-        .map(s => ({
-          type: 'value',
-          key: 'sort',
-          label: s === 'newest' ? 'Newest First' : 'Oldest First',
-          insertText: s,
-          icon: <Shuffle className="w-3.5 h-3.5 text-emerald-400" />
-        }));
-    }
   }
 ];
 
@@ -120,7 +103,6 @@ export interface ParsedSearchQuery {
   topic?: string;
   before?: string;
   after?: string;
-  sort?: 'newest' | 'oldest';
 }
 
 export function parseSearchQuery(queryStr: string): ParsedSearchQuery {
@@ -145,14 +127,7 @@ export function parseSearchQuery(queryStr: string): ParsedSearchQuery {
       cleanParts.push(textBefore);
     }
     
-    if (key === 'sort') {
-      const lowerVal = val.toLowerCase();
-      if (lowerVal === 'oldest' || lowerVal === 'newest') {
-        result.sort = lowerVal as 'newest' | 'oldest';
-      }
-    } else {
-      result[key] = val;
-    }
+    result[key] = val;
     
     lastIndex = filterRegex.lastIndex;
   }

@@ -60,7 +60,8 @@ export const Dashboard: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Heatmap Nav Card */}
               <Link 
-                to="/trendmap"
+                to="/search"
+                search={{ view: 'heatmap' }}
                 className="group bg-[#1a1a1a] hover:bg-[#202020] p-6 block transition-colors cursor-pointer relative"
               >
                 <div className="absolute top-0 left-0 w-1 h-full bg-[#03a9f4]" />
@@ -78,7 +79,8 @@ export const Dashboard: React.FC = () => {
 
               {/* Timeline Nav Card */}
               <Link 
-                to="/timeline"
+                to="/search"
+                search={{ view: 'timeline' }}
                 className="group bg-[#1a1a1a] hover:bg-[#202020] p-6 block transition-colors cursor-pointer relative"
               >
                 <div className="absolute top-0 left-0 w-1 h-full bg-[#3f51b5]" />
