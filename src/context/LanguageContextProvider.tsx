@@ -55,7 +55,8 @@ const translations = {
     modifierTopicDesc: "Filter by topic keyword",
     modifierAfterDesc: "Show articles published after date (YYYY-MM-DD)",
     modifierBeforeDesc: "Show articles published before date (YYYY-MM-DD)",
-    modifierSortDesc: "Sort order (newest, oldest)"
+    modifierSortDesc: "Sort order (newest, oldest)",
+    viewingArticle: "Viewing Article: {id}"
   },
   de: {
     dashboardTitle: "T-10 Analyse-Dashboard",
@@ -107,7 +108,8 @@ const translations = {
     modifierTopicDesc: "Nach Themenschlüsselwort filtern",
     modifierAfterDesc: "Artikel nach Datum anzeigen (JJJJ-MM-TT)",
     modifierBeforeDesc: "Artikel vor Datum anzeigen (JJJJ-MM-TT)",
-    modifierSortDesc: "Sortierreihenfolge (newest, oldest)"
+    modifierSortDesc: "Sortierreihenfolge (newest, oldest)",
+    viewingArticle: "Artikel anzeigen: {id}"
   }
 }
 

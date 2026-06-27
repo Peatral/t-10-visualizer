@@ -3,25 +3,22 @@ import { Filter, ChevronDown } from 'lucide-react'
 import { DataSet } from 'vis-data'
 import { Timeline as VisTimeline } from 'vis-timeline'
 import { useQuery } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
 import { useData } from '../context'
 import { useTranslation } from '../context'
 import { useTRPC } from '../utils/trpc'
 import type { Article } from '../types'
-import { DetailPanel } from '../components/DetailPanel'
 
 export const Timeline: React.FC = () => {
   const data = useData()
   const { t } = useTranslation()
   const trpcUtils = useTRPC()
+  const navigate = useNavigate()
   const timelineRef = useRef<HTMLDivElement>(null)
   const timelineInstance = useRef<VisTimeline | null>(null)
 
   const categories = ["All", ...data.categories]
   const [selectedCat, setSelectedCat] = useState("All")
-
-  // Drilldown overlay panel states
-  const [panelOpen, setPanelOpen] = useState(false)
-  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null)
 
   // Fetch timeline articles on-demand based on category select
   const { data: activeArticles = [], isLoading: isTimelineLoading } = useQuery(
@@ -94,8 +91,7 @@ export const Timeline: React.FC = () => {
           const selectedId = properties.items[0] as number
           const item = items.get(selectedId)
           if (item && item.rawArticle) {
-            setSelectedArticle(item.rawArticle)
-            setPanelOpen(true)
+            navigate({ to: '/article/$articleId', params: { articleId: item.rawArticle.id } })
           }
         }
       })
@@ -110,7 +106,7 @@ export const Timeline: React.FC = () => {
         timelineInstance.current = null
       }
     }
-  }, [activeArticles])
+  }, [activeArticles, navigate])
 
   return (
     <div className="h-full flex flex-col relative bg-[#121212] font-sans">
@@ -126,7 +122,6 @@ export const Timeline: React.FC = () => {
               value={selectedCat} 
               onChange={(e) => {
                 setSelectedCat(e.target.value)
-                setPanelOpen(false)
               }}
               className="bg-[#2a2a2a] text-white px-3 py-1.5 pr-8 text-sm font-medium focus:outline-none appearance-none cursor-pointer font-sans"
             >
@@ -157,17 +152,6 @@ export const Timeline: React.FC = () => {
 
         <div ref={timelineRef} className="h-full w-full" />
       </div>
-
-      <DetailPanel 
-        isOpen={panelOpen}
-        onClose={() => setPanelOpen(false)}
-        articlesList={selectedArticle ? [selectedArticle] : []}
-        selectedArticle={selectedArticle}
-        onSelectArticle={setSelectedArticle}
-        title={t('detailTitle')}
-        defaultView="list"
-        hideList={true}
-      />
     </div>
   )
 }

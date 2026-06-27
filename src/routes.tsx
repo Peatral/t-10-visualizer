@@ -3,6 +3,7 @@ import { Dashboard } from './pages/Dashboard'
 import { Trendmap } from './pages/Trendmap'
 import { Timeline } from './pages/Timeline'
 import { Search } from './pages/Search'
+import { ArticleView } from './pages/ArticleView'
 
 import { RootLayout } from './components/RootLayout'
 
@@ -51,7 +52,13 @@ const searchRoute = createRoute({
   component: Search,
 })
 
-const routeTree = rootRoute.addChildren([indexRoute, trendmapRoute, timelineRoute, searchRoute])
+const articleRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/article/$articleId',
+  component: ArticleView,
+})
+
+const routeTree = rootRoute.addChildren([indexRoute, trendmapRoute, timelineRoute, searchRoute, articleRoute])
 
 export const router = createRouter({ routeTree })
 

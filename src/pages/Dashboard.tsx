@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
-import { Link } from '@tanstack/react-router'
+import React from 'react'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { TrendingUp, Calendar, ArrowRight } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from '../context'
 import { useTRPC } from '../utils/trpc'
-import { DetailPanel } from '../components/DetailPanel'
 import { StatPanel } from '../components/StatPanel'
 import { RecentArticlesFeed } from '../components/RecentArticlesFeed'
 import type { Article } from '../types'
@@ -12,18 +11,14 @@ import type { Article } from '../types'
 export const Dashboard: React.FC = () => {
   const { t } = useTranslation()
   const trpcUtils = useTRPC()
+  const navigate = useNavigate()
 
   const { data: dashboardData, isLoading } = useQuery(
     trpcUtils.getDashboardData.queryOptions()
   )
 
-  // Details panel states
-  const [panelOpen, setPanelOpen] = useState(false)
-  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null)
-
   const handleArticleClick = (art: Article) => {
-    setSelectedArticle(art)
-    setPanelOpen(true)
+    navigate({ to: '/article/$articleId', params: { articleId: art.id } })
   }
 
   if (isLoading || !dashboardData) {
@@ -116,17 +111,6 @@ export const Dashboard: React.FC = () => {
 
         </div>
       </div>
-
-      <DetailPanel 
-        isOpen={panelOpen}
-        onClose={() => setPanelOpen(false)}
-        articlesList={selectedArticle ? [selectedArticle] : []}
-        selectedArticle={selectedArticle}
-        onSelectArticle={setSelectedArticle}
-        title={t('detailTitle')}
-        defaultView="list"
-        hideList={true}
-      />
     </div>
   )
 }

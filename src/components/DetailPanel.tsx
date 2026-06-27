@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { Link } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { useTRPC } from '../utils/trpc'
+import { TopicTag } from './TopicTag'
+import { CategoryBadge } from './CategoryBadge'
 import { 
   MoveVertical, 
   Maximize2, 
@@ -41,7 +44,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
   const [panelHeight, setPanelHeight] = useState(380)
   const [leftColWidth, setLeftColWidth] = useState(35) // percentage
   const [viewMode, setViewMode] = useState<'list' | 'mini-timeline'>(defaultView)
-  const { t, language } = useTranslation()
+  const { t } = useTranslation()
   const trpc = useTRPC()
 
   // On-demand body text loading
@@ -329,27 +332,33 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
           >
             {selectedArticle ? (
               <div className="space-y-4">
+                <div className="flex justify-between items-start gap-4">
+                  <div>
+                    <h2 className="text-xl font-bold text-white mb-1 leading-snug">{selectedArticle.title}</h2>
+                    <div className="text-cyan-400 text-xs font-semibold mb-2">Published: {selectedArticle.date}</div>
+                  </div>
+                  <Link
+                    to="/article/$articleId"
+                    params={{ articleId: selectedArticle.id }}
+                    className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 bg-[#252525] hover:bg-[#323232] border border-[#2e2e2e] text-white hover:text-cyan-400 font-medium text-xs transition-colors rounded shadow-sm cursor-pointer"
+                  >
+                    <span>Open Full Page</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
                 <div>
-                  <h2 className="text-xl font-bold text-white mb-1 leading-snug">{selectedArticle.title}</h2>
-                  <div className="text-cyan-400 text-xs font-semibold mb-2">Published: {selectedArticle.date}</div>
                   <div className="flex flex-wrap items-center gap-2">
-                    <div className="text-xs uppercase bg-[#3f51b5]/30 text-indigo-300 w-fit px-2 py-0.5 font-medium font-sans">
-                      {selectedArticle.category}
-                    </div>
+                    <CategoryBadge category={selectedArticle.category} variant="small" />
                     {topicsData && topicsData.length > 0 && (
                       <div className="flex flex-wrap gap-1.5">
-                        {topicsData.map((topic: any) => {
-                          const label = language === 'en' ? topic.nameEn : topic.nameDe
-                          return (
-                            <span 
-                              key={topic.topicId}
-                              className="text-[10px] font-semibold bg-[#2a3c2c]/40 text-green-400 border border-[#3c5a3e]/30 px-2 py-0.5"
-                              title={`Topic ID: ${topic.topicId}`}
-                            >
-                              {label}
-                            </span>
-                          )
-                        })}
+                        {topicsData.map((topic: any) => (
+                          <TopicTag 
+                            key={topic.topicId}
+                            nameDe={topic.nameDe}
+                            nameEn={topic.nameEn}
+                            topicId={topic.topicId}
+                          />
+                        ))}
                       </div>
                     )}
                   </div>
@@ -372,7 +381,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
                 </div>
 
                 <div className="border-t border-[#333] pt-4 mt-6">
-                  <h4 className="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-3">{t('fullContent')}</h4>
+                  <h4 className="text-xs text-gray-500 font-semibold mb-3">{t('fullContent')}</h4>
                   {isDetailLoading ? (
                     <div className="flex items-center gap-2 text-xs text-gray-500 font-sans">
                       <div className="w-3.5 h-3.5 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />

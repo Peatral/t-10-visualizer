@@ -7,9 +7,10 @@ import { useVirtualizer } from '@tanstack/react-virtual'
 import { useData } from '../context'
 import { useTranslation } from '../context'
 import { useTRPC } from '../utils/trpc'
-import { DetailPanel } from '../components/DetailPanel'
 import { SmartSearchInput } from '../components/SmartSearchInput'
 import { parseSearchQuery } from '../utils/searchParser'
+import { CategoryBadge } from '../components/CategoryBadge'
+import { PublishedDateBadge } from '../components/PublishedDateBadge'
 import type { Article } from '../types'
 
 export const Search = () => {
@@ -48,10 +49,6 @@ export const Search = () => {
     setLocalQuery(value)
   }
 
-  // Details overlay panel states
-  const [panelOpen, setPanelOpen] = useState(false)
-  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null)
-
   // List of unique categories
   const categories = useMemo(() => {
     return [...data.categories]
@@ -76,8 +73,7 @@ export const Search = () => {
   )
 
   const handleArticleClick = (art: Article) => {
-    setSelectedArticle(art)
-    setPanelOpen(true)
+    navigate({ to: '/article/$articleId', params: { articleId: art.id } })
   }
 
   // --- Virtualization Setup (using @tanstack/react-virtual) ---
@@ -97,7 +93,7 @@ export const Search = () => {
         <div className="flex items-center justify-between pb-2 border-b border-[#2a2a2a]">
           <div>
             <h2 className="text-xl font-bold text-white tracking-tight">{t('searchTitle')}</h2>
-            <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">Article Index Search</span>
+            <span className="text-[10px] text-gray-500 font-semibold">Article Index Search</span>
           </div>
           <div className="text-xs text-gray-400 font-medium font-mono bg-[#151515] px-3 py-1 border border-[#2e2e2e]">
             {filteredArticles.length} / {data.totalArticlesCount} {t('listView').toLowerCase()}
@@ -112,7 +108,7 @@ export const Search = () => {
             categories={categories}
           />
           
-          <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-[10px] font-semibold text-gray-500 uppercase tracking-wider select-none font-mono">
+          <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-[10px] font-semibold text-gray-500 select-none font-mono">
             <span className="text-cyan-500 font-bold">Search Modifiers:</span>
             <span>category:name</span>
             <span>topic:id</span>
@@ -131,7 +127,7 @@ export const Search = () => {
         {isSearchLoading ? (
           <div className="absolute inset-0 z-10 bg-[#121212]/80 flex flex-col items-center justify-center text-gray-500 gap-4">
             <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
-            <span className="text-sm font-semibold tracking-wider uppercase text-gray-500 animate-pulse">Searching Articles...</span>
+            <span className="text-sm font-semibold text-gray-500 animate-pulse">Searching Articles...</span>
           </div>
         ) : filteredArticles.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-2">
@@ -143,9 +139,9 @@ export const Search = () => {
             {/* Table Header - sticky to the top of the scrolling container */}
             <thead className="block sticky top-0 z-10 bg-[#181818] border-b border-[#2e2e2e] text-gray-500 w-full">
               <tr className="flex w-full">
-                <th className="p-3.5 font-bold uppercase tracking-wider w-28 shrink-0 font-mono">{t('published')}</th>
-                <th className="p-3.5 font-bold uppercase tracking-wider w-48 shrink-0">{t('category')}</th>
-                <th className="p-3.5 font-bold uppercase tracking-wider flex-1">{t('title')}</th>
+                <th className="p-3.5 font-bold w-28 shrink-0 font-mono">{t('published')}</th>
+                <th className="p-3.5 font-bold w-48 shrink-0">{t('category')}</th>
+                <th className="p-3.5 font-bold flex-1">{t('title')}</th>
               </tr>
             </thead>
             
@@ -168,11 +164,11 @@ export const Search = () => {
                       transform: `translateY(${virtualRow.start}px)`,
                     }}
                   >
-                    <td className="p-3.5 font-mono text-cyan-400 w-28 shrink-0 flex items-center">{art.date}</td>
+                    <td className="p-3.5 w-28 shrink-0 flex items-center">
+                      <PublishedDateBadge date={art.date} variant="small" />
+                    </td>
                     <td className="p-3.5 w-48 shrink-0 flex items-center">
-                      <span className="bg-[#3f51b5]/20 text-indigo-300 px-2 py-0.5 font-semibold text-[10px] font-mono tracking-wide uppercase truncate">
-                        {art.category}
-                      </span>
+                      <CategoryBadge category={art.category} variant="small" />
                     </td>
                     <td className="p-3.5 flex-1 min-w-0 flex items-center">
                       <div className="space-y-1 w-full">
@@ -187,15 +183,6 @@ export const Search = () => {
           </table>
         )}
       </div>
-
-      <DetailPanel
-        isOpen={panelOpen}
-        onClose={() => setPanelOpen(false)}
-        articlesList={filteredArticles}
-        selectedArticle={selectedArticle}
-        onSelectArticle={setSelectedArticle}
-        title={t('detailTitle')}
-      />
     </div>
   )
 }
