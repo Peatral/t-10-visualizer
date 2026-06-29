@@ -1,9 +1,9 @@
 import { initTRPC } from '@trpc/server'
 import { z } from 'zod'
-import { db } from './db/index.js'
-import { articles, topics, articleTopicMatches, type Article } from './db/schema.js'
-import { eq, desc, asc, and, sql } from 'drizzle-orm'
-import { calculateTrendmapGrid, formatFtsQuery, getMatchingTopicIdsForQuery, type TrendmapCalculationResult } from '../utils/trendmapCalc.js'
+import { db } from './db'
+import { articles, topics, articleTopicMatches, type Article } from './db/schema'
+import { eq, desc, asc, and, sql, count } from 'drizzle-orm'
+import { calculateTrendmapGrid, formatFtsQuery, getMatchingTopicIdsForQuery, type TrendmapCalculationResult } from '../utils/trendmapCalc'
 
 const t = initTRPC.create()
 
@@ -14,46 +14,54 @@ export const appRouter = t.router({
       const categories = categoryRows.map(row => row.category)
       return categories
     }),
+  
+  getRecentArticles: t.procedure
+    .input(
+      z.object({
+        count: z.int().positive(),
+      })
+    )
+    .query(({ input: { count }}) => {
+      return db
+        .select({
+          id: articles.id,
+          title: articles.title,
+          description: articles.description,
+          date: articles.date,
+          link: articles.link,
+          category: articles.category,
+        })
+        .from(articles)
+        .orderBy(desc(articles.date))
+        .limit(count)
+        .all()
+      }),
+
+  getTotalArticles: t.procedure
+    .query(async () => {
+      const countResult = await db.select({ count: count() }).from(articles).get()
+      const totalArticles = countResult ? countResult.count : 0
+      return totalArticles
+    }),
 
   // Get aggregated dashboard statistics and recent feed
-  getDashboardData: t.procedure.query(async () => {
-    // Total Count
-    const countResult = await db.select({ count: sql<number>`count(*)` }).from(articles).get()
-    const totalArticles = countResult ? countResult.count : 0
+  getArticleCountByCategory: t.procedure
+    .query(async () => {
+      const categoryRows = await db.select({
+        category: articles.category,
+        count: count(),
+      }).from(articles)
+      .groupBy(articles.category)
+      .all()
 
-    // Group counts
-    const categoryRows = await db.select({
-      category: articles.category,
-      count: sql<number>`count(*)`
-    }).from(articles)
-    .groupBy(articles.category)
-    .all()
+      const categoryCounts: Record<string, number> = {}
+      categoryRows.forEach(row => {
+        categoryCounts[row.category] = row.count
+      })
 
-    const categoryCounts: Record<string, number> = {}
-    categoryRows.forEach(row => {
-      categoryCounts[row.category] = row.count
-    })
+      return categoryCounts
+    }),
 
-    // Recent 5 articles
-    const recent = await db.select({
-      id: articles.id,
-      title: articles.title,
-      description: articles.description,
-      date: articles.date,
-      link: articles.link,
-      category: articles.category,
-    })
-    .from(articles)
-    .orderBy(desc(articles.date))
-    .limit(5)
-    .all()
-
-    return {
-      totalArticles,
-      categoryCounts,
-      recentArticles: recent,
-    }
-  }),
   // Server-side Trendmap grid calculation on the fly
   getTrendmapGrid: t.procedure
     .input(z.object({
@@ -66,7 +74,7 @@ export const appRouter = t.router({
     }))
     .query(async ({ input }): Promise<TrendmapCalculationResult> => {
       const { category, language, q, before, after, topic } = input
-      return await calculateTrendmapGrid(db, language, category, q, before, after, topic)
+      return calculateTrendmapGrid(db, language, category, q, before, after, topic)
     }),
 
   getArticleDetail: t.procedure
@@ -87,8 +95,8 @@ export const appRouter = t.router({
   // Get topics matched to a specific article by ID
   getArticleTopics: t.procedure
     .input(z.object({ id: z.string() }))
-    .query(async ({ input }) => {
-      return await db
+    .query(({ input }) => {
+      return db
         .select({
           topicId: topics.id,
           nameDe: topics.nameDe,
@@ -101,7 +109,7 @@ export const appRouter = t.router({
     }),
 
   getAllTopics: t.procedure.query(async () => {
-    return await db.select({
+    return db.select({
       id: topics.id,
       nameDe: topics.nameDe,
       nameEn: topics.nameEn,
@@ -182,7 +190,7 @@ export const appRouter = t.router({
       }
 
       query.orderBy(sort === 'newest' ? desc(articles.date) : asc(articles.date))
-      return await query.all()
+      return query.all()
     }),
 })
 

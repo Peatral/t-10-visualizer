@@ -1,6 +1,6 @@
 import { createHTTPHandler } from '@trpc/server/adapters/standalone'
 import type { IncomingMessage, ServerResponse } from 'http'
-import { appRouter } from '../src/server/router.js'
+import { appRouter } from '../src/server/router'
 
 const handler = createHTTPHandler({
   router: appRouter,

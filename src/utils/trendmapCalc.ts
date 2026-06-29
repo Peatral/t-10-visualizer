@@ -1,6 +1,6 @@
 import { eq, sql, and } from 'drizzle-orm'
-import { articles, topics, articleTopicMatches, topicKeywords } from '../server/db/schema.js'
-import { getYearHalf } from './matching.js'
+import { articles, topics, articleTopicMatches, topicKeywords } from '../server/db/schema'
+import { getYearHalf } from './matching'
 
 export interface ArticleMetadata {
   id: string

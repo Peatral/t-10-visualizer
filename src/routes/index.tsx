@@ -18,15 +18,19 @@ function Dashboard() {
   const trpcUtils = useTRPC()
   const navigate = useNavigate()
 
-  const { data: dashboardData } = useSuspenseQuery(
-    trpcUtils.getDashboardData.queryOptions()
+  const { data: categoryCounts } = useSuspenseQuery(
+    trpcUtils.getArticleCountByCategory.queryOptions()
+  )
+  const { data: totalArticles } = useSuspenseQuery(
+    trpcUtils.getTotalArticles.queryOptions()
+  )
+  const { data: recentArticles } = useSuspenseQuery(
+    trpcUtils.getRecentArticles.queryOptions({ count: 5 })
   )
 
   const handleArticleClick = (art: FeedArticle) => {
     navigate({ to: '/articles/$articleId', params: { articleId: art.id } })
   }
-
-  const { totalArticles, categoryCounts, recentArticles } = dashboardData
 
   return (
     <div className="h-full overflow-y-auto bg-[#121212] select-none text-left font-sans">

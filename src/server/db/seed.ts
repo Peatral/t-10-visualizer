@@ -1,10 +1,10 @@
 import fs from 'fs'
 import path from 'path'
 import Database from 'better-sqlite3'
-import { db } from './index.js'
-import { articles, topics, topicKeywords, articleTopicMatches, categories } from './schema.js'
-import { getYearHalf } from '../../utils/matching.js'
-import { TOPICS_LIST } from './topicData.js'
+import { db } from './index'
+import { articles, topics, topicKeywords, articleTopicMatches, categories } from './schema'
+import { getYearHalf } from '../../utils/matching'
+import { TOPICS_LIST } from './topicData'
 
 type NewArticle = typeof articles.$inferInsert
 
