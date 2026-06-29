@@ -9,13 +9,11 @@ import type { ModifierKey, SuggestionItem } from '../utils/searchParser';
 interface SmartSearchInputProps {
   value: string;
   onChange: (val: string) => void;
-  categories: string[];
 }
 
 export const SmartSearchInput: React.FC<SmartSearchInputProps> = ({
   value,
   onChange,
-  categories,
 }) => {
   const trpc = useTRPC();
   const { t } = useTranslation();
@@ -27,6 +25,7 @@ export const SmartSearchInput: React.FC<SmartSearchInputProps> = ({
 
   // Fetch topics list for autocomplete
   const { data: topics = [] } = useQuery(trpc.getAllTopics.queryOptions());
+  const { data: categories = [] } = useQuery(trpc.getAllCategories.queryOptions())
 
   // Detect which suggestions to show based on input cursor position and string
   const suggestions = useMemo<SuggestionItem[]>(() => {

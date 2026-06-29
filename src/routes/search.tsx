@@ -9,7 +9,7 @@ import { Info, List, Clock, LayoutGrid, ChevronDown } from 'lucide-react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useSearch, useNavigate, createFileRoute } from '@tanstack/react-router'
 import { useDebounce } from 'use-debounce'
-import { useData, type Language } from '../context'
+import { type Language } from '../context'
 import { useTranslation } from '../context'
 import { useTRPC } from '../utils/trpc'
 import { SmartSearchInput } from '../components/SmartSearchInput'
@@ -113,7 +113,6 @@ function SearchResults({
 }
 
 function Search() {
-  const data = useData()
   const { t, language } = useTranslation()
   const searchParams = useSearch({ from: '/search' })
   const navigate = useNavigate({ from: '/search' })
@@ -158,8 +157,6 @@ function Search() {
     setLocalQuery(searchParams.q || '')
   }, [searchParams.q])
 
-
-  const categories = useMemo(() => [...data.categories], [data.categories])
   const parsedFilters = useMemo(() => parseSearchQuery(debouncedQuery), [debouncedQuery])
 
   const handleArticleClick = (art: Article) => {
@@ -211,7 +208,6 @@ function Search() {
               <SmartSearchInput
                 value={localQuery}
                 onChange={setLocalQuery}
-                categories={categories}
               />
             </div>
 

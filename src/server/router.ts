@@ -8,21 +8,12 @@ import { calculateTrendmapGrid, formatFtsQuery, getMatchingTopicIdsForQuery, typ
 const t = initTRPC.create()
 
 export const appRouter = t.router({
-  // Get main metadata configuration payload (no heavy articles list, no keyword vocabulary, no translations)
-  getDataPayload: t.procedure.query(async () => {
-    // 1. Fetch total count of articles using Drizzle sql aggregator
-    const countResult = await db.select({ count: sql<number>`count(*)` }).from(articles).get()
-    const totalCount = countResult ? countResult.count : 0
-
-    // 2. Fetch unique categories list using Drizzle selectDistinct
-    const categoryRows = await db.selectDistinct({ category: articles.category }).from(articles).all()
-    const categories = categoryRows.map(row => row.category)
-
-    return {
-      totalArticlesCount: totalCount,
-      categories,
-    }
-  }),
+  getAllCategories: t.procedure
+    .query(async () => {
+      const categoryRows = await db.selectDistinct({ category: articles.category }).from(articles).all()
+      const categories = categoryRows.map(row => row.category)
+      return categories
+    }),
 
   // Get aggregated dashboard statistics and recent feed
   getDashboardData: t.procedure.query(async () => {
