@@ -40,7 +40,7 @@ export const SearchHeatmapView: React.FC<SearchHeatmapViewProps> = ({
   );
 
   return (
-    <div className="h-full relative overflow-auto bg-[#121212]">
+    <div className="h-full relative flex overflow-hidden bg-[#121212]">
       <HeatmapTable
         topWords={trendmapResult.topDisplayKeys}
         croppedTimeScale={trendmapResult.croppedTimeScale}
