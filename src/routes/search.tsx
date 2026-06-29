@@ -241,7 +241,7 @@ function Search() {
       <div className="flex-grow overflow-auto relative bg-[#121212]">
         <Suspense fallback={
           <div className="h-full flex items-center justify-center text-gray-400">
-            <LoadingSpinner text={viewMode === 'heatmap' ? 'Calculating Heatmap...' : 'Searching...'} />
+            <LoadingSpinner text={viewMode === 'heatmap' ? 'Calculating Heatmap...' : viewMode === 'timeline' ? 'Loading Timeline...' : 'Searching...'} />
           </div>
         }>
           <SearchResults 
