@@ -1,21 +1,19 @@
-import { initTRPC } from '@trpc/server'
 import { z } from 'zod'
 import { db } from './db'
 import { articles, topics, articleTopicMatches, type Article } from './db/schema'
 import { eq, desc, asc, and, sql, count } from 'drizzle-orm'
 import { calculateTrendmapGrid, formatFtsQuery, getMatchingTopicIdsForQuery, type TrendmapCalculationResult } from '../utils/trendmapCalc'
+import { createTRPCRouter, publicProcedure } from '../integrations/trpc/init'
 
-const t = initTRPC.create()
-
-export const appRouter = t.router({
-  getAllCategories: t.procedure
+export const appRouter = createTRPCRouter({
+  getAllCategories: publicProcedure
     .query(async () => {
       const categoryRows = await db.selectDistinct({ category: articles.category }).from(articles).all()
       const categories = categoryRows.map(row => row.category)
       return categories
     }),
   
-  getRecentArticles: t.procedure
+  getRecentArticles: publicProcedure
     .input(
       z.object({
         count: z.int().positive(),
@@ -37,7 +35,7 @@ export const appRouter = t.router({
         .all()
       }),
 
-  getTotalArticles: t.procedure
+  getTotalArticles: publicProcedure
     .query(async () => {
       const countResult = await db.select({ count: count() }).from(articles).get()
       const totalArticles = countResult ? countResult.count : 0
@@ -45,7 +43,7 @@ export const appRouter = t.router({
     }),
 
   // Get aggregated dashboard statistics and recent feed
-  getArticleCountByCategory: t.procedure
+  getArticleCountByCategory: publicProcedure
     .query(async () => {
       const categoryRows = await db.select({
         category: articles.category,
@@ -63,7 +61,7 @@ export const appRouter = t.router({
     }),
 
   // Server-side Trendmap grid calculation on the fly
-  getTrendmapGrid: t.procedure
+  getTrendmapGrid: publicProcedure
     .input(z.object({
       category: z.string().optional(),
       language: z.enum(['en', 'de']),
@@ -77,7 +75,7 @@ export const appRouter = t.router({
       return calculateTrendmapGrid(db, language, category, q, before, after, topic)
     }),
 
-  getArticleDetail: t.procedure
+  getArticleDetail: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
       const result = await db
@@ -93,7 +91,7 @@ export const appRouter = t.router({
     }),
 
   // Get topics matched to a specific article by ID
-  getArticleTopics: t.procedure
+  getArticleTopics: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(({ input }) => {
       return db
@@ -108,7 +106,7 @@ export const appRouter = t.router({
         .all()
     }),
 
-  getAllTopics: t.procedure.query(async () => {
+  getAllTopics: publicProcedure.query(async () => {
     return db.select({
       id: topics.id,
       nameDe: topics.nameDe,
@@ -119,7 +117,7 @@ export const appRouter = t.router({
   }),
 
   // Search articles using SQLite indexes and FTS5 full-text index
-  searchArticles: t.procedure
+  searchArticles: publicProcedure
     .input(
       z.object({
         q: z.string().optional(),
@@ -194,5 +192,5 @@ export const appRouter = t.router({
     }),
 })
 
-export type AppRouter = typeof appRouter
+export type TRPCRouter = typeof appRouter
 export default appRouter

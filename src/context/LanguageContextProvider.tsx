@@ -3,6 +3,7 @@ import { LanguageContext } from './LanguageContext'
 import type { TranslationKey } from './LanguageContext'
 
 export type Language = 'en' | 'de'
+type Translation<T extends string> = Record<Language, Record<T, string>>
 
 const translations = {
   en: {

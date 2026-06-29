@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArticlesArticleIdRouteImport } from './routes/articles.$articleId'
+import { Route as ApiTrpcSplatRouteImport } from './routes/api.trpc.$'
 
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
@@ -28,35 +29,44 @@ const ArticlesArticleIdRoute = ArticlesArticleIdRouteImport.update({
   path: '/articles/$articleId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
+  id: '/api/trpc/$',
+  path: '/api/trpc/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
+  '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
+  '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
+  '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/search' | '/articles/$articleId'
+  fullPaths: '/' | '/search' | '/articles/$articleId' | '/api/trpc/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/search' | '/articles/$articleId'
-  id: '__root__' | '/' | '/search' | '/articles/$articleId'
+  to: '/' | '/search' | '/articles/$articleId' | '/api/trpc/$'
+  id: '__root__' | '/' | '/search' | '/articles/$articleId' | '/api/trpc/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SearchRoute: typeof SearchRoute
   ArticlesArticleIdRoute: typeof ArticlesArticleIdRoute
+  ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArticlesArticleIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/trpc/$': {
+      id: '/api/trpc/$'
+      path: '/api/trpc/$'
+      fullPath: '/api/trpc/$'
+      preLoaderRoute: typeof ApiTrpcSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,7 +106,17 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SearchRoute: SearchRoute,
   ArticlesArticleIdRoute: ArticlesArticleIdRoute,
+  ApiTrpcSplatRoute: ApiTrpcSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
