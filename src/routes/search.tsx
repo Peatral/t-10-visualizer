@@ -4,7 +4,6 @@ import {
   useEffect, 
   Suspense, 
   useEffectEvent,
-  Activity,
 } from 'react'
 import { Info, List, Clock, LayoutGrid, Network, type LucideIcon } from 'lucide-react'
 import { useSuspenseQuery } from '@tanstack/react-query'
@@ -147,8 +146,13 @@ export function ViewportContainer({
     <>
       {VISUALIZATIONS.map((viz) => {
         const ViewportComponent = viz.component;
+        const isActive = viewMode === viz.id;
         return (
-          <Activity key={viz.id} mode={viewMode === viz.id ? 'visible' : 'hidden'}>
+          <div 
+            key={viz.id} 
+            style={{ display: isActive ? 'block' : 'none' }}
+            className="h-full w-full"
+          >
             <Suspense fallback={
               <div className="h-full flex items-center justify-center text-gray-500">
                 <LoadingSpinner text={language === 'de' ? 'Lädt...' : 'Loading...'} />
@@ -163,7 +167,7 @@ export function ViewportContainer({
                 onColumnClick={onColumnClick}
               />
             </Suspense>
-          </Activity>
+          </div>
         );
       })}
     </>
