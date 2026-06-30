@@ -47,6 +47,12 @@ export const Route = createRootRouteWithContext()({
 })
 
 function RootDocument({ children }: { children: React.ReactNode}) {
+  const [showDevtools, setShowDevtools] = React.useState(false)
+
+  React.useEffect(() => {
+    setShowDevtools(true)
+  }, [])
+
   return (
     <html lang="en">
       <head>
@@ -64,9 +70,11 @@ function RootDocument({ children }: { children: React.ReactNode}) {
             </main>
           </div>
         </LanguageProvider>
-        <Suspense>
-          <Devtools />
-        </Suspense>
+        {showDevtools && (
+          <Suspense>
+            <Devtools />
+          </Suspense>
+        )}
         <Scripts />
       </body>
     </html>
