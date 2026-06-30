@@ -1,18 +1,22 @@
-import { useState, useEffect, lazy, Suspense, useRef, useMemo, useCallback } from 'react'
+import React, { useState, useEffect, lazy, Suspense, useRef, useMemo, useCallback } from 'react'
 import { Maximize2 } from 'lucide-react'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { useTRPC } from '../utils/trpc'
-import type { ParsedSearchQuery } from '../utils/searchParser'
-import type { Language } from '../context'
+import { useTRPC } from '../../../utils/trpc'
+import type { ParsedSearchQuery } from '../../../utils/searchParser'
+import type { Language } from '../../../context'
 import type { ForceGraphMethods } from 'react-force-graph-2d'
+import type { Article } from '../../../server/db/schema'
+import { useNetworkState } from './NetworkContext'
 
 const ForceGraph2D = lazy(() => import('react-force-graph-2d'))
 
 interface SearchNetworkViewProps {
   parsedFilters: ParsedSearchQuery;
   language: Language;
-  onNodeClick: (topicId: string) => void;
-  weightFilter: number;
+  onArticleClick?: (article: Article) => void;
+  onCellClick?: (topicId: string, label: string, bucket: string) => void;
+  onRowClick?: (topicId: string, label?: string) => void;
+  onColumnClick?: (bucket: string) => void;
 }
 
 interface GraphNode {
@@ -42,7 +46,8 @@ interface GraphLink {
   weight?: number;
 }
 
-export function SearchNetworkView({ parsedFilters, language, onNodeClick, weightFilter }: SearchNetworkViewProps) {
+export function SearchNetworkView({ parsedFilters, language, onRowClick }: SearchNetworkViewProps) {
+  const { weightFilter } = useNetworkState()
   const trpc = useTRPC()
   const [isMounted, setIsMounted] = useState(false)
 
@@ -223,7 +228,7 @@ export function SearchNetworkView({ parsedFilters, language, onNodeClick, weight
           linkWidth={(link) => Math.sqrt(link.weight || 1) * 1.5}
           linkColor={() => 'rgba(255, 255, 255, 0.15)'}
           nodeColor={getNodeColor}
-          onNodeClick={(node) => onNodeClick(node.id as string)}
+          onNodeClick={(node) => onRowClick && onRowClick(node.id as string)}
         />
       </Suspense>
     </div>

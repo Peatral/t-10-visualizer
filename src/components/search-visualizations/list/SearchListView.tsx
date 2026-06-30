@@ -1,17 +1,21 @@
 import React, { useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { CategoryBadge } from './CategoryBadge';
-import { PublishedDateBadge } from './PublishedDateBadge';
-import { useTranslation } from '../context';
-import type { Article } from '../server/db/schema';
+import { CategoryBadge } from '../../CategoryBadge';
+import { PublishedDateBadge } from '../../PublishedDateBadge';
+import { useTranslation, type Language } from '../../../context';
+import type { Article } from '../../../server/db/schema';
+import type { ParsedSearchQuery } from '../../../utils/searchParser';
+import { useFilteredArticles } from '../shared/useFilteredArticles';
 
 interface SearchListViewProps {
-  articles: Article[];
+  parsedFilters: ParsedSearchQuery;
+  language: Language;
   onArticleClick: (article: Article) => void;
 }
 
-export const SearchListView: React.FC<SearchListViewProps> = ({ articles, onArticleClick }) => {
+export const SearchListView: React.FC<SearchListViewProps> = ({ parsedFilters, onArticleClick }) => {
   const { t } = useTranslation();
+  const articles = useFilteredArticles(parsedFilters);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const rowVirtualizer = useVirtualizer({

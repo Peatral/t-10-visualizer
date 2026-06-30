@@ -6,7 +6,7 @@ import {
   useEffectEvent,
   Activity,
 } from 'react'
-import { Info, List, Clock, LayoutGrid, ChevronDown, Network } from 'lucide-react'
+import { Info, List, Clock, LayoutGrid, Network, type LucideIcon } from 'lucide-react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useSearch, useNavigate, createFileRoute } from '@tanstack/react-router'
 import { useDebounce } from 'use-debounce'
@@ -15,14 +15,16 @@ import { useTranslation } from '../context'
 import { useTRPC } from '../utils/trpc'
 import { SmartSearchInput } from '../components/SmartSearchInput'
 import { parseSearchQuery, stringifySearchQuery, type ParsedSearchQuery } from '../utils/searchParser'
-import { SearchListView } from '../components/SearchListView'
-import { SearchTimelineView } from '../components/SearchTimelineView'
-import { SearchHeatmapView } from '../components/SearchHeatmapView'
+import { 
+  SearchListView, ListStateProvider, ListControls, useListState,
+  SearchTimelineView,
+  SearchHeatmapView, HeatmapStateProvider, HeatmapControls,
+  SearchNetworkView, NetworkStateProvider, NetworkControls 
+} from '../components/search-visualizations'
 import type { Article } from '../server/db/schema'
 import { z } from 'zod'
 import { LoadingSpinner } from '../components/LoadingSpinner'
 import type { TranslationKey } from '../context/LanguageContext'
-import { SearchNetworkView } from '../components/SearchNetworkView'
 
 const viewModes = ['list', 'timeline', 'heatmap', 'network'] as const;
 
@@ -41,104 +43,141 @@ export const Route = createFileRoute('/search')({
   component: Search,
 })
 
-interface SearchResultsProps {
+interface ViewportProps {
   parsedFilters: ParsedSearchQuery;
-  sortBy: 'newest' | 'oldest';
-  viewMode: ViewMode;
-  heatmapScaleMode: 'absolute' | 'relative';
-  language: Language;  
-  t: (key: TranslationKey, params?: Record<string, string | number>) => string;
+  language: Language;
   onArticleClick: (article: Article) => void;
   onCellClick: (topicId: string, label: string, bucket: string) => void;
   onRowClick: (topicId: string, label?: string) => void;
   onColumnClick: (bucket: string) => void;
-  networkWeightFilter: number;
 }
 
-function SearchResults({ 
-  parsedFilters, 
-  sortBy, 
-  viewMode, 
-  heatmapScaleMode,
+interface ControlsProps {
+  language: Language;
+}
+
+interface VisualizationConfig {
+  id: ViewMode;
+  labelKey: TranslationKey;
+  icon: LucideIcon;
+  Provider?: React.ComponentType<{ children: React.ReactNode }>;
+  component: React.ComponentType<ViewportProps>;
+  controlsComponent?: React.ComponentType<ControlsProps>;
+}
+
+const VISUALIZATIONS: VisualizationConfig[] = [
+  {
+    id: 'list',
+    labelKey: 'listView',
+    icon: List,
+    Provider: ListStateProvider,
+    component: SearchListView,
+    controlsComponent: ListControls,
+  },
+  {
+    id: 'timeline',
+    labelKey: 'timelineView',
+    icon: Clock,
+    component: SearchTimelineView,
+  },
+  {
+    id: 'heatmap',
+    labelKey: 'heatmapView',
+    icon: LayoutGrid,
+    Provider: HeatmapStateProvider,
+    component: SearchHeatmapView,
+    controlsComponent: HeatmapControls,
+  },
+  {
+    id: 'network',
+    labelKey: 'networkView',
+    icon: Network,
+    Provider: NetworkStateProvider,
+    component: SearchNetworkView,
+    controlsComponent: NetworkControls,
+  },
+];
+
+interface ProvidersProps {
+  children: React.ReactNode;
+}
+
+export function VisualizationProviders({ children }: ProvidersProps) {
+  return VISUALIZATIONS.reduceRight((acc, viz) => {
+    if (viz.Provider) {
+      const Provider = viz.Provider;
+      return <Provider>{acc}</Provider>;
+    }
+    return acc;
+  }, children);
+}
+
+interface ActiveControlsProps {
+  viewMode: ViewMode;
+  language: Language;
+}
+
+export function ActiveControls({ viewMode, language }: ActiveControlsProps) {
+  const activeViz = VISUALIZATIONS.find((v) => v.id === viewMode);
+  if (!activeViz?.controlsComponent) return null;
+  const ControlsComponent = activeViz.controlsComponent;
+  return <ControlsComponent language={language} />;
+}
+
+interface ViewportContainerProps {
+  viewMode: ViewMode;
+  parsedFilters: ParsedSearchQuery;
+  language: Language;
+  onArticleClick: (article: Article) => void;
+  onCellClick: (topicId: string, label: string, bucket: string) => void;
+  onRowClick: (topicId: string, label?: string) => void;
+  onColumnClick: (bucket: string) => void;
+}
+
+export function ViewportContainer({
+  viewMode,
+  parsedFilters,
   language,
   onArticleClick,
   onCellClick,
   onRowClick,
   onColumnClick,
-  t,
-  networkWeightFilter
-}: SearchResultsProps) {
-  const trpc = useTRPC()
-
-  const { data: filteredArticles } = useSuspenseQuery(
-    trpc.searchArticles.queryOptions({
-      q: parsedFilters.q,
-      category: parsedFilters.category,
-      sort: sortBy,
-      before: parsedFilters.before,
-      after: parsedFilters.after,
-      topic: parsedFilters.topic,
-      includeFullText: true,
-    })
-  )
-
-  if (filteredArticles.length === 0) {
-    return (
-      <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-2">
-        <Info className="w-8 h-8 text-gray-600" />
-        <span>{t('searchEmpty')}</span>
-      </div>
-    )
-  }
-
+}: ViewportContainerProps) {
   return (
     <>
-      <Activity mode={viewMode === 'heatmap' ? 'visible' : 'hidden'}>
-        <SearchHeatmapView
-          parsedFilters={parsedFilters}
-          language={language}
-          heatmapScaleMode={heatmapScaleMode}
-          handleCellClick={onCellClick}
-          handleRowClick={onRowClick}
-          handleColumnClick={onColumnClick}
-        />
-      </Activity>
-      <Activity mode={viewMode === 'timeline' ? 'visible' : 'hidden'}>
-        <SearchTimelineView
-          articles={filteredArticles}
-          onArticleClick={onArticleClick}
-        />
-      </Activity>
-      <Activity mode={viewMode === 'network' ? 'visible' : 'hidden'}>
-        <SearchNetworkView
-          parsedFilters={parsedFilters}
-          language={language}
-          onNodeClick={(topicId) => onRowClick(topicId)}
-          weightFilter={networkWeightFilter}
-        />
-      </Activity>
-      <Activity mode={viewMode === 'list' ? 'visible' : 'hidden'}>
-        <SearchListView
-          articles={filteredArticles}
-          onArticleClick={onArticleClick}
-        />
-      </Activity>
+      {VISUALIZATIONS.map((viz) => {
+        const ViewportComponent = viz.component;
+        return (
+          <Activity key={viz.id} mode={viewMode === viz.id ? 'visible' : 'hidden'}>
+            <Suspense fallback={
+              <div className="h-full flex items-center justify-center text-gray-500">
+                <LoadingSpinner text={language === 'de' ? 'Lädt...' : 'Loading...'} />
+              </div>
+            }>
+              <ViewportComponent
+                parsedFilters={parsedFilters}
+                language={language}
+                onArticleClick={onArticleClick}
+                onCellClick={onCellClick}
+                onRowClick={onRowClick}
+                onColumnClick={onColumnClick}
+              />
+            </Suspense>
+          </Activity>
+        );
+      })}
     </>
-  )
+  );
 }
 
-function Search() {
+function SearchContent() {
   const { t, language } = useTranslation()
   const searchParams = useSearch({ from: '/search' })
   const navigate = useNavigate({ from: '/search' })
 
   const [localQuery, setLocalQuery] = useState(searchParams.q || '')
   const [viewMode, setViewMode] = useState<ViewMode>(searchParams.view || 'list')
-  const [sortBy, setSortBy] = useState<'newest' | 'oldest'>('newest')
-  const [heatmapScaleMode, setHeatmapScaleMode] = useState<'absolute' | 'relative'>('absolute')
   const [debouncedQuery] = useDebounce(localQuery, 400)
-
-  const [networkWeightFilter, setNetworkWeightFilter] = useState(2)
 
   const syncViewToUrl = useEffectEvent((newViewMode: ViewMode) => {
     if (searchParams.view !== newViewMode) {
@@ -157,24 +196,39 @@ function Search() {
     }
   })
 
-
   useEffect(() => {
     syncViewToUrl(viewMode)
-  }, [viewMode]) // Only triggers when local viewMode changes
+  }, [viewMode])
 
   useEffect(() => {
     syncUrlToView(searchParams.view)
-  }, [searchParams.view]) // Only triggers when URL view changes
+  }, [searchParams.view])
 
   useEffect(() => {
     syncQueryToUrl(debouncedQuery)
-  }, [debouncedQuery]) // Only triggers when debounced input changes
+  }, [debouncedQuery])
 
   useEffect(() => {
     setLocalQuery(searchParams.q || '')
   }, [searchParams.q])
 
   const parsedFilters = useMemo(() => parseSearchQuery(debouncedQuery), [debouncedQuery])
+
+  const listState = useListState()
+  const sortBy = listState ? listState.sortBy : 'newest'
+  const trpc = useTRPC()
+
+  const { data: filteredArticles } = useSuspenseQuery(
+    trpc.searchArticles.queryOptions({
+      q: parsedFilters.q,
+      category: parsedFilters.category,
+      sort: sortBy,
+      before: parsedFilters.before,
+      after: parsedFilters.after,
+      topic: parsedFilters.topic,
+      includeFullText: true,
+    })
+  )
 
   const handleArticleClick = (art: Article) => {
     navigate({ to: '/articles/$articleId', params: { articleId: art.id } })
@@ -195,6 +249,8 @@ function Search() {
     setViewMode('list')
   }
 
+  const isEmpty = filteredArticles.length === 0
+
   return (
     <div className="h-full flex flex-col bg-[#121212] select-none text-left font-sans">
       <div className="bg-[#1e1e1e] border-b border-[#2e2e2e] p-6 shrink-0 space-y-4">
@@ -204,17 +260,14 @@ function Search() {
           </div>
 
           <div className="flex bg-[#252525] p-0.5 text-xs select-none self-start sm:self-center">
-            {viewModes.map((mode) => (
+            {VISUALIZATIONS.map((viz) => (
               <button 
-                key={mode}
-                onClick={() => setViewMode(mode)}
-                className={`px-3 py-1.5 flex items-center gap-1.5 transition-colors cursor-pointer capitalize ${viewMode === mode ? 'bg-[#3f51b5] text-white font-medium' : 'text-gray-400 hover:text-white'}`}
+                key={viz.id}
+                onClick={() => setViewMode(viz.id)}
+                className={`px-3 py-1.5 flex items-center gap-1.5 transition-colors cursor-pointer capitalize ${viewMode === viz.id ? 'bg-[#3f51b5] text-white font-medium' : 'text-gray-400 hover:text-white'}`}
               >
-                {mode === 'list' && <List className="w-3.5 h-3.5" />}
-                {mode === 'timeline' && <Clock className="w-3.5 h-3.5" />}
-                {mode === 'heatmap' && <LayoutGrid className="w-3.5 h-3.5" />}
-                {mode === 'network' && <Network className="w-3.5 h-3.5" />}
-                {t(`${mode}View`) || mode}
+                <viz.icon className="w-3.5 h-3.5" />
+                {t(viz.labelKey) || viz.id}
               </button>
             ))}
           </div>
@@ -229,46 +282,7 @@ function Search() {
               />
             </div>
 
-            {viewMode === 'list' && (
-              <div className="shrink-0 flex items-center gap-2 bg-[#252525] px-3 py-1.5 border border-[#2e2e2e]">
-                <span className="text-[11px] text-gray-400 font-medium font-mono">{t('sortBy')}:</span>
-                <div className="relative">
-                  <select 
-                    value={sortBy} 
-                    onChange={(e) => setSortBy(e.target.value as 'newest' | 'oldest')}
-                    className="bg-[#1a1a1a] text-white pl-2 pr-6 py-0.5 text-xs font-semibold focus:outline-none appearance-none cursor-pointer font-sans"
-                  >
-                    <option value="newest">{t('newest')}</option>
-                    <option value="oldest">{t('oldest')}</option>
-                  </select>
-                  <ChevronDown className="w-3.5 h-3.5 text-gray-400 absolute right-1.5 top-1 pointer-events-none" />
-                </div>
-              </div>
-            )}
-
-            {viewMode === 'heatmap' && (
-              <div className="shrink-0 flex bg-[#252525] p-0.5 text-[10px] font-semibold">
-                <button onClick={() => setHeatmapScaleMode('absolute')} className={`px-2.5 py-1 ${heatmapScaleMode === 'absolute' ? 'bg-[#3f51b5] text-white font-bold' : 'text-gray-400 hover:text-white'}`}>{t('absoluteMode') || 'Absolute'}</button>
-                <button onClick={() => setHeatmapScaleMode('relative')} className={`px-2.5 py-1 ${heatmapScaleMode === 'relative' ? 'bg-[#3f51b5] text-white font-bold' : 'text-gray-400 hover:text-white'}`}>{t('relativeMode') || 'Relative'}</button>
-              </div>
-            )}
-
-            {viewMode === 'network' && (
-              <div className="shrink-0 flex items-center gap-3 bg-[#252525] px-3 py-1.5 border border-[#2e2e2e]">
-                <span className="text-[11px] text-gray-400 font-medium font-mono whitespace-nowrap">
-                  {t('minConnectionWeight')}: {networkWeightFilter}
-                </span>
-                <input 
-                  type="range" 
-                  min="2" 
-                  max="15" 
-                  step="1" 
-                  value={networkWeightFilter} 
-                  onChange={(e) => setNetworkWeightFilter(parseInt(e.target.value, 10))}
-                  className="w-28 accent-[#5c6bc0] bg-[#1a1a1a] h-1.5 rounded-lg cursor-pointer"
-                />
-              </div>
-            )}
+            <ActiveControls viewMode={viewMode} language={language} />
           </div>
         </div>
       </div>
@@ -279,21 +293,32 @@ function Search() {
             <LoadingSpinner text={viewMode === 'heatmap' ? 'Calculating Heatmap...' : viewMode === 'timeline' ? 'Loading Timeline...' : 'Searching...'} />
           </div>
         }>
-          <SearchResults 
-            parsedFilters={parsedFilters}
-            sortBy={sortBy}
-            viewMode={viewMode}
-            heatmapScaleMode={heatmapScaleMode}
-            language={language}
-            t={t}
-            onArticleClick={handleArticleClick}
-            onCellClick={(topicId: string, _label: string, bucket: string) => updateSearchWithBucket(topicId, bucket)}
-            onRowClick={(topicId: string) => updateSearchWithBucket(topicId)}
-            onColumnClick={(bucket: string) => updateSearchWithBucket(null, bucket)}
-            networkWeightFilter={networkWeightFilter}
-          />
+          {isEmpty ? (
+            <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-2">
+              <Info className="w-8 h-8 text-gray-600" />
+              <span>{t('searchEmpty')}</span>
+            </div>
+          ) : (
+            <ViewportContainer
+              viewMode={viewMode}
+              parsedFilters={parsedFilters}
+              language={language}
+              onArticleClick={handleArticleClick}
+              onCellClick={(topicId: string, _label: string, bucket: string) => updateSearchWithBucket(topicId, bucket)}
+              onRowClick={(topicId: string) => updateSearchWithBucket(topicId)}
+              onColumnClick={(bucket: string) => updateSearchWithBucket(null, bucket)}
+            />
+          )}
         </Suspense>
       </div>
     </div>
+  )
+}
+
+export function Search() {
+  return (
+    <VisualizationProviders>
+      <SearchContent />
+    </VisualizationProviders>
   )
 }
