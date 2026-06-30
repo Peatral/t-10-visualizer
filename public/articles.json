@@ -64,12 +64,20 @@
     "category": "T-10 MOBILITY"
   },
   {
-    "id": "https://indianexpress.com/article/world/climate-change/carbon-dioxide-levels-hit-new-record-now-more-than-50-higher-than-pre-industrial-times-8649698/",
-    "title": "Carbon dioxide levels hit new record, now more than 50% higher than pre-industrial times | World News,The Indian Express",
-    "description": "The NOAA update said the average monthly concentration in May this year was about 3 parts per million higher than May of last year.",
-    "date": "2023-06-07",
-    "link": "https://web.archive.org/web/2/https://indianexpress.com/article/world/climate-change/carbon-dioxide-levels-hit-new-record-now-more-than-50-higher-than-pre-industrial-times-8649698/",
-    "category": "Climate Change"
+    "id": "https://www.washingtonpost.com/technology/2022/08/27/electric-vehicle-charge-time/",
+    "title": "Electric vehicle charging time could fall to 10 minutes within 5 years - The Washington Post",
+    "description": "Consumers could charge electric vehicle batteries up to 90 percent in ten minutes within five years, far surpassing the best superchargers in existence.",
+    "date": "2022-08-27",
+    "link": "https://web.archive.org/web/2/https://www.washingtonpost.com/technology/2022/08/27/electric-vehicle-charge-time/",
+    "category": "T-10 MOBILITY"
+  },
+  {
+    "id": "https://theconversation.com/12-best-ways-to-get-cars-out-of-cities-ranked-by-new-research-180642",
+    "title": "12 best ways to get cars out of cities – ranked by new research",
+    "description": "A new study finds congestion charging and creating car-free streets and separated bike lanes have been most effective at reducing car use in European cities.",
+    "date": "2022-04-14",
+    "link": "https://theconversation.com/12-best-ways-to-get-cars-out-of-cities-ranked-by-new-research-180642",
+    "category": "T-10 MOBILITY"
   },
   {
     "id": "https://twitter.com/BrentToderian/status/1565870450483564544",
@@ -123,7 +131,7 @@
     "id": "https://www.theverge.com/2022/9/21/23365557/kitty-hawk-larry-page-electric-vtol-shutdown",
     "title": "Flying car company Kitty Hawk winds down as Wisk Aero continues - The Verge",
     "description": "Kitty Hawk was funded by Google co-founder Larry Page to develop electric aircraft for taxi and personal travel, but now it’s closing up shop. A joint venture building an autonomous flyer with Boeing — Wisk Aero — is still active.",
-    "date": "2022-09-21",
+    "date": "2022-09-22",
     "link": "https://www.theverge.com/2022/9/21/23365557/kitty-hawk-larry-page-electric-vtol-shutdown",
     "category": "T-10 MOBILITY"
   },
@@ -328,6 +336,14 @@
     "category": "T-10 MOBILITY"
   },
   {
+    "id": "https://www.umweltbundesamt.de/sites/default/files/medien/479/publikationen/texte_156-2020_oekologische_bewertung_von_verkehrsarten_0.pdf",
+    "title": "Studie Klimabilanz Verkehrsarten",
+    "description": "",
+    "date": "2020-05-11",
+    "link": "https://web.archive.org/web/2/https://www.umweltbundesamt.de/sites/default/files/medien/479/publikationen/texte_156-2020_oekologische_bewertung_von_verkehrsarten_0.pdf",
+    "category": "T-10 MOBILITY"
+  },
+  {
     "id": "https://www.theguardian.com/business/2023/jul/04/toyota-claims-battery-breakthrough-electric-cars",
     "title": "Toyota claims battery breakthrough in potential boost for electric cars | Automotive industry | The Guardian",
     "description": "Japanese firm believes it could make a solid-state battery with a range of 745 miles that charges in 10 minutes",
@@ -491,7 +507,7 @@
     "id": "https://www.umweltbundesamt.de/publikationen/klimawirkung-des-luftverkehrs",
     "title": "Klimawirkung des Luftverkehrs | Umweltbundesamt",
     "description": "Luftverkehr beeinträchtigt das Klima. Durch die Verbrennung des Treibstoffs Kerosin entstehen Kohlendioxid (CO2), aber auch weitere klimawirksame Substanzen, deren Wirkung als „nicht-CO2-Klimaeffekte“ bezeichnet werden. Welche Substanzen sind es und wie stark wirken sie?",
-    "date": "2023-11-30",
+    "date": "2023-12-01",
     "link": "https://www.umweltbundesamt.de/publikationen/klimawirkung-des-luftverkehrs",
     "category": "T-10 MOBILITY"
   },
@@ -651,7 +667,7 @@
     "id": "https://thehill.com/newsletters/energy-environment/4814719-trump-says-he-has-to-support-evs-because-musk-backs-him/",
     "title": "Trump says he has to support EVs because Musk backs him",
     "description": "Presented by American Energy Action — Over the weekend, Trump told supporters in Atlanta: “I’m for electric cars.” {beacon} Energy & Environment Energy & Environment   The Big Story  Trump says he has to support EVs because Musk backs him Former President Trump has softened his tone on electric vehicles in recent days, citing an…",
-    "date": "2024-08-06",
+    "date": "2024-08-07",
     "link": "https://web.archive.org/web/2/https://thehill.com/newsletters/energy-environment/4814719-trump-says-he-has-to-support-evs-because-musk-backs-him/",
     "category": "T-10 MOBILITY"
   },
@@ -685,6 +701,14 @@
     "description": "Nick Hedley is a research analyst focused on clean energy and sustainable development. He works for Zero Carbon Analytics and is an energy access specialist.",
     "date": "2024-11-19",
     "link": "https://theprogressplaybook.com/2024/11/19/solar-installations-are-now-mandatory-for-large-parking-lots-in-france/",
+    "category": "T-10 MOBILITY"
+  },
+  {
+    "id": "https://theconversation.com/cycling-is-ten-times-more-important-than-electric-cars-for-reaching-net-zero-cities-157163",
+    "title": "Cycling is ten times more important than electric cars for reaching net-zero cities",
+    "description": "Active travel can help tackle the climate crisis earlier than electric vehicles – even if you swap the car for a bike for just one trip a day.",
+    "date": "2021-03-29",
+    "link": "https://theconversation.com/cycling-is-ten-times-more-important-than-electric-cars-for-reaching-net-zero-cities-157163",
     "category": "T-10 MOBILITY"
   },
   {
@@ -915,7 +939,7 @@
     "id": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0270712",
     "title": "Diagnosing the performance of food systems to increase accountability toward healthy diets and environmental sustainability | PLOS ONE",
     "description": "To reorient food systems to ensure they deliver healthy diets that protect against multiple forms of malnutrition and diet-related disease and safeguard the environment, ecosystems, and natural resources, there is a need for better governance and accountability. However, decision-makers are often in the dark on how to navigate their food systems to achieve these multiple outcomes. Even where there is sufficient data to describe various elements, drivers, and outcomes of food systems, there is a lack of tools to assess how food systems are performing. This paper presents a diagnostic methodology for 39 indicators representing food supply, food environments, nutrition outcomes, and environmental outcomes that offer cutoffs to assess performance of national food systems. For each indicator, thresholds are presented for unlikely, potential, or likely challenge areas. This information can be used to generate actions and decisions on where and how to intervene in food systems to improve human and planetary health. A global assessment and two country case studies—Greece and Tanzania—illustrate how the diagnostics could spur decision options available to countries.",
-    "date": "2022-07-28",
+    "date": "2022-07-29",
     "link": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0270712",
     "category": "T-10 FOOD"
   },
@@ -931,7 +955,7 @@
     "id": "https://e360.yale.edu/features/salmon-farming-climate-change",
     "title": "Warming Waters Challenge Atlantic Salmon, Both Wild and Farmed - Yale E360",
     "description": "Higher ocean and river temperatures are stressing Atlantic salmon, depriving these iconic fish of oxygen and forcing them to swim farther to find food. These climate-change pressures are also impacting salmon in ocean farms, which have seen an increase in mass die-offs.\n",
-    "date": "2022-09-14",
+    "date": "2022-09-15",
     "link": "https://e360.yale.edu/features/salmon-farming-climate-change",
     "category": "T-10 FOOD"
   },
@@ -1152,6 +1176,14 @@
     "category": "T-10 FOOD"
   },
   {
+    "id": "https://www.psypost.org/2023/05/chronic-intake-of-refined-carbohydrates-between-meals-is-associated-with-decreased-cognitive-performance-study-finds-163533",
+    "title": "Chronic intake of refined carbohydrates between meals is associated with decreased cognitive performance, study finds",
+    "description": "A new study in France found that chronic consumption of refined carbohydrates between meals was associated with worse cognitive performance in both men and women. This effect persisted even when energy intake and a number of other factors were controlled. The study was published in Personality and Individual Differences.",
+    "date": "2023-05-22",
+    "link": "https://www.psypost.org/2023/05/chronic-intake-of-refined-carbohydrates-between-meals-is-associated-with-decreased-cognitive-performance-study-finds-163533",
+    "category": "T-10 FOOD"
+  },
+  {
     "id": "https://www.cnbc.com/2023/05/23/pasta-prices-have-surged-prompting-crisis-meetings-in-italy-and-calls-for-a-strike.html",
     "title": "Pasta prices have surged, prompting crisis meetings in Italy and calls for a strike",
     "description": "Two weeks ago, Italy's Minister of Economic Development Adolfo Urso convened an emergency meeting tabling a discussion over the pasta price hike.",
@@ -1179,7 +1211,7 @@
     "id": "https://apnews.com/article/pfas-forever-chemicals-drinking-water-813c1323f74d5adb798047eea39c778a",
     "title": "Study says drinking water from nearly half of US faucets contains potentially harmful chemicals | AP News",
     "description": "A government study says nearly half of the tap water in the US contains potentially harmful compounds known as “forever chemicals.” The US Geological Survey said that PFAS chemicals are found in private wells in addition to public systems.",
-    "date": "2023-07-05",
+    "date": "2023-07-06",
     "link": "https://apnews.com/article/pfas-forever-chemicals-drinking-water-813c1323f74d5adb798047eea39c778a",
     "category": "T-10 FOOD"
   },
@@ -1235,8 +1267,16 @@
     "id": "https://www.umweltbundesamt.de/publikationen/monitoringbericht-2023",
     "title": "Monitoringbericht 2023 | Umweltbundesamt",
     "description": "Im Rahmen der Deutschen Anpassungsstrategie an den Klimawandel (DAS) legt die Bundesregierung den dritten Monitoringbericht 2023 zur Deutschen Anpas­sungsstrategie an den Klimawandel vor, in dem alle vier Jahre über Klimafolgen und Anpassung berichtet wird.",
-    "date": "2023-10-31",
+    "date": "2023-11-01",
     "link": "https://www.umweltbundesamt.de/publikationen/monitoringbericht-2023",
+    "category": "T-10 FOOD"
+  },
+  {
+    "id": "https://liu.se/en/news-item/elektronisk-jord-okar-tillvaxten-hos-grodor",
+    "title": "Electronic “soil” enhances crop growth - Linköping University",
+    "description": "Barley seedlings grow on average 50% more when their root system is stimulated electrically through a new cultivation substrate.  LiU-researchers have developed an electrically conductive “soil” for hydroponics.",
+    "date": "2023-12-27",
+    "link": "https://liu.se/en/news-item/elektronisk-jord-okar-tillvaxten-hos-grodor",
     "category": "T-10 FOOD"
   },
   {
@@ -1309,6 +1349,14 @@
     "description": "«Unser tägliches Brot gib uns heute» wird zum Gebet an Nestlé, Bayer und neu an IT-Konzerne. Pat Roy Mooney hatte davor gewarnt.",
     "date": "2024-05-27",
     "link": "https://www.infosperber.ch/gesundheit/ernaehrung/amazon-microsoft-google-und-alibaba-wollen-uns-noch-ernaehren/",
+    "category": "T-10 FOOD"
+  },
+  {
+    "id": "https://www.psypost.org/huge-study-links-ultra-processed-foods-to-heightened-depression-risk/",
+    "title": "Huge study links ultra-processed foods to heightened depression risk",
+    "description": "Scientists have found that higher consumption of ultra-processed foods is significantly associated with an increased risk of developing depressive symptoms, highlighting the potential mental health risks of diets rich in these foods.",
+    "date": "2024-05-27",
+    "link": "https://www.psypost.org/huge-study-links-ultra-processed-foods-to-heightened-depression-risk/",
     "category": "T-10 FOOD"
   },
   {
@@ -1496,6 +1544,14 @@
     "category": "T-10 FOOD"
   },
   {
+    "id": "https://www.psypost.org/fast-food-consumption-is-associated-with-depression/",
+    "title": "Fast food consumption is associated with depression",
+    "description": "Eating more fast food is linked to higher odds of depression, mostly independent of obesity, according to new research.",
+    "date": "2024-12-21",
+    "link": "https://www.psypost.org/fast-food-consumption-is-associated-with-depression/",
+    "category": "T-10 FOOD"
+  },
+  {
     "id": "https://nachrichten.idw-online.de/2025/01/06/komplexer-antrieb-der-planktonbluete-am-aequator",
     "title": "Komplexer Antrieb der Planktonblüte am Äquator",
     "description": "",
@@ -1539,7 +1595,7 @@
     "id": "https://www.theguardian.com/environment/2025/mar/20/glacier-meltdown-risks-food-and-water-supply-of-2bn-people-says-un",
     "title": "Glacier meltdown risks food and water supply of 2 billion people, says UN | Glaciers | The Guardian",
     "description": "Unesco report highlights ‘unprecedented’ glacier loss driven by climate crisis, threatening ecosystems, agriculture and water sources",
-    "date": "2025-03-20",
+    "date": "2025-03-21",
     "link": "https://www.theguardian.com/environment/2025/mar/20/glacier-meltdown-risks-food-and-water-supply-of-2bn-people-says-un",
     "category": "T-10 FOOD"
   },
@@ -1731,7 +1787,7 @@
     "id": "https://esd.copernicus.org/articles/17/151/2026/esd-17-151-2026.html",
     "title": "ESD - The largest crop production shocks: magnitude, causes and frequency",
     "description": "Abstract. Food is the foundation of our society. We often take it for granted, but stocks are rarely available for longer than a year, and food production can be disrupted by catastrophic events, both locally and globally. To highlight such major risks to the food system, we analyzed FAO crop production data from 1961 to 2023 to find the largest crop production shock for every country and identify its causes. We show that large crop production shocks regularly happen in all countries. This is most often driven by climate (especially droughts), but disruptions by other causes like economic disruptions, environmental hazards (especially storms) and conflict also occur regularly. The global mean of largest country-level shocks averaged −29 %, with African countries experiencing the most extreme collapses (−80 % in Botswana), while Asian and Central European nations faced more moderate largest shocks (−5 % to −15 %). While global shocks above 5 % are rare (occurring once in 63 years), continent-level shocks of this magnitude happen every 1.8 years on average. These results show that large disruptions to our food system frequently happen on a local to regional scale and can plausibly happen on a global scale as well. We therefore argue that more preparation and planning are needed to avoid such global disruptions to food production.",
-    "date": "2026-02-02",
+    "date": "2026-02-03",
     "link": "https://esd.copernicus.org/articles/17/151/2026/esd-17-151-2026.html",
     "category": "T-10 FOOD"
   },
@@ -2243,7 +2299,7 @@
     "id": "https://www.sciencedirect.com/science/article/pii/S036031992204900X",
     "title": "On the feasibility of direct hydrogen utilisation in a fossil-free Europe - ScienceDirect",
     "description": "Hydrogen is often suggested as a universal fuel that can replace fossil fuels. This paper analyses the feasibility of direct hydrogen utilisation in a…",
-    "date": "2023-01-25",
+    "date": "2023-01-26",
     "link": "https://web.archive.org/web/2/https://www.sciencedirect.com/science/article/pii/S036031992204900X",
     "category": "T-10 ENERGY"
   },
@@ -2491,7 +2547,7 @@
     "id": "https://knowablemagazine.org/article/technology/2023/heat-pumps-becoming-technology-future",
     "title": "Electric heat pumps for homes could be a clean, green technology of the future",
     "description": "Innovative thinking has done away with problems that long dogged the electric devices — and both scientists and environmentalists are excited about the possibilities",
-    "date": "2023-01-10",
+    "date": "2023-01-11",
     "link": "https://knowablemagazine.org/article/technology/2023/heat-pumps-becoming-technology-future",
     "category": "T-10 ENERGY"
   },
@@ -2533,6 +2589,14 @@
     "description": "Electricity generated from renewables surpassed coal in the United States for the first time in 2022, the U.S. Energy Information Administration announced Monday.",
     "date": "2023-03-28",
     "link": "https://web.archive.org/web/2/https://techxplore.com/news/2023-03-renewable-electricity-surpassed-coal.html",
+    "category": "T-10 ENERGY"
+  },
+  {
+    "id": "https://www.kit.edu/kit/pi_2023_15-batterierecycling-70-prozent-des-lithiums-zuruckgewonnen.php",
+    "title": "KIT - Das KIT - Medien - Presseinformationen - PI 2023 - Batterierecycling: 70 Prozent des Lithiums zurückgewonnen",
+    "description": "",
+    "date": "2025-07-31",
+    "link": "https://www.kit.edu/kit/pi_2023_15-batterierecycling-70-prozent-des-lithiums-zuruckgewonnen.php",
     "category": "T-10 ENERGY"
   },
   {
@@ -2763,7 +2827,7 @@
     "id": "https://www.zmescience.com/ecology/solar-power-surges-in-europe-and-is-set-to-double-by-2030/",
     "title": "Solar power surges in Europe and is set to double by 2030",
     "description": "New report shows governments are updating their energy plans with more ambitious targets.",
-    "date": "2023-08-14",
+    "date": "2023-08-15",
     "link": "https://www.zmescience.com/ecology/solar-power-surges-in-europe-and-is-set-to-double-by-2030/",
     "category": "T-10 ENERGY"
   },
@@ -3520,6 +3584,14 @@
     "category": "T-10 ENERGY"
   },
   {
+    "id": "https://www.independent.co.uk/climate-change/news/china-nuclear-reactor-meltdown-proof-b2584399.html",
+    "title": "China unveils world’s first meltdown-proof nuclear power plant in clean energy breakthrough | The Independent",
+    "description": "Materials used in reactor can withstand very high temperatures without melting",
+    "date": "2024-07-24",
+    "link": "https://web.archive.org/web/2/https://www.independent.co.uk/climate-change/news/china-nuclear-reactor-meltdown-proof-b2584399.html",
+    "category": "T-10 ENERGY"
+  },
+  {
     "id": "https://arstechnica.com/science/2024/07/us-solar-production-soars-by-25-percent-in-just-one-year/",
     "title": "US solar production soars by 25 percent in just one year | Ars Technica",
     "description": "2024 is seeing the inevitable outcome of the building boom in solar farms.",
@@ -3843,7 +3915,7 @@
     "id": "https://www.theguardian.com/world/2025/jan/22/rising-star-europe-made-more-electricity-from-solar-than-coal-in-2024",
     "title": "‘Rising star’: Europe made more electricity from solar than coal in 2024 | Europe | The Guardian",
     "description": "Report reveals solar power generated 11% of bloc’s electricity, surpassing coal at 10%",
-    "date": "2025-01-22",
+    "date": "2025-01-23",
     "link": "https://www.theguardian.com/world/2025/jan/22/rising-star-europe-made-more-electricity-from-solar-than-coal-in-2024",
     "category": "T-10 ENERGY"
   },
@@ -4099,7 +4171,7 @@
     "id": "https://apnews.com/article/china-climate-solar-wind-carbon-emissions-ab119c39f226cfbeb2f5c1449747cae9",
     "title": "China's carbon emissions are falling but not fast enough | AP News",
     "description": "Chinese officials have showcased what they claim will be the world's largest solar farm on the Tibetan plateau. It covers 610 square kilometers, or about 235 square miles, and is part of China's rapid solar expansion. A study published Thursday said China's carbon emissions fell 1% in the first half of the year, continuing a trend since March 2024. This decline suggests emissions may have peaked well ahead of the nation's goal of before 2030. However, experts say a sharper reduction is needed for China to achieve carbon neutrality by 2060. One challenge is aligning green energy distribution with industrial needs across the country.",
-    "date": "2025-08-20",
+    "date": "2025-08-21",
     "link": "https://apnews.com/article/china-climate-solar-wind-carbon-emissions-ab119c39f226cfbeb2f5c1449747cae9",
     "category": "T-10 ENERGY"
   },
@@ -4221,6 +4293,14 @@
     "description": "",
     "date": "2026-01-01",
     "link": "https://www.golem.de/news/atomreaktor-japan-nimmt-fukushima-wieder-in-betrieb-2601-203869.html",
+    "category": "T-10 ENERGY"
+  },
+  {
+    "id": "https://www.washingtonpost.com/world/2026/02/28/china-cuba-solar-trump-oil-blockade/?utm_source=reddit.com",
+    "title": "Trump has choked off Cuba’s oil supply. China is stepping in with solar. - The Washington Post",
+    "description": "",
+    "date": "2026-02-28",
+    "link": "https://www.washingtonpost.com/world/2026/02/28/china-cuba-solar-trump-oil-blockade/?utm_source=reddit.com",
     "category": "T-10 ENERGY"
   },
   {
@@ -4347,7 +4427,7 @@
     "id": "https://schraub-pfahl-fundament.de/",
     "title": "Fundamentbau mit Schraubfundamenten - einfach und klimafreundlich",
     "description": "Schraubpfahlfundament\nFundamentbau\nSchraubfundament \nGründungen ",
-    "date": "2025-09-29",
+    "date": "2025-09-30",
     "link": "https://schraub-pfahl-fundament.de/",
     "category": "T-10 HOUSING"
   },
@@ -4472,6 +4552,14 @@
     "category": "T-10 HOUSING"
   },
   {
+    "id": "https://passipedia.de/baulich/verglasungen_verbessern",
+    "title": "Verglasungen verbessern? [Passipedia DE]",
+    "description": "",
+    "date": "2024-01-01",
+    "link": "https://web.archive.org/web/2/https://passipedia.de/baulich/verglasungen_verbessern",
+    "category": "T-10 HOUSING"
+  },
+  {
     "id": "https://www.popsci.com/technology/quantum-computer-heat-window-glass/",
     "title": "Quantum computing used to design heat-blocking glass | Popular Science",
     "description": "Researchers used quantum computing to develop a micro-thin coating capable of blocking heat while keeping glass totally transparent.",
@@ -4507,7 +4595,7 @@
     "id": "https://itv-grabungen.de/magazin/kalk-werkstoff",
     "title": "Kalk – seit Jahrtausenden ein universeller Werkstoff - Magazin",
     "description": "Kalk wird im wahrsten Sinne des Wortes seit Urzeiten als Bau- und Werkstoff genutzt und ist bis heute von vielen Baustellen nicht wegzudenken. Die ältesten Nachweise stammen aus der mesopotamischen Stadt Ur, wo bei archäologischen Ausgrabungen eine K",
-    "date": "2023-02-01",
+    "date": "2023-02-02",
     "link": "https://web.archive.org/web/2/https://itv-grabungen.de/magazin/kalk-werkstoff",
     "category": "T-10 HOUSING"
   },
@@ -4643,7 +4731,7 @@
     "id": "https://www.sciencedirect.com/science/article/abs/pii/S0165032723010066",
     "title": "Urbanicity and depression: A global meta-analysis - ScienceDirect",
     "description": "Previous meta-analyses have revealed that in adult and older adult populations of developed countries, depression is more prevalent in urban than rura…",
-    "date": "2023-10-31",
+    "date": "2023-11-01",
     "link": "https://web.archive.org/web/2/https://www.sciencedirect.com/science/article/abs/pii/S0165032723010066",
     "category": "T-10 HOUSING"
   },
@@ -4653,6 +4741,14 @@
     "description": "As the planet gets hotter, the need for cool living environments is becoming more urgent. But air conditioning is a major contributor to global warming since units use potent greenhouse gases and lots of energy.",
     "date": "2023-09-25",
     "link": "https://web.archive.org/web/2/https://techxplore.com/news/2023-09-sustainable-alternative-air-conditioning.html",
+    "category": "T-10 HOUSING"
+  },
+  {
+    "id": "https://www.independent.co.uk/tech/solar-panels-uk-renewable-energy-b2442896.html",
+    "title": "Solar panel advances will see millions abandon electrical grid, scientists predict | The Independent",
+    "description": "Solar energy costs have fallen 90 per cent over the last decade, while new discoveries have seen efficiency rates rise ",
+    "date": "2023-11-07",
+    "link": "https://web.archive.org/web/2/https://www.independent.co.uk/tech/solar-panels-uk-renewable-energy-b2442896.html",
     "category": "T-10 HOUSING"
   },
   {
@@ -4904,6 +5000,14 @@
     "category": "T-10 HOUSING"
   },
   {
+    "id": "https://theconversation.com/a-2-000-year-old-building-site-reveals-the-raw-ingredients-for-ancient-roman-self-healing-concrete-271405",
+    "title": "'This has re-written our understanding of Roman concrete manufacture': Abandoned Pompeii worksite reveal how self-healing concrete was made | Live Science",
+    "description": "This has re-written our understanding of how Romans manufactured concrete.",
+    "date": "2025-12-09",
+    "link": "https://theconversation.com/a-2-000-year-old-building-site-reveals-the-raw-ingredients-for-ancient-roman-self-healing-concrete-271405",
+    "category": "T-10 HOUSING"
+  },
+  {
     "id": "https://spectrum.ieee.org/subzero-elastocaloric-cooling",
     "title": "Solid-State Elastocaloric Cooling Hits Sub-Zero Mark - IEEE Spectrum",
     "description": "A new elastocaloric device can freeze water using solid-state tech, offering a greener cooling solution.",
@@ -4925,7 +5029,7 @@
     "description": "Biologist Paul Ehrlich reflects on the 1972 MIT study, The Limits to Growth, on its 50th anniversary – including the fact that it has been refuted (poorly), ignored, and confirmed.",
     "date": "2022-06-01",
     "link": "https://www.growthbusters.org/ehrlich-limits-to-growth/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.statista.com/chart/25452/best-places-to-survive-societal-collapse/",
@@ -4933,7 +5037,7 @@
     "description": "This chart shows the most favorable starting locations/countries in the event of global societal collapse (2021).",
     "date": "2021-08-02",
     "link": "https://web.archive.org/web/2/https://www.statista.com/chart/25452/best-places-to-survive-societal-collapse/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.spiegel.de/wissenschaft/natur/grenzen-des-wachstums-interview-mit-dennis-meadows-a-870238.html",
@@ -4941,7 +5045,7 @@
     "description": "\"Die Grenzen des Wachstums\" ist die Bibel der Umweltbewegung: In der Studie warnte Dennis Meadows vor 40 Jahren vor der Ausbeutung der Erde und dem Kollaps der Weltwirtschaft. Im Interview erklärt er, warum er mit seinen düsteren Vorhersagen recht behalten wird.",
     "date": "2012-12-04",
     "link": "https://www.spiegel.de/wissenschaft/natur/grenzen-des-wachstums-interview-mit-dennis-meadows-a-870238.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.reuters.com/business/environment/us-corn-based-ethanol-worse-climate-than-gasoline-study-finds-2022-02-14/",
@@ -4949,7 +5053,7 @@
     "description": "Corn-based ethanol, which for years has been mixed in huge quantities into gasoline sold at U.S. pumps, is likely a much bigger contributor to global warming than straight gasoline, according to a study published Monday.",
     "date": "2022-02-14",
     "link": "https://web.archive.org/web/2/https://www.reuters.com/business/environment/us-corn-based-ethanol-worse-climate-than-gasoline-study-finds-2022-02-14/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://oilprice.com/Alternative-Energy/Nuclear-Power/France-Sees-Nuclear-Energy-Output-Plummet-At-The-Worst-Possible-Moment.html",
@@ -4957,7 +5061,7 @@
     "description": "he European Union's leading nuclear energy force is facing declining production, and the timing couldn't be worse",
     "date": "2022-06-25",
     "link": "https://oilprice.com/Alternative-Energy/Nuclear-Power/France-Sees-Nuclear-Energy-Output-Plummet-At-The-Worst-Possible-Moment.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.lejdd.fr/Societe/tribune-nous-devons-collectivement-agir-sur-la-demande-en-energie-4119737",
@@ -4965,7 +5069,7 @@
     "description": "Catherine MacGregor, directrice générale d’Engie, Jean-Bernard Lévy, président-directeur général d’EDF, Patrick Pouyanné, président-directeur général de TotalEnergies appellent à une sobriété d'urgence face à la flambée des prix de l'énergie. ",
     "date": "2022-06-25",
     "link": "https://www.lejdd.fr/Societe/tribune-nous-devons-collectivement-agir-sur-la-demande-en-energie-4119737",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://year2049.substack.com/p/vertical-farming-",
@@ -4973,7 +5077,7 @@
     "description": "Can it help us meet our growing food demand?",
     "date": "2022-06-24",
     "link": "https://year2049.substack.com/p/vertical-farming-",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.wired.com/story/the-infamous-1972-report-that-warned-of-civilizations-collapse/",
@@ -4981,7 +5085,7 @@
     "description": "The Limits to Growth argued that rampant pollution and resource extraction were pushing Earth to the brink. How does it hold up 50 years later?",
     "date": "2022-07-06",
     "link": "https://www.wired.com/story/the-infamous-1972-report-that-warned-of-civilizations-collapse/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.faz.net/aktuell/rhein-main/region-und-hessen/photovoltaik-am-weinberg-energie-und-wein-aus-geisenheim-18157280.html",
@@ -4989,7 +5093,7 @@
     "description": "Das Vorhaben der Weinbau-Hochschule in Geisenheim könnte neue Wege in der Solarenergie aufzeigen. Doch die Organisatoren müssen sich zunächst mit der Bürokratie auseinandersetzen.",
     "date": "2022-07-08",
     "link": "https://www.faz.net/aktuell/rhein-main/region-und-hessen/photovoltaik-am-weinberg-energie-und-wein-aus-geisenheim-18157280.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://phys.org/news/2022-07-alarm-earth-overshoot-day-thursday.html",
@@ -4997,7 +5101,7 @@
     "description": "",
     "date": "2022-07-01",
     "link": "https://phys.org/news/2022-07-alarm-earth-overshoot-day-thursday.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.goodnewsnetwork.org/dead-solar-panels-are-about-to-become-a-lot-more-valuable-a-2-7-billion-market-by-2030/",
@@ -5005,7 +5109,7 @@
     "description": "PV panels at the end of their lifespan will be worth more than $2.7 billion in 2030, compared to just $170 million this year.",
     "date": "2022-07-29",
     "link": "https://www.goodnewsnetwork.org/dead-solar-panels-are-about-to-become-a-lot-more-valuable-a-2-7-billion-market-by-2030/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.nytimes.com/2022/08/16/opinion/climate-inflation-reduction-act.html",
@@ -5013,7 +5117,7 @@
     "description": "Subsidies in the climate bill will lock in carbon capture and storage, which will sustain fossil fuels.",
     "date": "2022-08-16",
     "link": "https://web.archive.org/web/2/https://www.nytimes.com/2022/08/16/opinion/climate-inflation-reduction-act.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.independent.co.uk/independentpremium/uk-news/wealth-inequality-environmental-breakdown-dysfunctional-society-b2155736.html",
@@ -5021,7 +5125,7 @@
     "description": "‘Extraordinary action to redistribute wealth’ required to avert cascading series of disasters, Harry Cockburn writes ",
     "date": "2022-08-30",
     "link": "https://web.archive.org/web/2/https://www.independent.co.uk/independentpremium/uk-news/wealth-inequality-environmental-breakdown-dysfunctional-society-b2155736.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.tagesschau.de/multimedia/video/video-1080377.html",
@@ -5029,7 +5133,7 @@
     "description": "tagesschau 20 Uhr",
     "date": "2023-04-18",
     "link": "https://www.tagesschau.de/multimedia/video/video-1080377.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.tagesschau.de/wirtschaft/club-of-rome-studie-103.html",
@@ -5037,7 +5141,7 @@
     "description": "Eine neue Club-of-Rome-Studie fordert drastische Schritte für eine lebenswerte Zukunft. Derzeit werde die Saat für den Zusammenbruch ganzer Weltregionen gelegt - ohne eine Umverteilung des Reichtums lasse sich die Klimakrise nicht lösen.",
     "date": "2022-08-30",
     "link": "https://www.tagesschau.de/wirtschaft/club-of-rome-studie-103.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.theguardian.com/environment/2022/oct/04/wax-worm-saliva-rapidly-breaks-down-plastic-bags-scientists-discover",
@@ -5045,7 +5149,7 @@
     "description": "Its enzymes degrade polyethylene within hours at room temperature and could ‘revolutionise’ recycling",
     "date": "2022-10-04",
     "link": "https://www.theguardian.com/environment/2022/oct/04/wax-worm-saliva-rapidly-breaks-down-plastic-bags-scientists-discover",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.tagesschau.de/wirtschaft/weltwirtschaft/wachstum-klimaschutz-degrowth-report-mainz-101.html",
@@ -5053,7 +5157,7 @@
     "description": "Überblick zu Hintergründen, Analysen und Interviews bei tagesschau.de - die erste Adresse für Nachrichten und umfassende Berichte zu aktuellen Themen.",
     "date": "2023-02-16",
     "link": "https://www.tagesschau.de/wirtschaft/weltwirtschaft/wachstum-klimaschutz-degrowth-report-mainz-101.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://yaleclimateconnections.org/2020/07/review-bad-science-and-bad-arguments-abound-in-apocalypse-never/",
@@ -5061,7 +5165,7 @@
     "description": "A new book that critiques environmentalism is deeply and fatally flawed.",
     "date": "2020-07-15",
     "link": "https://yaleclimateconnections.org/2020/07/review-bad-science-and-bad-arguments-abound-in-apocalypse-never/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.bloomberg.com/features/2022-india-plastic-recycling-pollution/",
@@ -5069,7 +5173,7 @@
     "description": "Plastic wrappers and parcels that start off in Americans’ recycling bins end up at illegal dumpsites and industrial incinerators — and inside the lungs of people in Muzaffarnagar.",
     "date": "2022-12-27",
     "link": "https://www.bloomberg.com/features/2022-india-plastic-recycling-pollution/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.forbes.com/sites/jamiehailstone/2023/02/27/plastic-consumption-could-nearly-double-by-2050-study-warns/",
@@ -5077,15 +5181,15 @@
     "description": "The report by the Back to Blue group warns that without significant policy interventions, the amount of plastics consumed across the G20 nations will hit 451 million tonnes a year by that date, which is nearly twice the 2019 level of 261 million.",
     "date": "2023-02-27",
     "link": "https://www.forbes.com/sites/jamiehailstone/2023/02/27/plastic-consumption-could-nearly-double-by-2050-study-warns/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://zerotracker.net/analysis/net-zero-stocktake-2023",
     "title": "Net Zero Stocktake 2023 | Net Zero Tracker",
     "description": "From intent to integrity. We assess the net zero targets and mitigation strategies of all nations, the largest 2,000+ companies, and the worlds's biggest regions and cities.",
-    "date": "2023-06-11",
+    "date": "2023-06-12",
     "link": "https://zerotracker.net/analysis/net-zero-stocktake-2023",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://donellameadows.org/archives/what-does-sustainability-mean/",
@@ -5093,7 +5197,7 @@
     "description": "By Donella Meadows –April 23, 1992– As the world prepares for the Earth Summit in June, the global buzz-word is “sustainability.” Governments and people are working not only to define that concept, but to achieve it, just about everywhere except the United States, where there seems to be a determined effort not to join the […]",
     "date": "1992-04-23",
     "link": "https://donellameadows.org/archives/what-does-sustainability-mean/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.nbcnews.com/science/space/astronauts-urine-sweat-almost-entirely-recycled-drinking-water-new-sys-rcna91619",
@@ -5101,15 +5205,15 @@
     "description": "Scientists have achieved a clear win on the International Space Station as they have managed to filter nearly all of the astronauts' wastewater with a new system that distills sweat, urine and other moisture in the cabin into clean drinking water, NASA said.",
     "date": "2023-06-28",
     "link": "https://www.nbcnews.com/science/space/astronauts-urine-sweat-almost-entirely-recycled-drinking-water-new-sys-rcna91619",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.umweltbundesamt.de/publikationen/projektionsbericht-2023-fuer-deutschland",
     "title": "Projektionsbericht 2023 für Deutschland | Umweltbundesamt",
     "description": "Der deutsche Projektionsbericht 2023 beschreibt die projizierte Entwicklung der Treibhausgasemissionen in Deutschland in einem Mit-Maßnahmen-Szenario (MMS) sowie in einem Mit-Weiteren-Maßnahmen-Szenario (MWMS) für die Jahre 2023 bis 2050.",
-    "date": "2023-07-31",
+    "date": "2023-08-01",
     "link": "https://www.umweltbundesamt.de/publikationen/projektionsbericht-2023-fuer-deutschland",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://taz.de/Studie-zur-Belastung-des-Planeten/!5960174/",
@@ -5117,7 +5221,7 @@
     "description": "Zu viel Plastik, zu hoher Verbrauch von Süßwasser, zu viel Erwärmung: Laut einer aktuellen Studie sind 6 von 9 planetaren Grenzen sind überschritten.",
     "date": "2023-09-13",
     "link": "https://taz.de/Studie-zur-Belastung-des-Planeten/!5960174/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.theguardian.com/environment/2023/sep/13/earth-well-outside-safe-operating-space-for-humanity-scientists-find",
@@ -5125,7 +5229,7 @@
     "description": "First complete ‘scientific health check’ shows most global systems beyond stable range in which modern civilisation emerged",
     "date": "2023-09-13",
     "link": "https://www.theguardian.com/environment/2023/sep/13/earth-well-outside-safe-operating-space-for-humanity-scientists-find",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.usatoday.com/story/news/nation/2023/09/13/planetary-boundaries-study-warns-humans-are-taking-earth-to-the-brink/70834568007/",
@@ -5133,7 +5237,7 @@
     "description": "Human activity has now gone past six of nine planetary \"boundaries\" that are important for maintaining Earth's stability and resilience.",
     "date": "2023-09-13",
     "link": "https://www.usatoday.com/story/news/nation/2023/09/13/planetary-boundaries-study-warns-humans-are-taking-earth-to-the-brink/70834568007/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.science.org/doi/10.1126/sciadv.adh2458",
@@ -5141,7 +5245,7 @@
     "description": "This planetary boundaries framework update finds that six of the nine boundaries are transgressed, suggesting that Earth is now well outside of the safe operating space for humanity. Ocean acidific...",
     "date": "2023-09-01",
     "link": "https://www.science.org/doi/10.1126/sciadv.adh2458",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.spiegel.de/wirtschaft/experten-fuerchten-ersten-rueckschritt-in-der-menschlichen-entwicklung-seit-jahrzehnten-a-4bd87e14-4538-4664-a792-3694c369d610",
@@ -5149,7 +5253,7 @@
     "description": "Energiekrise, Inflation und Ukrainekrieg haben die Welt instabiler gemacht. Der Global Risk Report des Weltwirtschaftsforums zeichnet ein düsteres Bild der nahen Zukunft.",
     "date": "2023-01-11",
     "link": "https://www.spiegel.de/wirtschaft/experten-fuerchten-ersten-rueckschritt-in-der-menschlichen-entwicklung-seit-jahrzehnten-a-4bd87e14-4538-4664-a792-3694c369d610",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.npr.org/2023/11/13/1211843512/plastic-pollution-waste-treaty-united-nations-fossil-fuel-oil-gas",
@@ -5157,7 +5261,7 @@
     "description": "Groups connected to the fossil fuel industry are trying to shape an international treaty to cut plastic pollution. And oil- and gas-producing nations are at the negotiating table.",
     "date": "2023-11-13",
     "link": "https://www.npr.org/2023/11/13/1211843512/plastic-pollution-waste-treaty-united-nations-fossil-fuel-oil-gas",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.wired.com/story/gaya-herrington-avoiding-global-collapse/",
@@ -5165,7 +5269,7 @@
     "description": "Economic data expert Gaya Herrington says overconsumption has brought the world to a dangerous tipping point, but there’s still time to act.",
     "date": "2023-05-22",
     "link": "https://www.wired.com/story/gaya-herrington-avoiding-global-collapse/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.tagesschau.de/multimedia/video/video-1280772.html",
@@ -5173,7 +5277,7 @@
     "description": "Das Beste aus tagesschau, tagesthemen und tagesschau24 ",
     "date": "2023-04-18",
     "link": "https://www.tagesschau.de/multimedia/video/video-1280772.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.youtube.com/watch?v=PTu0X_PesrY",
@@ -5181,7 +5285,7 @@
     "description": "Gaya Herrington - Vice President Sustainability Research at Schneider Electric and Co-Author of Earth for All and Five Insights for Avoiding Global Collapse....",
     "date": "2023-03-01",
     "link": "https://www.youtube.com/watch?v=PTu0X_PesrY",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.theguardian.com/global-development/2024/feb/28/eu-countries-already-hitting-some-of-their-sustainable-energy-targets-for-2030",
@@ -5189,7 +5293,7 @@
     "description": "Study finds ‘systematic progress’ achieved in 2010s with some states reaching targets a decade early",
     "date": "2024-02-28",
     "link": "https://www.theguardian.com/global-development/2024/feb/28/eu-countries-already-hitting-some-of-their-sustainable-energy-targets-for-2030",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://newsroom.ucla.edu/releases/ucla-equatic-to-build-largest-ocean-based-plant-for-carbon-removal",
@@ -5197,7 +5301,7 @@
     "description": "The $20 million system in Singapore will be capable of removing 3,650 metric tons of CO2 per year",
     "date": "2024-02-28",
     "link": "https://newsroom.ucla.edu/releases/ucla-equatic-to-build-largest-ocean-based-plant-for-carbon-removal",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://phys.org/news/2024-03-world-resource-surge.html",
@@ -5205,7 +5309,7 @@
     "description": "Extraction of Earth's natural resources could surge 60 percent by 2060, imperiling climate goals and economic prosperity, the UN said Friday, calling for dramatic changes in energy, food, transport and housing.",
     "date": "2024-03-01",
     "link": "https://web.archive.org/web/2/https://phys.org/news/2024-03-world-resource-surge.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.collapsemusings.com/what-it-means-to-be-collapse-aware/",
@@ -5213,7 +5317,7 @@
     "description": "Becoming collapse-aware can make you feel like you&#x27;re going insane. You&#x27;d be crazy if it didn&#x27;t. ",
     "date": "2024-03-06",
     "link": "https://www.collapsemusings.com/what-it-means-to-be-collapse-aware/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.theguardian.com/us-news/2024/mar/22/oil-companies-emissions-goals-report",
@@ -5221,7 +5325,7 @@
     "description": "Despite splashy climate pledges, firms including BP and Saudi Aramco have plans to expand fossil fuel production, says analysis",
     "date": "2024-03-22",
     "link": "https://www.theguardian.com/us-news/2024/mar/22/oil-companies-emissions-goals-report",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.zeit.de/wissen/umwelt/2024-03/co2-budget-1-5-grad-ziel-deutschland-klimaschutz-emissionen",
@@ -5229,7 +5333,7 @@
     "description": "Aktuelle Nachrichten, Kommentare, Analysen und Hintergrundberichte aus Politik, Wirtschaft, Gesellschaft, Wissen, Kultur und Sport lesen Sie auf zeit.de.",
     "date": "2024-03-28",
     "link": "https://www.zeit.de/wissen/umwelt/2024-03/co2-budget-1-5-grad-ziel-deutschland-klimaschutz-emissionen",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://scilogs.spektrum.de/der-anthropozaeniker/anatomie-eines-falls/",
@@ -5237,15 +5341,15 @@
     "description": "pdf-english version (Vers1e) Inhaltsverzeichnis Intro1. Prozedurales zur Ablehnung durch SQS/ICS und IUGS2. Der Ablauf: Fast 15 Jahre AWG-Arbeit unter dauerhafter Abstimmung mit SQS3. Ist eine frühere Untergrenze für das Anthropozän in “Event-Auffassung” wirklich sinnvoller?4. Die …",
     "date": "2024-03-28",
     "link": "https://scilogs.spektrum.de/der-anthropozaeniker/anatomie-eines-falls/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://today.ucsd.edu/story/biodegradable-living-plastic-houses-bacterial-spores-that-help-it-break-down",
     "title": "Biodegradable ‘Living Plastic’ Houses Bacterial Spores That Help It Break Down",
     "description": "A new type of bioplastic could help reduce the plastic industry’s environmental footprint. Researchers have developed a biodegradable form of thermoplastic polyurethane (TPU) filled with bacterial spores that, when exposed to nutrients present in compost, germinate and break down the material at the end of its life cycle.",
-    "date": "2024-04-29",
+    "date": "2024-04-30",
     "link": "https://today.ucsd.edu/story/biodegradable-living-plastic-houses-bacterial-spores-that-help-it-break-down",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.theguardian.com/world/article/2024/may/07/un-expert-human-rights-climate-crisis-economy",
@@ -5253,7 +5357,7 @@
     "description": "Outgoing special rapporteur David Boyd says ‘there’s something wrong with our brains that we can’t understand how grave this is’",
     "date": "2024-05-07",
     "link": "https://www.theguardian.com/world/article/2024/may/07/un-expert-human-rights-climate-crisis-economy",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.tagesschau.de/ausland/amerika/un-nachhaltigkeitsziele-zwischenbilanz-100.html",
@@ -5261,15 +5365,15 @@
     "description": "17 Nachhaltigkeitsziele haben sich die Vereinten Nationen im Jahr 2015 gesetzt. Seitdem wird einmal jährlich auf einer Konferenz darüber Bilanz gezogen - und die fällt in diesem Jahr nicht gut aus. ",
     "date": "2024-07-19",
     "link": "https://www.tagesschau.de/ausland/amerika/un-nachhaltigkeitsziele-zwischenbilanz-100.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.france24.com/en/europe/20240721-spain-mallorca-mass-tourism",
     "title": "Thousands rally in Spain's Mallorca against mass tourism",
     "description": "Over 20,000 anti-tourism activists protested in Palma de Mallorca, Spain, on Sunday, highlighting concerns about rising housing costs. This is the latest in a series of protests in popular destinations like Barcelona, Malaga and the Canary Islands.",
-    "date": "2024-07-21",
+    "date": "2024-07-22",
     "link": "https://web.archive.org/web/2/https://www.france24.com/en/europe/20240721-spain-mallorca-mass-tourism",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.clubofrome.org/member/herrington-gaya/",
@@ -5277,7 +5381,7 @@
     "description": "Gaya Herrington, member of the Club of Rome, is an internationally known sustainability researcher, wellbeing economist and bioregional advocate.",
     "date": "2024-07-17",
     "link": "https://www.clubofrome.org/member/herrington-gaya/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.heise.de/news/Atommuellendlager-Suche-dauert-womoeglich-Jahrzehnte-laenger-als-geplant-9827394.html",
@@ -5285,7 +5389,7 @@
     "description": "Das Öko-Institut bezweifelt in einem Gutachten, dass die Suche nach einem Endlager für hochradioaktiven Atommüll im Jahr 2031 abgeschlossen sein wird.",
     "date": "2024-08-07",
     "link": "https://www.heise.de/news/Atommuellendlager-Suche-dauert-womoeglich-Jahrzehnte-laenger-als-geplant-9827394.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.latimes.com/california/story/2024-08-13/billionaire-accused-of-stealing-sand-from-malibus-broad-beach-lawsuit-says",
@@ -5293,7 +5397,7 @@
     "description": "In Malibu, billionaire businessman Mark Attanasio is being sued by his next-door neighbor for allegedly removing sand from Broad Beach for a construction project.",
     "date": "2024-08-13",
     "link": "https://www.latimes.com/california/story/2024-08-13/billionaire-accused-of-stealing-sand-from-malibus-broad-beach-lawsuit-says",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.bpb.de/themen/umwelt/anthropozaen/216918/texte-und-grafiken-zur-grossen-beschleunigung-the-great-acceleration/",
@@ -5301,7 +5405,15 @@
     "description": "Seit den 1950er Jahren ist eine beispiellose Zunahme menschlicher Aktivitäten zu verzeichnen. In dem als “Große Beschleunigung” bezeichneten Modell werden zwölf gesellschaftlich-wirtschaftliche Megatrends zwölf ökologischen Megatrends zur Seite geste",
     "date": "2022-01-07",
     "link": "https://www.bpb.de/themen/umwelt/anthropozaen/216918/texte-und-grafiken-zur-grossen-beschleunigung-the-great-acceleration/",
-    "category": "T-10 HOUSING"
+    "category": "General"
+  },
+  {
+    "id": "https://theconversation.com/the-overshoot-myth-you-cant-keep-burning-fossil-fuels-and-expect-scientists-of-the-future-to-get-us-back-to-1-5-c-230814",
+    "title": "The overshoot myth: you can’t keep burning fossil fuels and expect scientists of the future to get us back to 1.5°C",
+    "description": "The net zero approach of the Paris agreement has become detached from reality as it increasingly relies on science fiction levels of speculative technology.",
+    "date": "2024-08-20",
+    "link": "https://theconversation.com/the-overshoot-myth-you-cant-keep-burning-fossil-fuels-and-expect-scientists-of-the-future-to-get-us-back-to-1-5-c-230814",
+    "category": "General"
   },
   {
     "id": "https://www.theguardian.com/environment/2024/sep/12/consumerism-and-the-climate-crisis-threaten-equitable-future-for-humanity-report-says",
@@ -5309,7 +5421,7 @@
     "description": "The Earth Commission says hope lies in sustainable lifestyles, a radical transformation of global politics and fair distribution of resources",
     "date": "2024-09-12",
     "link": "https://www.theguardian.com/environment/2024/sep/12/consumerism-and-the-climate-crisis-threaten-equitable-future-for-humanity-report-says",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.cam.ac.uk/research/news/personal-carbon-footprint-of-the-rich-is-vastly-underestimated-by-rich-and-poor-alike-study-finds",
@@ -5317,7 +5429,7 @@
     "description": "An international group of researchers, led by the Copenhagen Business School, the University of Basel and the University of Cambridge, surveyed 4,000 people from Denmark, India, Nigeria and the United States about inequality in personal carbon footprints – the total amount of greenhouse gases produced by a person’s activities – within their own country.",
     "date": "2024-09-12",
     "link": "https://www.cam.ac.uk/research/news/personal-carbon-footprint-of-the-rich-is-vastly-underestimated-by-rich-and-poor-alike-study-finds",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.cnbc.com/2024/09/18/japan-faces-demographic-crisis-as-elderly-count-hits-record-high-.html",
@@ -5325,7 +5437,7 @@
     "description": "Japan's number of people aged 65 and over has reached a record high, cementing it as the worlds most elderly country, according to government statistics. ",
     "date": "2024-09-18",
     "link": "https://www.cnbc.com/2024/09/18/japan-faces-demographic-crisis-as-elderly-count-hits-record-high-.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.theguardian.com/environment/2024/sep/23/earth-breach-planetary-boundaries-health-check-oceans",
@@ -5333,7 +5445,7 @@
     "description": "Ocean acidification close to critical threshold, say scientists, posing threat to marine ecosystems and global liveability",
     "date": "2024-09-23",
     "link": "https://www.theguardian.com/environment/2024/sep/23/earth-breach-planetary-boundaries-health-check-oceans",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.deutschlandfunk.de/amazonas-regenwald-um-die-groesse-deutschlands-und-frankreichs-geschrumpft-100.html",
@@ -5341,7 +5453,7 @@
     "description": "In den vergangenen vier Jahrzehnten ist der Amazonas-Regenwald einer Studie zufolge um Hunderttausende Quadratkilometer geschrumpft.",
     "date": "2024-09-24",
     "link": "https://www.deutschlandfunk.de/amazonas-regenwald-um-die-groesse-deutschlands-und-frankreichs-geschrumpft-100.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.theguardian.com/world/2024/sep/23/canada-first-nation-forest-wildfire-logging",
@@ -5349,7 +5461,7 @@
     "description": "The Wet’suwet’en Nation never signed treaties with the Canadian or provincial governments, yet their land was leased to timber companies",
     "date": "2024-09-23",
     "link": "https://www.theguardian.com/world/2024/sep/23/canada-first-nation-forest-wildfire-logging",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.wired.com/story/hurricane-helene-shockwaves-semiconductor-industry-microchips-spruce-pine-north-carolina-sand-high-quality-quartz/",
@@ -5357,7 +5469,7 @@
     "description": "Downpours at Spruce Pine, North Carolina, have taken the biggest known deposit of high-purity quartz offline, leaving the global tech supply chain potentially starved of an ingredient vital for making microchips.",
     "date": "2024-10-01",
     "link": "https://www.wired.com/story/hurricane-helene-shockwaves-semiconductor-industry-microchips-spruce-pine-north-carolina-sand-high-quality-quartz/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.cnn.com/2024/10/02/tech/semiconductor-supply-chain-north-carolina-helene/index.html",
@@ -5365,7 +5477,7 @@
     "description": "The devastation in North Carolina in the wake of Hurricane Helene could have serious implications for a niche — but extremely important — corner of the tech industry.",
     "date": "2024-10-02",
     "link": "https://www.cnn.com/2024/10/02/tech/semiconductor-supply-chain-north-carolina-helene/index.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.theguardian.com/environment/2024/oct/08/earths-vital-signs-show-humanitys-future-in-balance-say-climate-experts",
@@ -5373,7 +5485,7 @@
     "description": "Record emissions, temperatures and population mean more scientists are looking into possibility of societal collapse, report says",
     "date": "2024-10-08",
     "link": "https://www.theguardian.com/environment/2024/oct/08/earths-vital-signs-show-humanitys-future-in-balance-say-climate-experts",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://academic.oup.com/pnasnexus/article/3/10/pgae399/7795949",
@@ -5381,7 +5493,7 @@
     "description": "Abstract. Sea level rise and climate change are shaping present societies, particularly those on oceanic islands. Few historical examples could serve as re",
     "date": "2024-10-01",
     "link": "https://web.archive.org/web/2/https://academic.oup.com/pnasnexus/article/3/10/pgae399/7795949",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.youtube.com/watch?v=JfeRLwlnuHo",
@@ -5389,7 +5501,7 @@
     "description": "What if solving poverty, caring for nature and fostering well-being were the ultimate goals of the economy, instead of growth for its own sake? Environmental...",
     "date": "2024-10-23",
     "link": "https://www.youtube.com/watch?v=JfeRLwlnuHo",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.theguardian.com/world/2024/nov/25/polluted-rivers-taxes-ghana-illegal-gold-mining-boom",
@@ -5397,7 +5509,7 @@
     "description": "Estimated $2bn lost in missed taxes from environmentally destructive practice some blame on political corruption",
     "date": "2024-11-25",
     "link": "https://www.theguardian.com/world/2024/nov/25/polluted-rivers-taxes-ghana-illegal-gold-mining-boom",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.theguardian.com/environment/2024/dec/28/we-need-dramatic-social-and-technological-changes-is-societal-collapse-inevitable",
@@ -5405,7 +5517,7 @@
     "description": "Academic Danilo Brozović says studies of failed civilisations all point in one direction – today’s society needs radical transformation to survive",
     "date": "2024-12-28",
     "link": "https://www.theguardian.com/environment/2024/dec/28/we-need-dramatic-social-and-technological-changes-is-societal-collapse-inevitable",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://hub.jhu.edu/2024/06/05/biocubes-everything-on-earth/",
@@ -5413,7 +5525,7 @@
     "description": "A new interactive visual depicts everything on the planet Earth, showing, with scientific precision and breathtaking profundity, how man-made things now outweigh all forms of natural life",
     "date": "2024-06-05",
     "link": "https://hub.jhu.edu/2024/06/05/biocubes-everything-on-earth/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://arstechnica.com/science/2024/12/injured-green-sea-turtle-relearns-how-to-swim-thanks-to-3d-printed-harness/",
@@ -5421,7 +5533,7 @@
     "description": "Boat collision left Charlotte stranded at the surface and in danger of predation.",
     "date": "2024-12-21",
     "link": "https://arstechnica.com/science/2024/12/injured-green-sea-turtle-relearns-how-to-swim-thanks-to-3d-printed-harness/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.zeit.de/wissen/umwelt/2025-03/klimaziele-deutschland-erreicht-umwelt-treibhausgas",
@@ -5429,7 +5541,7 @@
     "description": "Aktuelle Nachrichten, Kommentare, Analysen und Hintergrundberichte aus Politik, Wirtschaft, Gesellschaft, Wissen, Kultur und Sport lesen Sie auf zeit.de.",
     "date": "2025-03-14",
     "link": "https://www.zeit.de/wissen/umwelt/2025-03/klimaziele-deutschland-erreicht-umwelt-treibhausgas",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.theguardian.com/environment/2025/apr/03/climate-crisis-on-track-to-destroy-capitalism-warns-allianz-insurer",
@@ -5437,7 +5549,7 @@
     "description": "Action urgently needed to save the conditions under which markets – and civilisation itself – can operate, says senior Allianz figure",
     "date": "2025-04-03",
     "link": "https://www.theguardian.com/environment/2025/apr/03/climate-crisis-on-track-to-destroy-capitalism-warns-allianz-insurer",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.npr.org/2025/06/15/nx-s1-5400642/affordable-housing-environment-vienna-climate-change",
@@ -5445,7 +5557,7 @@
     "description": "Vienna has a way to make affordable housing and combat climate change all at the same time. Now U.S. cities want in, and they're building their own green housing.",
     "date": "2025-06-15",
     "link": "https://www.npr.org/2025/06/15/nx-s1-5400642/affordable-housing-environment-vienna-climate-change",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.theatlantic.com/science/archive/2025/07/science-empire-america-decline/683711/",
@@ -5453,7 +5565,7 @@
     "description": "America’s run as the premier techno-superpower may be over.",
     "date": "2025-07-31",
     "link": "https://www.theatlantic.com/science/archive/2025/07/science-empire-america-decline/683711/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://shado-mag.com/education/know/what-is-waste-colonialism/",
@@ -5461,7 +5573,7 @@
     "description": "See | Hear | Act | Do",
     "date": "2023-07-17",
     "link": "https://shado-mag.com/education/know/what-is-waste-colonialism/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.ft.com/content/fa4ce69b-e925-4324-a027-cdf86e66163f",
@@ -5469,7 +5581,7 @@
     "description": "Some experts say the technology is crucial for climate change goals but scaling up is proving hard",
     "date": "2025-09-28",
     "link": "https://www.ft.com/content/fa4ce69b-e925-4324-a027-cdf86e66163f",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.rte.ie/news/2025/1006/1536971-fishing-industry-quotas/",
@@ -5477,7 +5589,7 @@
     "description": "The Irish fishing industry has warned it is bracing for catastrophic fishing quotas next year that &quot;could collapse the Irish fishing sector and devastate major fishing communities&quot;.",
     "date": "2025-10-06",
     "link": "https://www.rte.ie/news/2025/1006/1536971-fishing-industry-quotas/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://wittenbrink.net/rueckblick-auf-die-republica-25-johan-rockstroem-zur-decisive-decade/",
@@ -5485,7 +5597,7 @@
     "description": "",
     "date": "2025-06-08",
     "link": "https://wittenbrink.net/rueckblick-auf-die-republica-25-johan-rockstroem-zur-decisive-decade/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.bpb.de/themen/umwelt/anthropozaen/234831/zum-entwicklungsverlauf-des-anthropozaens-die-grosse-beschleunigung/",
@@ -5493,7 +5605,7 @@
     "description": "Die als „Große Beschleunigung” bekannt gewordenen Kurvendiagramme zeigen die zunehmende Belastung des Erdsystems durch den Menschen. Die englische Originalfassung des Forscherkollektivs wurde übersetzt und führt in das Thema Anthropozän ein.",
     "date": "2021-06-23",
     "link": "https://www.bpb.de/themen/umwelt/anthropozaen/234831/zum-entwicklungsverlauf-des-anthropozaens-die-grosse-beschleunigung/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.independent.co.uk/news/world/middle-east/saudi-arabia-neom-the-line-mohammed-bin-salman-b2908541.html",
@@ -5501,7 +5613,7 @@
     "description": "Nearly a decade ago, the Saudi crown prince promised to build a gleaming utopia on the coast of the Red Sea that would redefine how human beings lived and worked. But experts say the scaling back of his project reveals that it was always an impossible dream in the first place, Alex Croft reports",
     "date": "2026-01-31",
     "link": "https://web.archive.org/web/2/https://www.independent.co.uk/news/world/middle-east/saudi-arabia-neom-the-line-mohammed-bin-salman-b2908541.html",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.theguardian.com/environment/2026/mar/23/earth-being-pushed-beyond-its-limits-as-energy-imbalance-reaches-record-high",
@@ -5509,7 +5621,7 @@
     "description": "State of the Climate report finds Earth’s energy has moved dangerously out of balance, with oceans absorbing vast majority of trapped heat",
     "date": "2026-03-23",
     "link": "https://www.theguardian.com/environment/2026/mar/23/earth-being-pushed-beyond-its-limits-as-energy-imbalance-reaches-record-high",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.resilience.org/stories/2024-12-19/beyond-growth-the-promise-of-a-wellbeing-economy/",
@@ -5517,7 +5629,7 @@
     "description": "In a “wellbeing economy”, government policies, business activities, and citizens’ behaviour are aimed at meeting our physical, social, and spiritual needs within planetary boundaries. It doesn’t mean we’re anti-growth; we’re just more selective about it.",
     "date": "2024-12-19",
     "link": "https://web.archive.org/web/2/https://www.resilience.org/stories/2024-12-19/beyond-growth-the-promise-of-a-wellbeing-economy/",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.ted.com/talks/johan_rockstrom_the_tipping_points_of_climate_change_and_where_we_stand?user_email_address=a839de7b2d5f51d2b925dc649ad2766c&lctg=62d1a2f41c794c328cb0a13e",
@@ -5525,7 +5637,7 @@
     "description": "We're nearly halfway through the 2020s, dubbed the most decisive decade for action on climate change. Where exactly do things stand? Climate impact scholar Johan Rockström offers the most up-to-date scientific assessment of the state of the planet and explains what must be done to preserve Earth's resilience to human pressure.",
     "date": "2024-08-14",
     "link": "https://www.ted.com/talks/johan_rockstrom_the_tipping_points_of_climate_change_and_where_we_stand?user_email_address=a839de7b2d5f51d2b925dc649ad2766c&lctg=62d1a2f41c794c328cb0a13e",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.theguardian.com/tv-and-radio/2026/apr/29/david-attenborough-100-birthday-share-your-memories?CMP=Share_iOSApp_Other",
@@ -5533,7 +5645,7 @@
     "description": "As David Attenbourugh turns 100 years old, we would like to hear your memories over the years – including any encounters you’ve had with him in the wild",
     "date": "2026-04-29",
     "link": "https://www.theguardian.com/tv-and-radio/2026/apr/29/david-attenborough-100-birthday-share-your-memories?CMP=Share_iOSApp_Other",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.zeit.de/2026/23/gesellschaftlicher-kollaps-forschung-faktoren",
@@ -5541,7 +5653,7 @@
     "description": "Aktuelle Nachrichten, Kommentare, Analysen und Hintergrundberichte aus Politik, Wirtschaft, Gesellschaft, Wissen, Kultur und Sport lesen Sie auf zeit.de.",
     "date": "2026-05-25",
     "link": "https://www.zeit.de/2026/23/gesellschaftlicher-kollaps-forschung-faktoren",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.theguardian.com/environment/2026/jun/04/world-inequality-lab-equality-academics-planetary-survival",
@@ -5549,7 +5661,7 @@
     "description": "Global report provides an alternative to climate breakdown, political extremism and economic tensions",
     "date": "2026-06-04",
     "link": "https://www.theguardian.com/environment/2026/jun/04/world-inequality-lab-equality-academics-planetary-survival",
-    "category": "T-10 HOUSING"
+    "category": "General"
   },
   {
     "id": "https://www.commondreams.org/news/2022/08/03/sanders-blasts-huge-giveaway-fossil-fuel-industry-manchin-deal",
@@ -5637,6 +5749,14 @@
     "description": "Tech billionaires are buying up luxurious bunkers to survive a societal collapse they helped create, but like everything they do, it has unintended consequences",
     "date": "2022-09-04",
     "link": "https://www.theguardian.com/news/2022/sep/04/super-rich-prepper-bunkers-apocalypse-survival-richest-rushkoff",
+    "category": "Politics"
+  },
+  {
+    "id": "https://www.washingtonpost.com/climate-environment/2022/09/02/fight-climate-greens-have-embrace-big-energy-projects-fast/",
+    "title": "To fight climate change, environmentalists may have to give up a core belief - The Washington Post",
+    "description": "To fight climate change, environmentalists may have to learn to say yes to big energy projects -- including some they've spent years fighting.",
+    "date": "2022-09-02",
+    "link": "https://web.archive.org/web/2/https://www.washingtonpost.com/climate-environment/2022/09/02/fight-climate-greens-have-embrace-big-energy-projects-fast/",
     "category": "Politics"
   },
   {
@@ -5992,6 +6112,14 @@
     "category": "Politics"
   },
   {
+    "id": "https://www.zdf.de/nachrichten/politik/lanz-gauck-afd-migrationspolitik-100.html",
+    "title": "Ex-Bundespräsident Gauck: AfD kommt bei uns nie an die Macht - ZDFheute",
+    "description": "Joachim Gauck ist überzeugt, \"diese Typen\" von der AfD würden nie an die Macht kommen. Gleichzeitig brauche Deutschland eine härtere Migrationspolitik.\r\n",
+    "date": "2023-07-19",
+    "link": "https://web.archive.org/web/2/https://www.zdf.de/nachrichten/politik/lanz-gauck-afd-migrationspolitik-100.html",
+    "category": "Politics"
+  },
+  {
     "id": "https://www.cnbc.com/2023/07/27/first-solar-announces-fifth-us-factory-as-climate-deal-fuels-domestic-manufacturing.html",
     "title": "First Solar announces fifth U.S. factory as Inflation Reduction Act fuels domestic manufacturing",
     "description": "First Solar, the nation's largest solar panel manufacturer, announced Thursday that it will build its fifth U.S. factory.",
@@ -6083,7 +6211,7 @@
     "id": "https://brazilreports.com/brazil-police-arrest-amazon-deforestation-gang-leader/5167/",
     "title": "Brazil police arrest Amazon deforestation gang leader - Brazil Reports",
     "description": "Brazilian police arrest man considered the greatest destroyer of the Amazon",
-    "date": "2023-08-11",
+    "date": "2023-08-12",
     "link": "https://brazilreports.com/brazil-police-arrest-amazon-deforestation-gang-leader/5167/",
     "category": "Politics"
   },
@@ -6515,7 +6643,7 @@
     "id": "https://www.cambridge.org/core/journals/british-journal-of-political-science/article/young-people-punish-undemocratic-behaviour-less-than-older-people/F8C27AEB0095E5770B2198D2A2E464C3",
     "title": "Young People Punish Undemocratic Behaviour Less Than Older People | British Journal of Political Science | Cambridge Core",
     "description": "Young People Punish Undemocratic Behaviour Less Than Older People - Volume 54 Issue 3",
-    "date": "2024-06-30",
+    "date": "2024-07-01",
     "link": "https://www.cambridge.org/core/journals/british-journal-of-political-science/article/young-people-punish-undemocratic-behaviour-less-than-older-people/F8C27AEB0095E5770B2198D2A2E464C3",
     "category": "Politics"
   },
@@ -6763,7 +6891,7 @@
     "id": "https://www.theguardian.com/us-news/article/2024/may/13/trump-president-agenda-climate-policy-wind-power",
     "title": "Trump pledges to scrap offshore wind projects on ‘day one’ of presidency | Donald Trump | The Guardian",
     "description": "The Republican frontrunner has vowed to put an end to ‘horrible’ wind turbines, pledging to undo yet another key US green policy",
-    "date": "2024-05-13",
+    "date": "2024-05-14",
     "link": "https://www.theguardian.com/us-news/article/2024/may/13/trump-president-agenda-climate-policy-wind-power",
     "category": "Politics"
   },
@@ -6867,7 +6995,7 @@
     "id": "https://e360.yale.edu/features/chevron-doctrine-supreme-court",
     "title": "A Key Court Ruling Could Weaken U.S. Environmental Protections - Yale E360",
     "description": "The U.S. Supreme Court is expected to rule soon on whether to overturn the Chevron doctrine, a landmark precedent that has stood for 40 years. Scrapping the doctrine could have major impacts on regulation in such areas as pollution, climate change, and endangered species.",
-    "date": "2024-06-11",
+    "date": "2024-06-12",
     "link": "https://e360.yale.edu/features/chevron-doctrine-supreme-court",
     "category": "Politics"
   },
@@ -7259,7 +7387,7 @@
     "id": "https://www.wjhl.com/news/local/fema-workers-threatened-in-carter-county/",
     "title": "FEMA workers threatened by armed group in Tennessee",
     "description": "CARTER COUNTY, Tenn. (WJHL) — There were some tense moments on Saturday when volunteers say they witnessed an armed group of people on side-by-sides confronting and threatening FEMA workers in the Elk Mills community of Carter County. Tracy Elder is president and founder of the International Alliance of Community Chaplains. Her group has been working [&hellip;]",
-    "date": "2024-10-15",
+    "date": "2024-10-16",
     "link": "https://www.wjhl.com/news/local/fema-workers-threatened-in-carter-county/",
     "category": "Politics"
   },
@@ -7451,7 +7579,7 @@
     "id": "https://www.theguardian.com/us-news/2024/nov/16/trump-administration-chris-wright-energy-secretary",
     "title": "Trump picks oil and gas industry CEO Chris Wright as next energy secretary | Trump administration | The Guardian",
     "description": "Oilfield services exec denies climate crisis and is expected to support Trump’s plan to maximize oil and gas production",
-    "date": "2024-11-16",
+    "date": "2024-11-17",
     "link": "https://www.theguardian.com/us-news/2024/nov/16/trump-administration-chris-wright-energy-secretary",
     "category": "Politics"
   },
@@ -7603,7 +7731,7 @@
     "id": "https://www.theguardian.com/us-news/2025/jan/20/trump-executive-order-paris-climate-agreement",
     "title": "Trump signs order to withdraw US from Paris climate agreement for second time | Trump administration | The Guardian",
     "description": "On first day back as president, Trump signs letter giving notice to UN of US exit from treaty seeking to curb climate crisis effects",
-    "date": "2025-01-20",
+    "date": "2025-01-21",
     "link": "https://www.theguardian.com/us-news/2025/jan/20/trump-executive-order-paris-climate-agreement",
     "category": "Politics"
   },
@@ -7787,7 +7915,7 @@
     "id": "https://www.whitehouse.gov/presidential-actions/2025/04/zero-based-regulatory-budgeting-to-unleash-american-energy/",
     "title": "Zero-Based Regulatory Budgeting to Unleash American Energy – The White House",
     "description": "By the authority vested in me as President by the Constitution and the laws of the United States of America, it is hereby ordered: Section 1.  Purpose.",
-    "date": "2025-04-09",
+    "date": "2025-04-10",
     "link": "https://www.whitehouse.gov/presidential-actions/2025/04/zero-based-regulatory-budgeting-to-unleash-american-energy/",
     "category": "Politics"
   },
@@ -7803,7 +7931,7 @@
     "id": "https://www.rollingstone.com/politics/politics-news/bernie-sanders-aoc-los-angeles-crowd-fighting-oligarchy-1235316393/",
     "title": "Bernie Sanders and AOC Draw Massive Crowd in Los Angeles",
     "description": "Sanders and Alexandria Ocasio-Cortez drew 36,000 supporters for his “Fighting Oligarchy” rally in Los Angeles on Saturday, according to his team.",
-    "date": "2025-04-12",
+    "date": "2025-04-13",
     "link": "https://www.rollingstone.com/politics/politics-news/bernie-sanders-aoc-los-angeles-crowd-fighting-oligarchy-1235316393/",
     "category": "Politics"
   },
@@ -7989,6 +8117,14 @@
     "description": "As Trump mobilizes the marines to quell an “insurrection” in LA, it’s essential to be clear about how the protests started and what actually happened.",
     "date": "2025-06-10",
     "link": "https://www.thenation.com/article/activism/los-angeles-protest-police-riot/",
+    "category": "Politics"
+  },
+  {
+    "id": "https://www.psypost.org/perceived-social-breakdown-fuels-desire-for-authoritarian-leaders-new-psychology-study-shows/",
+    "title": "Perceived social breakdown fuels desire for authoritarian leaders, new psychology study shows",
+    "description": "New research provides causal evidence that perceived societal breakdown—known as anomie—can increase support for authoritarianism by eroding feelings of control and increasing uncertainty.",
+    "date": "2025-06-10",
+    "link": "https://www.psypost.org/perceived-social-breakdown-fuels-desire-for-authoritarian-leaders-new-psychology-study-shows/",
     "category": "Politics"
   },
   {
@@ -8200,6 +8336,14 @@
     "category": "Politics"
   },
   {
+    "id": "https://www.psypost.org/new-paper-unpacks-how-trump-uses-strategic-victimhood-to-justify-retaliation/",
+    "title": "New paper unpacks how Trump uses \"strategic victimhood\" to justify retaliation",
+    "description": "A new analysis highlights how Trump used victimhood claims to frame economic suffering, then followed them with promises of retribution. This pattern allowed him to present sweeping policy changes as emotionally and morally justified responses to long-standing grievances.",
+    "date": "2025-09-15",
+    "link": "https://www.psypost.org/new-paper-unpacks-how-trump-uses-strategic-victimhood-to-justify-retaliation/",
+    "category": "Politics"
+  },
+  {
     "id": "https://www.wsj.com/economy/global/the-u-s-is-forfeiting-the-clean-energy-race-to-china-e822ab57",
     "title": "The U.S. Is Forfeiting the Clean-Energy Race to China - WSJ",
     "description": "As President Trump doubles down on fossil fuels, the U.S. and China offer competing visions for the future of energy",
@@ -8352,6 +8496,14 @@
     "category": "Politics"
   },
   {
+    "id": "https://theconversation.com/why-bill-gates-climate-memo-is-being-celebrated-by-skeptics-while-frustrating-scientists-268940",
+    "title": "Why Bill Gates’ climate memo is being celebrated by skeptics while frustrating scientists",
+    "description": "Gates recently called for a ‘strategic pivot’ in climate strategy. That appears to have hit a nerve.",
+    "date": "2025-11-06",
+    "link": "https://theconversation.com/why-bill-gates-climate-memo-is-being-celebrated-by-skeptics-while-frustrating-scientists-268940",
+    "category": "Politics"
+  },
+  {
     "id": "https://www.rfi.fr/en/environment/20251107-brazil-launches-global-fund-to-reward-protection-of-rainforests",
     "title": "Brazil launches global fund to reward protection of rainforests",
     "description": "World leaders attending a climate summit in Brazil have launched a flagship global fund designed to reward tropical countries for not chopping down their trees. While proponents say it could be a game changer for climate finance, critics fear it will enrich governments without obliging them to take meaningful action to protect the environment.",
@@ -8381,6 +8533,14 @@
     "description": "PWH",
     "date": "2025-11-25",
     "link": "https://perryworldhouse.upenn.edu/news-and-insight/reflections-from-cop30/",
+    "category": "Politics"
+  },
+  {
+    "id": "https://www.psypost.org/your-brains-reaction-to-the-unknown-could-predict-how-you-vote/",
+    "title": "Your brain’s reaction to the unknown could predict how you vote",
+    "description": "Political instability often drives voters toward populism. A new study shows that reframing uncertainty as an opportunity can reverse this trend, fostering openness to diversity and reducing support for right-wing parties.",
+    "date": "2025-11-27",
+    "link": "https://www.psypost.org/your-brains-reaction-to-the-unknown-could-predict-how-you-vote/",
     "category": "Politics"
   },
   {
@@ -8483,7 +8643,7 @@
     "id": "https://journals.sagepub.com/doi/10.1177/01634437251395003",
     "title": "Sovereignty-as-a-service: How big tech companies co-opt and redefine digital sovereignty - Rafael Grohmann, Alexandre Costa Barbosa, 2025",
     "description": "This article introduces the concept of sovereignty-as-a-service to describe how Big Tech companies, specifically Microsoft, Amazon, and Google/Alphabet, are strategically redefining digital soverei...",
-    "date": "2026-02-28",
+    "date": "2026-03-01",
     "link": "https://journals.sagepub.com/doi/10.1177/01634437251395003",
     "category": "Politics"
   },
@@ -8723,7 +8883,7 @@
     "id": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4713845",
     "title": "Coopting Disruption by Mark A. Lemley, Matthew Wansley :: SSRN",
     "description": "Our economy is dominated by five aging tech giants – Alphabet, Amazon, Apple, Meta, and Microsoft. In the last twenty years, no company has commercialized a new",
-    "date": "2024-01-31",
+    "date": "2024-02-01",
     "link": "https://web.archive.org/web/2/https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4713845",
     "category": "Partizipation"
   },
@@ -8773,6 +8933,14 @@
     "description": "Gov. Roy Cooper, D-NC, joins Morning Joe to discuss response and recovery efforts in North Carolina caused by Hurricane Helene and misinformation spread about the recovery efforts.",
     "date": "2024-10-08",
     "link": "https://www.msnbc.com/morning-joe/watch/disinformation-is-demoralizing-to-first-responders-says-north-carolina-governor-221166661947",
+    "category": "Partizipation"
+  },
+  {
+    "id": "https://www.psypost.org/the-confrontation-effect-revealed-outrage-over-opposing-political-views-fuels-social-media-engagement/",
+    "title": "The confrontation effect revealed: Outrage over opposing political views fuels social media engagement",
+    "description": "People are more likely to interact with posts that challenge their views, a new study shows. This engagement is often fueled by negative emotions, particularly outrage, making political content more likely to spark reactions from opponents.",
+    "date": "2024-10-14",
+    "link": "https://www.psypost.org/the-confrontation-effect-revealed-outrage-over-opposing-political-views-fuels-social-media-engagement/",
     "category": "Partizipation"
   },
   {
@@ -8848,6 +9016,14 @@
     "category": "Partizipation"
   },
   {
+    "id": "https://www.independent.co.uk/news/world/australasia/australia-sue-challenge-social-media-ban-b2873016.html",
+    "title": "Australian teenagers sue government saying social media ban violates their right to communicate | The Independent",
+    "description": "High Court challenge says law imposing ban is ‘grossly excessive’ and infringes on ‘constitutional right of freedom of political communication’",
+    "date": "2025-11-26",
+    "link": "https://web.archive.org/web/2/https://www.independent.co.uk/news/world/australasia/australia-sue-challenge-social-media-ban-b2873016.html",
+    "category": "Partizipation"
+  },
+  {
     "id": "https://hive.blog/hive-196387/@theworldaroundme/oc-young-americans-millennials-gen",
     "title": "[OC] Young Americans / Millennials & Gen Z (15-29) Now Spend ~50% More Time Alone Than in 2010 - Least Time with Children (BLS ATUS 2010-2023/24) — Hive",
     "description": "[OC] I recreated and refined this data from Our World in Data's chart (link) using Flourish for improved readability and emphasis on the solitude trend. Interactive Chart Notes from source: Activities by theworldaroundme",
@@ -8875,7 +9051,7 @@
     "id": "https://knowablemagazine.org/article/food-environment/2022/climate-change-altering-chemistry-wine",
     "title": "Climate change is altering the chemistry of wine | Ars Technica",
     "description": "Warming, wildfires and unpredictable weather threaten to disrupt the delicate processes that underlie treasured wines. Researchers and producers are innovating to keep ahead.",
-    "date": "2022-06-21",
+    "date": "2022-06-22",
     "link": "https://knowablemagazine.org/article/food-environment/2022/climate-change-altering-chemistry-wine",
     "category": "Climate Change"
   },
@@ -9008,6 +9184,14 @@
     "category": "Climate Change"
   },
   {
+    "id": "https://attheu.utah.edu/facultystaff/wildfire-smoke-plumes-pg/",
+    "title": "Western wildfire smoke plumes are getting taller | @theU",
+    "description": "Taller plumes spread farther, degrading air quality over a larger region—or even across a continent.",
+    "date": "2022-07-27",
+    "link": "https://attheu.utah.edu/facultystaff/wildfire-smoke-plumes-pg/",
+    "category": "Climate Change"
+  },
+  {
     "id": "https://www.br.de/nachrichten/wissen/faktenfuchs-wie-waldbraende-und-klimawandel-zusammenhaengen,TCt0QD9",
     "title": "#Faktenfuchs: Wie Waldbrände und Klimawandel zusammenhängen | BR24",
     "description": "Fast täglich vermelden Medien neue Waldbrände - im Süden Europas, aber auch in Bayern und Deutschland. Und nicht selten diskutieren in den Kommentarzeilen die User: Welche Rolle spielt der Klimawandel? Und welche Brandstifter?",
@@ -9085,6 +9269,14 @@
     "description": "The country joins France, Greece, and Italy in restricting the use of cooling in offices, shops, restaurants and other spaces to combat rising temperatures and fuel costs.",
     "date": "2022-08-03",
     "link": "https://www.theverge.com/2022/8/3/23291066/spain-bans-setting-air-conditioning-below-27-degrees-celsius",
+    "category": "Climate Change"
+  },
+  {
+    "id": "https://www.washingtonpost.com/climate-environment/2022/08/08/climate-change-lizards-premature-aging-dna/",
+    "title": "Climate change stress is prematurely aging lizards - The Washington Post",
+    "description": "In the South of France, temperatures are accelerating so quickly that many newborn lizards enter the world with DNA that’s already damaged and aged.",
+    "date": "2022-08-08",
+    "link": "https://web.archive.org/web/2/https://www.washingtonpost.com/climate-environment/2022/08/08/climate-change-lizards-premature-aging-dna/",
     "category": "Climate Change"
   },
   {
@@ -9267,7 +9459,7 @@
     "id": "https://apnews.com/article/science-oceans-glaciers-greenland-climate-and-environment-9cd7662658ebbeaba05682352de8aa87",
     "title": "Zombie ice from Greenland will raise sea level 10 inches | AP News",
     "description": "A new study finds that Greenland has more than 120 trillion tons of ice that can be thought of as zombie ice that's going to raise sea level globally by at least 10 inches. Monday's study looks at the edges of Greenland's ice sheet, ice that authors say is starving and dead. It will unavoidably melt and increase sea level rise no matter what else happens with future carbon pollution. That's because of decades of global warming. 3.3% of Greenland's ice sheet is not getting replenished from winter snow. Scientists calculated the ratio of area getting new ice to those starved of new ice and figured this much sea level rise is in the pipeline no matter what.",
-    "date": "2022-08-29",
+    "date": "2022-08-30",
     "link": "https://apnews.com/article/science-oceans-glaciers-greenland-climate-and-environment-9cd7662658ebbeaba05682352de8aa87",
     "category": "Climate Change"
   },
@@ -9349,6 +9541,14 @@
     "description": "Extreme heat in California has left Twitter without one of its key data centers, and a company executive warned in an internal memo obtained by CNN that another outage elsewhere could result in the service going dark for some of its users.",
     "date": "2022-09-12",
     "link": "https://www.cnn.com/2022/09/12/tech/twitter-data-center-california-heat-wave/index.html",
+    "category": "Climate Change"
+  },
+  {
+    "id": "https://www.cnbc.com/2022/09/13/world-entering-uncharted-territories-of-destruction-climate-crisis-un.html",
+    "title": "Climate crisis: UN warns of 'uncharted territories of destruction'",
+    "description": "The report, compiled by the World Meteorological Organization, said that climate-related disasters have increased fivefold over the past five decades.",
+    "date": "2022-09-13",
+    "link": "https://www.cnbc.com/2022/09/13/world-entering-uncharted-territories-of-destruction-climate-crisis-un.html",
     "category": "Climate Change"
   },
   {
@@ -9437,6 +9637,14 @@
     "description": "CBS News is a trusted source for the latest in politics, U.S. and world news. The network is home to award-winning broadcasts CBS Mornings, CBS Evening News, 60 Minutes, CBS Sunday Morning, 48 Hours and Face the Nation.",
     "date": "2022-10-14",
     "link": "https://www.cbsnews.com/news/fishing-alaska-snow-crab-season-canceled-investigation-climate-change/",
+    "category": "Climate Change"
+  },
+  {
+    "id": "https://finance.yahoo.com/news/america-going-shut-down-shut-204307435.html",
+    "title": "‘America is going to shut down if we shut down’: The Mississippi River’s water levels are near record lows, and it’s wreaking havoc on one of the U.S.’s most critical supply chains",
+    "description": "A prolonged drought is creating traffic jams and leading to stuck boats in the Mississippi River at the worst possible time.",
+    "date": "2022-10-14",
+    "link": "https://web.archive.org/web/2/https://finance.yahoo.com/news/america-going-shut-down-shut-204307435.html",
     "category": "Climate Change"
   },
   {
@@ -9640,6 +9848,14 @@
     "category": "Climate Change"
   },
   {
+    "id": "https://www.zdf.de/nachrichten/panorama/klimakrise-sommer-2022-europa-extrem-100.html#xtor=CS5-281",
+    "title": "Klimakrise in Europa: 2022 war Europas wärmster Sommer - ZDFheute",
+    "description": "Rekordtemperaturen, mehr Treibhausgase, heftige Wetterereignisse – 2022 war ein Jahr der Klimaextreme. Das zeigt der europäische Klima-Beobachtungsdienst Copernicus.",
+    "date": "2023-01-10",
+    "link": "https://web.archive.org/web/2/https://www.zdf.de/nachrichten/panorama/klimakrise-sommer-2022-europa-extrem-100.html#xtor=CS5-281",
+    "category": "Climate Change"
+  },
+  {
     "id": "https://www.rfi.fr/en/international-news/20230110-last-8-years-warmest-on-record-globally-eu-climate-monitor",
     "title": "Last 8 years warmest on record globally: EU climate monitor",
     "description": "The last eight years were the warmest on record even with the cooling influence of a La Nina weather pattern since 2020, the European Union's climate monitoring service said Tuesday.",
@@ -9699,7 +9915,7 @@
     "id": "https://scitechdaily.com/unprecedented-retreat-once-stable-glacier-now-rapidly-receding-at-an-alarming-rate/",
     "title": "Unprecedented Retreat – Once Stable Glacier Now Rapidly Receding at an Alarming Rate",
     "description": "Science, Space and Technology News 2026",
-    "date": "2023-04-23",
+    "date": "2023-04-24",
     "link": "https://scitechdaily.com/unprecedented-retreat-once-stable-glacier-now-rapidly-receding-at-an-alarming-rate/",
     "category": "Climate Change"
   },
@@ -9880,107 +10096,11 @@
     "category": "Climate Change"
   },
   {
-    "id": "https://www.washingtonpost.com/technology/2022/08/27/electric-vehicle-charge-time/",
-    "title": "Electric vehicle charging time could fall to 10 minutes within 5 years - The Washington Post",
-    "description": "Consumers could charge electric vehicle batteries up to 90 percent in ten minutes within five years, far surpassing the best superchargers in existence.",
-    "date": "2022-08-27",
-    "link": "https://web.archive.org/web/2/https://www.washingtonpost.com/technology/2022/08/27/electric-vehicle-charge-time/",
-    "category": "T-10 MOBILITY"
-  },
-  {
-    "id": "https://www.umweltbundesamt.de/sites/default/files/medien/479/publikationen/texte_156-2020_oekologische_bewertung_von_verkehrsarten_0.pdf",
-    "title": "Studie Klimabilanz Verkehrsarten",
-    "description": "",
-    "date": "2020-05-11",
-    "link": "https://web.archive.org/web/2/https://www.umweltbundesamt.de/sites/default/files/medien/479/publikationen/texte_156-2020_oekologische_bewertung_von_verkehrsarten_0.pdf",
-    "category": "T-10 MOBILITY"
-  },
-  {
-    "id": "https://www.independent.co.uk/climate-change/news/china-nuclear-reactor-meltdown-proof-b2584399.html",
-    "title": "China unveils world’s first meltdown-proof nuclear power plant in clean energy breakthrough | The Independent",
-    "description": "Materials used in reactor can withstand very high temperatures without melting",
-    "date": "2024-07-24",
-    "link": "https://web.archive.org/web/2/https://www.independent.co.uk/climate-change/news/china-nuclear-reactor-meltdown-proof-b2584399.html",
-    "category": "T-10 ENERGY"
-  },
-  {
-    "id": "https://www.washingtonpost.com/world/2026/02/28/china-cuba-solar-trump-oil-blockade/?utm_source=reddit.com",
-    "title": "Trump has choked off Cuba’s oil supply. China is stepping in with solar. - The Washington Post",
-    "description": "",
-    "date": "2026-02-28",
-    "link": "https://www.washingtonpost.com/world/2026/02/28/china-cuba-solar-trump-oil-blockade/?utm_source=reddit.com",
-    "category": "T-10 ENERGY"
-  },
-  {
-    "id": "https://passipedia.de/baulich/verglasungen_verbessern",
-    "title": "Verglasungen verbessern? [Passipedia DE]",
-    "description": "",
-    "date": "2024-01-01",
-    "link": "https://web.archive.org/web/2/https://passipedia.de/baulich/verglasungen_verbessern",
-    "category": "T-10 HOUSING"
-  },
-  {
-    "id": "https://www.independent.co.uk/tech/solar-panels-uk-renewable-energy-b2442896.html",
-    "title": "Solar panel advances will see millions abandon electrical grid, scientists predict | The Independent",
-    "description": "Solar energy costs have fallen 90 per cent over the last decade, while new discoveries have seen efficiency rates rise ",
-    "date": "2023-11-07",
-    "link": "https://web.archive.org/web/2/https://www.independent.co.uk/tech/solar-panels-uk-renewable-energy-b2442896.html",
-    "category": "T-10 HOUSING"
-  },
-  {
-    "id": "https://www.washingtonpost.com/climate-environment/2022/09/02/fight-climate-greens-have-embrace-big-energy-projects-fast/",
-    "title": "To fight climate change, environmentalists may have to give up a core belief - The Washington Post",
-    "description": "To fight climate change, environmentalists may have to learn to say yes to big energy projects -- including some they've spent years fighting.",
-    "date": "2022-09-02",
-    "link": "https://web.archive.org/web/2/https://www.washingtonpost.com/climate-environment/2022/09/02/fight-climate-greens-have-embrace-big-energy-projects-fast/",
-    "category": "Politics"
-  },
-  {
-    "id": "https://www.zdf.de/nachrichten/politik/lanz-gauck-afd-migrationspolitik-100.html",
-    "title": "Ex-Bundespräsident Gauck: AfD kommt bei uns nie an die Macht - ZDFheute",
-    "description": "Joachim Gauck ist überzeugt, \"diese Typen\" von der AfD würden nie an die Macht kommen. Gleichzeitig brauche Deutschland eine härtere Migrationspolitik.\r\n",
-    "date": "2023-07-19",
-    "link": "https://web.archive.org/web/2/https://www.zdf.de/nachrichten/politik/lanz-gauck-afd-migrationspolitik-100.html",
-    "category": "Politics"
-  },
-  {
-    "id": "https://www.independent.co.uk/news/world/australasia/australia-sue-challenge-social-media-ban-b2873016.html",
-    "title": "Australian teenagers sue government saying social media ban violates their right to communicate | The Independent",
-    "description": "High Court challenge says law imposing ban is ‘grossly excessive’ and infringes on ‘constitutional right of freedom of political communication’",
-    "date": "2025-11-26",
-    "link": "https://web.archive.org/web/2/https://www.independent.co.uk/news/world/australasia/australia-sue-challenge-social-media-ban-b2873016.html",
-    "category": "Partizipation"
-  },
-  {
-    "id": "https://www.washingtonpost.com/climate-environment/2022/08/08/climate-change-lizards-premature-aging-dna/",
-    "title": "Climate change stress is prematurely aging lizards - The Washington Post",
-    "description": "In the South of France, temperatures are accelerating so quickly that many newborn lizards enter the world with DNA that’s already damaged and aged.",
-    "date": "2022-08-08",
-    "link": "https://web.archive.org/web/2/https://www.washingtonpost.com/climate-environment/2022/08/08/climate-change-lizards-premature-aging-dna/",
-    "category": "Climate Change"
-  },
-  {
-    "id": "https://www.cnbc.com/2022/09/13/world-entering-uncharted-territories-of-destruction-climate-crisis-un.html",
-    "title": "Climate crisis: UN warns of 'uncharted territories of destruction'",
-    "description": "The report, compiled by the World Meteorological Organization, said that climate-related disasters have increased fivefold over the past five decades.",
-    "date": "2022-09-13",
-    "link": "https://www.cnbc.com/2022/09/13/world-entering-uncharted-territories-of-destruction-climate-crisis-un.html",
-    "category": "Climate Change"
-  },
-  {
-    "id": "https://finance.yahoo.com/news/america-going-shut-down-shut-204307435.html",
-    "title": "‘America is going to shut down if we shut down’: The Mississippi River’s water levels are near record lows, and it’s wreaking havoc on one of the U.S.’s most critical supply chains",
-    "description": "A prolonged drought is creating traffic jams and leading to stuck boats in the Mississippi River at the worst possible time.",
-    "date": "2022-10-14",
-    "link": "https://web.archive.org/web/2/https://finance.yahoo.com/news/america-going-shut-down-shut-204307435.html",
-    "category": "Climate Change"
-  },
-  {
-    "id": "https://www.zdf.de/nachrichten/panorama/klimakrise-sommer-2022-europa-extrem-100.html#xtor=CS5-281",
-    "title": "Klimakrise in Europa: 2022 war Europas wärmster Sommer - ZDFheute",
-    "description": "Rekordtemperaturen, mehr Treibhausgase, heftige Wetterereignisse – 2022 war ein Jahr der Klimaextreme. Das zeigt der europäische Klima-Beobachtungsdienst Copernicus.",
-    "date": "2023-01-10",
-    "link": "https://web.archive.org/web/2/https://www.zdf.de/nachrichten/panorama/klimakrise-sommer-2022-europa-extrem-100.html#xtor=CS5-281",
+    "id": "https://indianexpress.com/article/world/climate-change/carbon-dioxide-levels-hit-new-record-now-more-than-50-higher-than-pre-industrial-times-8649698/",
+    "title": "Carbon dioxide levels hit new record, now more than 50% higher than pre-industrial times | World News,The Indian Express",
+    "description": "The NOAA update said the average monthly concentration in May this year was about 3 parts per million higher than May of last year.",
+    "date": "2023-06-07",
+    "link": "https://web.archive.org/web/2/https://indianexpress.com/article/world/climate-change/carbon-dioxide-levels-hit-new-record-now-more-than-50-higher-than-pre-industrial-times-8649698/",
     "category": "Climate Change"
   },
   {
@@ -10051,7 +10171,7 @@
     "id": "https://globalnews.ca/news/9761043/dry-spring-southern-albertan-farmers-zero-production/",
     "title": "Extremely dry spring leaves southern Albertan farmers on the road to ‘zero production’ | Globalnews.ca",
     "description": "With little to no precipitation since mid April in areas south of Calgary,  some farmers are already predicting crop losses.",
-    "date": "2023-06-11",
+    "date": "2023-06-12",
     "link": "https://globalnews.ca/news/9761043/dry-spring-southern-albertan-farmers-zero-production/",
     "category": "Climate Change"
   },
@@ -10067,7 +10187,7 @@
     "id": "https://www.bloomberg.com/graphics/2023-el-nino-climate-change-extreme-weather/",
     "title": "First El Niño in Four Years Threatens New Economic Destruction",
     "description": "The return of the world’s most potent climate phenomenon risks sparking a chain reaction of dangerous weather, food shortages and blackouts that can stoke inflation and damage the global economy.",
-    "date": "2023-06-12",
+    "date": "2023-06-13",
     "link": "https://www.bloomberg.com/graphics/2023-el-nino-climate-change-extreme-weather/",
     "category": "Climate Change"
   },
@@ -10083,7 +10203,7 @@
     "id": "https://www.france24.com/en/live-news/20230616-mexico-says-mass-bird-die-off-most-probably-due-to-pacific-warming",
     "title": "Mexico says mass bird die-off 'most probably' due to Pacific warming",
     "description": "Massive die-offs of birds on the coast of Mexico, following similar phenomena in Peru and Chile, are \"most probably\" due to a warming of the waters of the Pacific Ocean, authorities said Friday. ",
-    "date": "2023-06-16",
+    "date": "2023-06-17",
     "link": "https://web.archive.org/web/2/https://www.france24.com/en/live-news/20230616-mexico-says-mass-bird-die-off-most-probably-due-to-pacific-warming",
     "category": "Climate Change"
   },
@@ -10171,7 +10291,7 @@
     "id": "https://www.spektrum.de/news/wassertemperaturen-extreme-hitzewelle-in-der-nordsee/2151528",
     "title": "Wassertemperaturen: Extreme Hitzewelle in der Nordsee - Spektrum der Wissenschaft",
     "description": "Die Nordsee ist bis zu fünf Grad wärmer als normal zu dieser Jahreszeit. Die hohen Temperaturen bedrohen Meeresorganismen und Ökosysteme – und auch Menschen sind gefährdet.",
-    "date": "2023-06-19",
+    "date": "2023-06-20",
     "link": "https://www.spektrum.de/news/wassertemperaturen-extreme-hitzewelle-in-der-nordsee/2151528",
     "category": "Climate Change"
   },
@@ -10443,7 +10563,7 @@
     "id": "https://www.france24.com/en/live-news/20230707-wildfires-off-the-charts-in-canada-as-temperatures-climb",
     "title": "Wildfires 'off the charts' in Canada as temperatures climb",
     "description": "The number of forest fires continues to rise in Canada, climbing on Friday to more than 670 blazes -- more than 380 of them out of control -- with a long and difficult summer ahead.",
-    "date": "2023-07-07",
+    "date": "2023-07-08",
     "link": "https://web.archive.org/web/2/https://www.france24.com/en/live-news/20230707-wildfires-off-the-charts-in-canada-as-temperatures-climb",
     "category": "Climate Change"
   },
@@ -10579,7 +10699,7 @@
     "id": "https://www.theguardian.com/environment/live/2023/jul/17/europe-heatwave-2023-us-asia-heat-extreme-severe-weather-fires-flash-floods-flooding-record-breaking-heat-wave-stress-temperature-red-alert-climate-crisis",
     "title": "Extreme heatwave live: Texas city confirms first heat death; northern hemisphere boils in severe weather – as it happened | Climate crisis | The Guardian",
     "description": "Man in Houston died in house without air conditioning; mercury in parts of Italy is close to hitting 45C as wildfires ravage Greece and Spain",
-    "date": "2023-07-17",
+    "date": "2023-07-18",
     "link": "https://www.theguardian.com/environment/live/2023/jul/17/europe-heatwave-2023-us-asia-heat-extreme-severe-weather-fires-flash-floods-flooding-record-breaking-heat-wave-stress-temperature-red-alert-climate-crisis",
     "category": "Climate Change"
   },
@@ -10587,7 +10707,7 @@
     "id": "https://www.bbc.com/news/world-us-canada-66229511",
     "title": "Millions again under smoke advisory due to Canada wildfires - BBC News",
     "description": "Smoke returns to the northern and eastern US and parts of Canada as wildfires continue to burn.",
-    "date": "2023-07-17",
+    "date": "2023-07-18",
     "link": "https://www.bbc.com/news/world-us-canada-66229511",
     "category": "Climate Change"
   },
@@ -10771,7 +10891,7 @@
     "id": "https://abcnews.go.com/US/preliminary-ocean-temperature-1011-degrees-recorded-off-coast/story?id=101646005",
     "title": "Triple-digit ocean temps in Florida could be a global record - ABC News",
     "description": "High water temperatures in the ocean are uncommon, experts say.",
-    "date": "2023-07-25",
+    "date": "2023-07-26",
     "link": "https://abcnews.go.com/US/preliminary-ocean-temperature-1011-degrees-recorded-off-coast/story?id=101646005",
     "category": "Climate Change"
   },
@@ -10995,7 +11115,7 @@
     "id": "https://www.cbc.ca/news/canada/north/northwest-territories-update-news-conference-wildfire-evacuations-1.6941214",
     "title": "95% of Yellowknife has now been evacuated due to N.W.T. wildfires | CBC News",
     "description": "Northwest Territories officials said on Friday evening that more than 19,000 people have fled from Yellowknife due to wildfires and urged those who remain to join the evacuation efforts.",
-    "date": "2023-08-18",
+    "date": "2023-08-19",
     "link": "https://www.cbc.ca/news/canada/north/northwest-territories-update-news-conference-wildfire-evacuations-1.6941214",
     "category": "Climate Change"
   },
@@ -11203,7 +11323,7 @@
     "id": "https://www.bbc.com/news/science-environment-66724246",
     "title": "Antarctic sea-ice at 'mind-blowing' low alarms experts - BBC News",
     "description": "Missing winter sea ice signals changes that could be a \"disaster for the world\", scientists say.",
-    "date": "2023-09-16",
+    "date": "2023-09-17",
     "link": "https://www.bbc.com/news/science-environment-66724246",
     "category": "Climate Change"
   },
@@ -11259,7 +11379,7 @@
     "id": "https://www.theguardian.com/global-development/2023/oct/05/extreme-weather-climate-crisis-displaced-children-unicef-report",
     "title": "Extreme weather displaced 43m children in past six years, Unicef reports | Global development | The Guardian",
     "description": "Toll likely to worsen as floods, storms, droughts and wildfires intensify due to climate crisis, according to Unicef and IDMC study",
-    "date": "2023-10-05",
+    "date": "2023-10-06",
     "link": "https://www.theguardian.com/global-development/2023/oct/05/extreme-weather-climate-crisis-displaced-children-unicef-report",
     "category": "Climate Change"
   },
@@ -11267,7 +11387,7 @@
     "id": "https://www.pnas.org/doi/10.1073/pnas.2314607120",
     "title": "Ghost forests haunt the East Coast, harbingers of sea-level rise | PNAS",
     "description": "Ghost forests haunt the East Coast, harbingers of sea-level rise",
-    "date": "2023-09-12",
+    "date": "2023-09-13",
     "link": "https://web.archive.org/web/2/https://www.pnas.org/doi/10.1073/pnas.2314607120",
     "category": "Climate Change"
   },
@@ -11275,7 +11395,7 @@
     "id": "https://www.bbc.com/news/science-environment-66857354",
     "title": "World breaches key 1.5C warming mark for record number of days - BBC News",
     "description": "The BBC finds that there have been a record number of days in 2023 that breached the 1.5C temperature limit.",
-    "date": "2023-10-06",
+    "date": "2023-10-07",
     "link": "https://www.bbc.com/news/science-environment-66857354",
     "category": "Climate Change"
   },
@@ -11771,7 +11891,7 @@
     "id": "https://www.theguardian.com/environment/2024/apr/04/just-57-companies-linked-to-80-of-greenhouse-gas-emissions-since-2016",
     "title": "Just 57 companies linked to 80% of greenhouse gas emissions since 2016 | Greenhouse gas emissions | The Guardian",
     "description": "Analysis reveals many big producers increased output of fossil fuels and related emissions in seven years after Paris climate deal",
-    "date": "2024-04-03",
+    "date": "2024-04-04",
     "link": "https://www.theguardian.com/environment/2024/apr/04/just-57-companies-linked-to-80-of-greenhouse-gas-emissions-since-2016",
     "category": "Climate Change"
   },
@@ -12808,6 +12928,14 @@
     "category": "Climate Change"
   },
   {
+    "id": "https://penntoday.upenn.edu/news/michael-mann-world-warms-how-are-young-people-feeling",
+    "title": "As the world warms, how are young people feeling? | Penn Today",
+    "description": "Climate scientist Michael Mann of the School of Arts & Sciences and Annenberg School for Communication leads a research community that aims to understand climate anxiety and improve climate communication.",
+    "date": "2024-09-03",
+    "link": "https://penntoday.upenn.edu/news/michael-mann-world-warms-how-are-young-people-feeling",
+    "category": "Climate Change"
+  },
+  {
     "id": "https://theclimatehistorian.substack.com/p/village-lost-to-time-reemerges-as",
     "title": "Village Lost to Time Reemerges as Greece Faces Historic Drought",
     "description": "Headlines from a Warming World",
@@ -12827,7 +12955,7 @@
     "id": "https://www.theguardian.com/us-news/article/2024/sep/04/us-west-heatwave-summer",
     "title": "‘Dangerously hot’ weather roasts US west as brutal summer continues | West Coast | The Guardian",
     "description": "California, Nevada and Arizona swelter in what could be the most intense heatwave of an already blazing season",
-    "date": "2024-09-04",
+    "date": "2024-09-05",
     "link": "https://www.theguardian.com/us-news/article/2024/sep/04/us-west-heatwave-summer",
     "category": "Climate Change"
   },
@@ -12899,7 +13027,7 @@
     "id": "https://www.theguardian.com/us-news/article/2024/sep/08/wildfire-line-fire-los-angeles-san-bernardino-evacuations",
     "title": "Wildfire near LA forces evacuations and threatens tens of thousands of buildings | California | The Guardian",
     "description": "Three firefighters injured and more than 35,000 structures endangered by Line fire amid days-long heatwave",
-    "date": "2024-09-08",
+    "date": "2024-09-09",
     "link": "https://www.theguardian.com/us-news/article/2024/sep/08/wildfire-line-fire-los-angeles-san-bernardino-evacuations",
     "category": "Climate Change"
   },
@@ -12971,7 +13099,7 @@
     "id": "https://www.rnd.de/politik/klimawandel-in-deutschland-viele-kommunen-von-extremwetter-betroffen-Z5FAJULZ25AHTFLKRCAR25VXGI.html",
     "title": "Klimawandel in Deutschland: Viele Kommunen von Extremwetter betroffen",
     "description": "Der Klimawandel schlägt zu. Eine deutliche Mehrheit der Städte und Gemeinden hat nach eigenen Angaben bereits mit heftigen Folgen zu kämpfen. Bundesumweltministerin Lemke fordert eine Grundgesetzänderung, um die Kosten für die Klimaanpassung fair zu verteilen.",
-    "date": "2024-09-12",
+    "date": "2024-09-13",
     "link": "https://web.archive.org/web/2/https://www.rnd.de/politik/klimawandel-in-deutschland-viele-kommunen-von-extremwetter-betroffen-Z5FAJULZ25AHTFLKRCAR25VXGI.html",
     "category": "Climate Change"
   },
@@ -12995,7 +13123,7 @@
     "id": "https://globalnation.inquirer.net/249273/disappeared-completely-melting-glaciers-worry-central-asia",
     "title": "'Disappeared completely': melting glaciers worry Central Asia",
     "description": "The towering Tian Shan range in Kyrgyzstan is home to thousands of glaciers that are melting at an alarming rate in Central Asia.",
-    "date": "2024-09-16",
+    "date": "2024-09-17",
     "link": "https://web.archive.org/web/2/https://globalnation.inquirer.net/249273/disappeared-completely-melting-glaciers-worry-central-asia",
     "category": "Climate Change"
   },
@@ -13019,7 +13147,7 @@
     "id": "https://www.france24.com/en/live-news/20240926-drought-reduces-amazon-river-in-colombia-by-as-much-as-90-report",
     "title": "Drought reduces Amazon River in Colombia by as much as 90%: report",
     "description": "The Amazon River has seen its levels in Colombia reduced by as much as 90 percent, a government agency said Thursday, as South America faces a severe and widespread drought.",
-    "date": "2024-09-26",
+    "date": "2024-09-27",
     "link": "https://web.archive.org/web/2/https://www.france24.com/en/live-news/20240926-drought-reduces-amazon-river-in-colombia-by-as-much-as-90-report",
     "category": "Climate Change"
   },
@@ -13181,6 +13309,14 @@
     "description": "Die Treibhausgas-Konzentration in der Erdatmosphäre steigt stark an. Offenbar schwindet die Kapazität der Ökosysteme, Kohlendioxid zu binden.",
     "date": "2024-10-17",
     "link": "https://taz.de/Hiobsbotschaft-fuers-Klima/!6040258/",
+    "category": "Climate Change"
+  },
+  {
+    "id": "https://theconversation.com/where-theres-smoke-the-rising-death-toll-from-climate-charged-fire-in-the-landscape-241590",
+    "title": "Where there’s smoke: the rising death toll from climate-charged fire in the landscape",
+    "description": "New international research reveals climate change increased the proportion of wildfire smoke-related human deaths tenfold between the 1960s and 2010s. Here’s what that means for Australia.",
+    "date": "2024-10-21",
+    "link": "https://theconversation.com/where-theres-smoke-the-rising-death-toll-from-climate-charged-fire-in-the-landscape-241590",
     "category": "Climate Change"
   },
   {
@@ -13947,7 +14083,7 @@
     "id": "https://www.theguardian.com/us-news/2025/aug/10/colorado-prison-evacuated-largest-wildfire",
     "title": "Colorado prison evacuated as wildfire becomes one of largest in state history | US wildfires | The Guardian",
     "description": "Lee fire chars more than 167 sq miles with 6% containment as California crews reach 62% containment on Canyon fire",
-    "date": "2025-08-10",
+    "date": "2025-08-11",
     "link": "https://www.theguardian.com/us-news/2025/aug/10/colorado-prison-evacuated-largest-wildfire",
     "category": "Climate Change"
   },
@@ -13989,6 +14125,14 @@
     "description": "Residents in some parts of Juneau evacuated ahead of what could be a record surge of floodwater after a huge upstream basin of rainwater and snowmelt dammed by Alaska’s Mendenhall Glacier started to escape. Flooding from the basin has become an annual concern for residents. On Tuesday officials confirmed water had started escaping the ice dam and was flowing downstream, with flooding expected into Wednesday. In past years the flooding has swept away houses and swamped hundreds of homes. The Mendenhall Glacier is a thinning, retreating glacier that acts as a dam for Suicide Basin, which fills each spring and summer with rainwater and snowmelt.",
     "date": "2025-08-12",
     "link": "https://apnews.com/article/alaska-glacial-flooding-dam-0454d452237bbd81d5d32ce5fe25471f",
+    "category": "Climate Change"
+  },
+  {
+    "id": "https://theconversation.com/farewell-to-summer-haze-and-trash-among-earths-new-seasons-as-climate-change-and-pollution-play-havoc-260765",
+    "title": "Earth appears to be developing new never-before-seen human-made seasons, study finds | Live Science",
+    "description": "Seasons are more than just divisions of time – they are our connection with nature.",
+    "date": "2025-07-22",
+    "link": "https://theconversation.com/farewell-to-summer-haze-and-trash-among-earths-new-seasons-as-climate-change-and-pollution-play-havoc-260765",
     "category": "Climate Change"
   },
   {
@@ -14211,7 +14355,7 @@
     "id": "https://www.theguardian.com/environment/2025/oct/13/coral-reefs-ice-sheets-amazon-rainforest-tipping-point-global-heating-scientists-report",
     "title": "Planet’s first catastrophic climate tipping point reached, report says, with coral reefs facing ‘widespread dieback’ | Climate crisis | The Guardian",
     "description": "Unless global heating is reduced to 1.2C ‘as fast as possible’, warm water coral reefs will not remain ‘at any meaningful scale’, a report by 160 scientists from 23 countries warns",
-    "date": "2025-10-12",
+    "date": "2025-10-13",
     "link": "https://www.theguardian.com/environment/2025/oct/13/coral-reefs-ice-sheets-amazon-rainforest-tipping-point-global-heating-scientists-report",
     "category": "Climate Change"
   },
@@ -14269,6 +14413,14 @@
     "description": "Climate change is affecting winter sports worldwide, with shorter winters and less snow. With 100 days until the Milan-Cortina Winter Olympic Games begin, many athletes say climate change is shaping their training and the future of their sport. Snowboarder Bea Kim is concerned about the future of winter sports as glaciers retreat. Canadian skier Marion Thénault has adjusted her travel to reduce her carbon footprint. American skier Julia Kern trains in slushy conditions due to warmer winters. The inconsistent weather is challenging for athletes preparing for events like the Olympics. Sports such as ski mountaineering, which will make its Olympic debut, may have to hold races at higher elevations in the future.",
     "date": "2025-10-29",
     "link": "https://apnews.com/article/climate-change-olympics-skiing-snow-ski-mountaineering-winter-ab8d7eb676fbf96e7732a82c76e94a2d",
+    "category": "Climate Change"
+  },
+  {
+    "id": "https://theconversation.com/extreme-heat-is-driving-up-property-prices-in-spains-cooler-northern-regions-new-study-268720",
+    "title": "Extreme heat is driving up property prices in Spain’s cooler northern regions – new study",
+    "description": "Our study shows that climate change is increasing property values in the country’s cooler north, and reducing them in the hotter south.",
+    "date": "2025-11-03",
+    "link": "https://theconversation.com/extreme-heat-is-driving-up-property-prices-in-spains-cooler-northern-regions-new-study-268720",
     "category": "Climate Change"
   },
   {
@@ -14504,6 +14656,14 @@
     "category": "Climate Change"
   },
   {
+    "id": "https://theconversation.com/completely-unexpected-antarctic-sea-ice-may-be-in-terminal-decline-due-to-rising-southern-ocean-salinity-259743",
+    "title": "‘Completely unexpected’: Antarctic sea ice may be in terminal decline due to rising Southern Ocean salinity",
+    "description": "Scientists once thought Antarctica might hold onto its sea ice as the world warmed. No longer.",
+    "date": "2025-06-30",
+    "link": "https://theconversation.com/completely-unexpected-antarctic-sea-ice-may-be-in-terminal-decline-due-to-rising-southern-ocean-salinity-259743",
+    "category": "Climate Change"
+  },
+  {
     "id": "https://www.theguardian.com/world/2026/feb/11/climate-fuelled-wildfires-patagonia-argentina-chile-oldest-trees",
     "title": "Some of world’s oldest trees hit by climate-fuelled wildfires in Patagonia | Wildfires | The Guardian",
     "description": "Wildfires that left 23 people dead were made about three times more likely by global heating, researchers say",
@@ -14531,7 +14691,7 @@
     "id": "https://mainichi.jp/english/articles/20260417/p2a/00m/0na/008000c",
     "title": "Japan weather agency adopts 'cruelly hot day' as new term for temps upwards of 40 C - The Mainichi",
     "description": "TOKYO -- The Japan Meteorological Agency (JMA) announced on April 17 that it has chosen ",
-    "date": "2026-04-16",
+    "date": "2026-04-17",
     "link": "https://web.archive.org/web/2/https://mainichi.jp/english/articles/20260417/p2a/00m/0na/008000c",
     "category": "Climate Change"
   },
@@ -14555,7 +14715,7 @@
     "id": "https://www.theguardian.com/environment/2026/may/20/uk-built-for-climate-that-no-longer-exists-and-needs-urgent-changes-to-survive-global-heating-report-warns?CMP=Share_iOSApp_Other",
     "title": "UK ‘built for climate that no longer exists’ and needs urgent changes to survive global heating, report warns | Environment | The Guardian",
     "description": "Landmark report calls for widespread air conditioning and says UK temperatures forecast to exceed 40C by 2050",
-    "date": "2026-05-19",
+    "date": "2026-05-20",
     "link": "https://www.theguardian.com/environment/2026/may/20/uk-built-for-climate-that-no-longer-exists-and-needs-urgent-changes-to-survive-global-heating-report-warns?CMP=Share_iOSApp_Other",
     "category": "Climate Change"
   },
@@ -14563,7 +14723,7 @@
     "id": "https://www.theguardian.com/us-news/2026/may/19/simi-valley-california-wildfire-evacuation?CMP=Share_iOSApp_Other",
     "title": "Thousands under evacuation orders in southern California as wildfire threatens homes | California | The Guardian",
     "description": "Hundreds of firefighters continue to battle the wind-driven fire in the Simi Valley area as at least one home is destroyed",
-    "date": "2026-05-19",
+    "date": "2026-05-20",
     "link": "https://www.theguardian.com/us-news/2026/may/19/simi-valley-california-wildfire-evacuation?CMP=Share_iOSApp_Other",
     "category": "Climate Change"
   },
@@ -14579,7 +14739,7 @@
     "id": "https://www.theguardian.com/world/2026/may/25/france-highest-ever-may-temperatures-spain-heatwave?CMP=Share_iOSApp_Other",
     "title": "Record May highs sweep across France as extreme heat hits western Europe | Europe weather | The Guardian",
     "description": "Mercury in Spain also climbs to well above normal with weather event set to continue for several more days",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "link": "https://www.theguardian.com/world/2026/may/25/france-highest-ever-may-temperatures-spain-heatwave?CMP=Share_iOSApp_Other",
     "category": "Climate Change"
   },
@@ -14611,7 +14771,7 @@
     "id": "https://www.theguardian.com/society/2026/may/26/climate-crisis-accelerating-antibiotic-resistance-across-world-salmonella-study?CMP=Share_iOSApp_Other",
     "title": "Climate crisis is accelerating antibiotic resistance across world, study says | Antibiotics | The Guardian",
     "description": "Experts say climate change linked to 10% rise in salmonella antibiotic resistance genes between 1940 and 2023",
-    "date": "2026-05-26",
+    "date": "2026-05-27",
     "link": "https://www.theguardian.com/society/2026/may/26/climate-crisis-accelerating-antibiotic-resistance-across-world-salmonella-study?CMP=Share_iOSApp_Other",
     "category": "Climate Change"
   },
@@ -14667,7 +14827,7 @@
     "id": "https://www.spektrum.de/news/genetik-der-sprache-seit-wann-kann-der-mensch-sprechen/2321230",
     "title": "Genetik der Sprache: Seit wann kann der Mensch sprechen? - Spektrum der Wissenschaft",
     "description": "Auf der Suche nach dem Ursprung der Sprachfähigkeit entdeckten Forscher uralte Regionen in unserem Genom. Diese sind älter als die Anfänge von modernem Menschen und Neandertaler.",
-    "date": "2026-04-28",
+    "date": "2026-04-29",
     "link": "https://www.spektrum.de/news/genetik-der-sprache-seit-wann-kann-der-mensch-sprechen/2321230",
     "category": "Climate Change"
   },
