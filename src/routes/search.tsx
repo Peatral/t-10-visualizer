@@ -4,6 +4,7 @@ import {
   useEffect, 
   Suspense, 
   useEffectEvent,
+  Activity,
 } from 'react'
 import { Info, List, Clock, LayoutGrid, ChevronDown, Network } from 'lucide-react'
 import { useSuspenseQuery } from '@tanstack/react-query'
@@ -88,43 +89,38 @@ function SearchResults({
     )
   }
 
-  if (viewMode === 'heatmap') {
-    return (
-      <SearchHeatmapView
-        parsedFilters={parsedFilters}
-        language={language}
-        heatmapScaleMode={heatmapScaleMode}
-        handleCellClick={onCellClick}
-        handleRowClick={onRowClick}
-        handleColumnClick={onColumnClick}
-      />
-    )
-  }
-
-  if (viewMode === 'timeline') {
-    return (
-      <SearchTimelineView
-        articles={filteredArticles}
-        onArticleClick={onArticleClick}
-      />
-    )
-  }
-
-  if (viewMode === 'network') {
-    return (
-      <SearchNetworkView
-        parsedFilters={parsedFilters}
-        language={language}
-        onNodeClick={(topicId) => onRowClick(topicId)}
-      />
-    )
-  }
-
   return (
-    <SearchListView
-      articles={filteredArticles}
-      onArticleClick={onArticleClick}
-    />
+    <>
+      <Activity mode={viewMode === 'heatmap' ? 'visible' : 'hidden'}>
+        <SearchHeatmapView
+          parsedFilters={parsedFilters}
+          language={language}
+          heatmapScaleMode={heatmapScaleMode}
+          handleCellClick={onCellClick}
+          handleRowClick={onRowClick}
+          handleColumnClick={onColumnClick}
+        />
+      </Activity>
+      <Activity mode={viewMode === 'timeline' ? 'visible' : 'hidden'}>
+        <SearchTimelineView
+          articles={filteredArticles}
+          onArticleClick={onArticleClick}
+        />
+      </Activity>
+      <Activity mode={viewMode === 'network' ? 'visible' : 'hidden'}>
+        <SearchNetworkView
+          parsedFilters={parsedFilters}
+          language={language}
+          onNodeClick={(topicId) => onRowClick(topicId)}
+        />
+      </Activity>
+      <Activity mode={viewMode === 'list' ? 'visible' : 'hidden'}>
+        <SearchListView
+          articles={filteredArticles}
+          onArticleClick={onArticleClick}
+        />
+      </Activity>
+    </>
   )
 }
 
