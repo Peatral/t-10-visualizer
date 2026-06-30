@@ -174,6 +174,68 @@ export function ViewportContainer({
   );
 }
 
+
+
+interface SearchViewportAreaProps {
+  viewMode: ViewMode;
+  parsedFilters: ParsedSearchQuery;
+  language: Language;
+  onArticleClick: (article: Article) => void;
+  onCellClick: (topicId: string, label: string, bucket: string) => void;
+  onRowClick: (topicId: string, label?: string) => void;
+  onColumnClick: (bucket: string) => void;
+}
+
+function SearchViewportArea({
+  viewMode,
+  parsedFilters,
+  language,
+  onArticleClick,
+  onCellClick,
+  onRowClick,
+  onColumnClick,
+}: SearchViewportAreaProps) {
+  const { t } = useTranslation();
+  const listState = useListState();
+  const sortBy = listState ? listState.sortBy : 'newest';
+  const trpc = useTRPC();
+
+  const { data: filteredArticles } = useSuspenseQuery(
+    trpc.searchArticles.queryOptions({
+      q: parsedFilters.q,
+      category: parsedFilters.category,
+      sort: sortBy,
+      before: parsedFilters.before,
+      after: parsedFilters.after,
+      topic: parsedFilters.topic,
+      includeFullText: true,
+    })
+  );
+
+  const isEmpty = filteredArticles.length === 0;
+
+  if (isEmpty) {
+    return (
+      <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-2">
+        <Info className="w-8 h-8 text-gray-600" />
+        <span>{t('searchEmpty')}</span>
+      </div>
+    );
+  }
+
+  return (
+    <ViewportContainer
+      viewMode={viewMode}
+      parsedFilters={parsedFilters}
+      language={language}
+      onArticleClick={onArticleClick}
+      onCellClick={onCellClick}
+      onRowClick={onRowClick}
+      onColumnClick={onColumnClick}
+    />
+  );
+}
+
 function SearchContent() {
   const { t, language } = useTranslation()
   const searchParams = useSearch({ from: '/search' })
@@ -218,22 +280,6 @@ function SearchContent() {
 
   const parsedFilters = useMemo(() => parseSearchQuery(debouncedQuery), [debouncedQuery])
 
-  const listState = useListState()
-  const sortBy = listState ? listState.sortBy : 'newest'
-  const trpc = useTRPC()
-
-  const { data: filteredArticles } = useSuspenseQuery(
-    trpc.searchArticles.queryOptions({
-      q: parsedFilters.q,
-      category: parsedFilters.category,
-      sort: sortBy,
-      before: parsedFilters.before,
-      after: parsedFilters.after,
-      topic: parsedFilters.topic,
-      includeFullText: true,
-    })
-  )
-
   const handleArticleClick = (art: Article) => {
     navigate({ to: '/articles/$articleId', params: { articleId: art.id } })
   }
@@ -252,8 +298,6 @@ function SearchContent() {
     setLocalQuery(stringifySearchQuery(parsed))
     setViewMode('list')
   }
-
-  const isEmpty = filteredArticles.length === 0
 
   return (
     <div className="h-full flex flex-col bg-[#121212] select-none text-left font-sans">
@@ -297,22 +341,15 @@ function SearchContent() {
             <LoadingSpinner text={viewMode === 'heatmap' ? 'Calculating Heatmap...' : viewMode === 'timeline' ? 'Loading Timeline...' : 'Searching...'} />
           </div>
         }>
-          {isEmpty ? (
-            <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-2">
-              <Info className="w-8 h-8 text-gray-600" />
-              <span>{t('searchEmpty')}</span>
-            </div>
-          ) : (
-            <ViewportContainer
-              viewMode={viewMode}
-              parsedFilters={parsedFilters}
-              language={language}
-              onArticleClick={handleArticleClick}
-              onCellClick={(topicId: string, _label: string, bucket: string) => updateSearchWithBucket(topicId, bucket)}
-              onRowClick={(topicId: string) => updateSearchWithBucket(topicId)}
-              onColumnClick={(bucket: string) => updateSearchWithBucket(null, bucket)}
-            />
-          )}
+          <SearchViewportArea
+            viewMode={viewMode}
+            parsedFilters={parsedFilters}
+            language={language}
+            onArticleClick={handleArticleClick}
+            onCellClick={(topicId: string, _label: string, bucket: string) => updateSearchWithBucket(topicId, bucket)}
+            onRowClick={(topicId: string) => updateSearchWithBucket(topicId)}
+            onColumnClick={(bucket: string) => updateSearchWithBucket(null, bucket)}
+          />
         </Suspense>
       </div>
     </div>
