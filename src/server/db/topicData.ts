@@ -344,8 +344,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
   },
   {
     "id": "energieproduktion-energiegewinnung",
-    "nameDe": "Energieproduktion/Energiegewinnung",
-    "nameEn": "Energy production/energy generation",
+    "nameDe": "Energiegewinnung",
+    "nameEn": "Energy Production",
     "keywordsDe": [
       "energieproduktion",
       "energiegewinnung"
@@ -461,12 +461,10 @@ export const TOPICS_LIST: TopicDefinition[] = [
   },
   {
     "id": "essen-food",
-    "nameDe": "Essen/Food",
-    "nameEn": "Food/food",
+    "nameDe": "Essen",
+    "nameEn": "Food",
     "keywordsDe": [
       "essen",
-      "food",
-      "essen food"
     ],
     "keywordsEn": [
       "food"
@@ -497,6 +495,7 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Forschung",
     "nameEn": "Research",
     "keywordsDe": [
+      "recherche",
       "forschung"
     ],
     "keywordsEn": [
@@ -715,8 +714,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
   },
   {
     "id": "kernkraft",
-    "nameDe": "Kernkraft / Atomkraft",
-    "nameEn": "Nuclear power / Nuclear energy",
+    "nameDe": "Kernkraft",
+    "nameEn": "Nuclear power",
     "keywordsDe": [
       "kernkraft",
       "atomkraft",
@@ -1352,14 +1351,16 @@ export const TOPICS_LIST: TopicDefinition[] = [
   },
   {
     "id": "stromleitung-elektrischer-transport",
-    "nameDe": "Stromleitung/elektrischer Transport",
-    "nameEn": "Power line/electrical transportation",
+    "nameDe": "Stromleitung",
+    "nameEn": "Power line",
     "keywordsDe": [
       "stromleitung",
+      "stromleitungen",
       "elektrischer transport"
     ],
     "keywordsEn": [
       "power line",
+      "power lines",
       "electrical transportation"
     ],
     "categories": [
@@ -1428,11 +1429,9 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameEn": "Environment",
     "keywordsDe": [
       "umwelt",
-      "klima"
     ],
     "keywordsEn": [
       "environment",
-      "climate"
     ],
     "categories": [
       "t-10-energy",
@@ -1589,8 +1588,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
   },
   {
     "id": "windenergie",
-    "nameDe": "Windenergie / Windkraft",
-    "nameEn": "Wind energy / Wind power",
+    "nameDe": "Windenergie",
+    "nameEn": "Wind Power",
     "keywordsDe": [
       "windenergie",
       "windkraft",
@@ -1626,8 +1625,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
   },
   {
     "id": "wohnen-housing",
-    "nameDe": "Wohnen/Housing",
-    "nameEn": "Living/Housing",
+    "nameDe": "Wohnen",
+    "nameEn": "Housing",
     "keywordsDe": [
       "wohnen",
       "housing"
@@ -2834,15 +2833,17 @@ export const TOPICS_LIST: TopicDefinition[] = [
   },
   {
     "id": "foodmix-kohlenhydrate-eiweisse-fette",
-    "nameDe": "Foodmix (Kohlenhydrate/Eiweiße/Fette)",
-    "nameEn": "Food mix (carbohydrates/proteins/fats)",
+    "nameDe": "Foodmix",
+    "nameEn": "Food mix",
     "keywordsDe": [
-      "foodmix kohlenhydrate",
+      "foodmix",
+      "kohlenhydrate",
       "eiweiße",
       "fette"
     ],
     "keywordsEn": [
-      "food mix carbohydrates",
+      "food mix",
+      "carbohydrates",
       "proteins",
       "fats"
     ],
@@ -4256,11 +4257,11 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameEn": "Regional products/production",
     "keywordsDe": [
       "regionale produkte",
-      "produktion"
+      "regionale produktion"
     ],
     "keywordsEn": [
       "regional products",
-      "production"
+      "regional production"
     ],
     "categories": [
       "t-10-food"
@@ -5011,17 +5012,15 @@ export const TOPICS_LIST: TopicDefinition[] = [
   },
   {
     "id": "versalzung-versaeuerung-der-boden-meer",
-    "nameDe": "Versalzung / Versäuerung der Boden/ Meer",
-    "nameEn": "Salinization / acidification of the soil/sea",
+    "nameDe": "Versalzung / Versäuerung der Boden / Meer",
+    "nameEn": "Salinization / acidification of the soil/ sea",
     "keywordsDe": [
       "versalzung",
-      "versäuerung der boden",
-      "meer"
+      "versäuerung",
     ],
     "keywordsEn": [
       "salinization",
-      "acidification of the soil",
-      "sea"
+      "acidification",
     ],
     "categories": [
       "t-10-food"
@@ -6464,7 +6463,8 @@ export const TOPICS_LIST: TopicDefinition[] = [
       "land"
     ],
     "keywordsEn": [
-      "country"
+      "country",
+      "countryside"
     ],
     "categories": [
       "t-10-housing",
@@ -9286,10 +9286,12 @@ export const TOPICS_LIST: TopicDefinition[] = [
     "nameDe": "Meer",
     "nameEn": "sea",
     "keywordsDe": [
-      "meer"
+      "meer",
+      "ozean"
     ],
     "keywordsEn": [
-      "sea"
+      "sea",
+      "ocean"
     ],
     "categories": [
       "t-10-mobility"
@@ -9644,20 +9646,6 @@ export const TOPICS_LIST: TopicDefinition[] = [
     ],
     "keywordsEn": [
       "rockets"
-    ],
-    "categories": [
-      "t-10-mobility"
-    ]
-  },
-  {
-    "id": "recherche",
-    "nameDe": "Recherche",
-    "nameEn": "Research",
-    "keywordsDe": [
-      "recherche"
-    ],
-    "keywordsEn": [
-      "research"
     ],
     "categories": [
       "t-10-mobility"
