@@ -31,7 +31,6 @@
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-force-graph-2d": "^1.29.1",
-    "react-scan": "^0.5.7",
     "superjson": "^2.2.6",
     "use-debounce": "^10.1.1",
     "vis-data": "^8.0.4",

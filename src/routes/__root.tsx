@@ -36,6 +36,12 @@ export const Route = createRootRouteWithContext()({
         href: appCss,
       },
     ],
+    scripts: [
+      (import.meta.env.DEV ? {
+        src: 'https://unpkg.com/react-scan/dist/auto.global.js',
+        async: true,
+      } : undefined)
+    ]
   }),
   shellComponent: RootDocument,
 })
