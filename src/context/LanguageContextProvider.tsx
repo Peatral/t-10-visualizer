@@ -60,6 +60,7 @@ const translations = {
     modifierSortDesc: "Sort order (newest, oldest)",
     viewingArticle: "Viewing Article: {id}",
     networkView: "Network",
+    minConnectionWeight: "Min Connection Weight",
   },
   de: {
     dashboardTitle: "T-10 Analyse-Dashboard",
@@ -115,6 +116,7 @@ const translations = {
     viewingArticle: "Artikel anzeigen: {id}",
     heatmapView: "Heatmap",
     networkView: "Netzwerk",
+    minConnectionWeight: "Min. Verbindungsgewicht",
   }
 }
 

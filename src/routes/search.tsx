@@ -52,6 +52,7 @@ interface SearchResultsProps {
   onCellClick: (topicId: string, label: string, bucket: string) => void;
   onRowClick: (topicId: string, label?: string) => void;
   onColumnClick: (bucket: string) => void;
+  networkWeightFilter: number;
 }
 
 function SearchResults({ 
@@ -64,7 +65,8 @@ function SearchResults({
   onCellClick,
   onRowClick,
   onColumnClick,
-  t
+  t,
+  networkWeightFilter
 }: SearchResultsProps) {
   const trpc = useTRPC()
 
@@ -112,6 +114,7 @@ function SearchResults({
           parsedFilters={parsedFilters}
           language={language}
           onNodeClick={(topicId) => onRowClick(topicId)}
+          weightFilter={networkWeightFilter}
         />
       </Activity>
       <Activity mode={viewMode === 'list' ? 'visible' : 'hidden'}>
@@ -134,6 +137,8 @@ function Search() {
   const [sortBy, setSortBy] = useState<'newest' | 'oldest'>('newest')
   const [heatmapScaleMode, setHeatmapScaleMode] = useState<'absolute' | 'relative'>('absolute')
   const [debouncedQuery] = useDebounce(localQuery, 400)
+
+  const [networkWeightFilter, setNetworkWeightFilter] = useState(2)
 
   const syncViewToUrl = useEffectEvent((newViewMode: ViewMode) => {
     if (searchParams.view !== newViewMode) {
@@ -247,6 +252,23 @@ function Search() {
                 <button onClick={() => setHeatmapScaleMode('relative')} className={`px-2.5 py-1 ${heatmapScaleMode === 'relative' ? 'bg-[#3f51b5] text-white font-bold' : 'text-gray-400 hover:text-white'}`}>{t('relativeMode') || 'Relative'}</button>
               </div>
             )}
+
+            {viewMode === 'network' && (
+              <div className="shrink-0 flex items-center gap-3 bg-[#252525] px-3 py-1.5 border border-[#2e2e2e]">
+                <span className="text-[11px] text-gray-400 font-medium font-mono whitespace-nowrap">
+                  {t('minConnectionWeight')}: {networkWeightFilter}
+                </span>
+                <input 
+                  type="range" 
+                  min="2" 
+                  max="15" 
+                  step="1" 
+                  value={networkWeightFilter} 
+                  onChange={(e) => setNetworkWeightFilter(parseInt(e.target.value, 10))}
+                  className="w-28 accent-[#5c6bc0] bg-[#1a1a1a] h-1.5 rounded-lg cursor-pointer"
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -268,6 +290,7 @@ function Search() {
             onCellClick={(topicId: string, _label: string, bucket: string) => updateSearchWithBucket(topicId, bucket)}
             onRowClick={(topicId: string) => updateSearchWithBucket(topicId)}
             onColumnClick={(bucket: string) => updateSearchWithBucket(null, bucket)}
+            networkWeightFilter={networkWeightFilter}
           />
         </Suspense>
       </div>

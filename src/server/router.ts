@@ -237,7 +237,8 @@ export const appRouter = createTRPCRouter({
       let query: any = db.select({
         articleId: articles.id,
         topicId: topics.id,
-        topicName: language === 'de' ? topics.nameDe : topics.nameEn
+        topicName: language === 'de' ? topics.nameDe : topics.nameEn,
+        category: articles.category
       })
       .from(articles)
       .innerJoin(articleTopicMatches, eq(articles.id, articleTopicMatches.articleId))
@@ -250,7 +251,7 @@ export const appRouter = createTRPCRouter({
       const rows = await query.all()
 
       // 3. Process into Nodes and Links
-      const nodeMap = new Map<string, { id: string; name: string; val: number }>()
+      const nodeMap = new Map<string, { id: string; name: string; val: number; categories: Record<string, number>; category?: string }>()
       const linkMap = new Map<string, { source: string; target: string; weight: number }>()
       
       // Group topics by article to calculate co-occurrences
@@ -259,15 +260,30 @@ export const appRouter = createTRPCRouter({
       for (const row of rows) {
         // Tally node frequencies
         if (!nodeMap.has(row.topicId)) {
-          nodeMap.set(row.topicId, { id: row.topicId, name: row.topicName, val: 0 })
+          nodeMap.set(row.topicId, { id: row.topicId, name: row.topicName, val: 0, categories: {} })
         }
-        nodeMap.get(row.topicId)!.val += 1
+        const node = nodeMap.get(row.topicId)!
+        node.val += 1
+        node.categories[row.category] = (node.categories[row.category] || 0) + 1
 
         // Group by article
         if (!articlesMap.has(row.articleId)) {
           articlesMap.set(row.articleId, [])
         }
         articlesMap.get(row.articleId)!.push({ id: row.topicId, name: row.topicName })
+      }
+
+      // Assign dominant category to each node
+      for (const node of nodeMap.values()) {
+        let maxCount = 0
+        let dominantCategory = ''
+        for (const [cat, count] of Object.entries(node.categories)) {
+          if (count > maxCount) {
+            maxCount = count
+            dominantCategory = cat
+          }
+        }
+        node.category = dominantCategory
       }
 
       // Tally link weights (co-occurrences)
@@ -296,9 +312,15 @@ export const appRouter = createTRPCRouter({
         strongLinks.flatMap(l => [l.source, l.target])
       );
       
-      const relevantNodes = Array.from(nodeMap.values()).filter(node => 
-        connectedNodeIds.has(node.id) || node.val > 2 // Keep highly frequent isolated nodes too
-      );
+      const relevantNodes = Array.from(nodeMap.values())
+        .filter(node => connectedNodeIds.has(node.id) || node.val > 2)
+        .map(node => ({
+          id: node.id,
+          name: node.name,
+          val: node.val,
+          category: node.category || '',
+          categories: node.categories
+        }));
 
       return {
         nodes: relevantNodes,
