@@ -5,7 +5,7 @@ import {
   Suspense, 
   useEffectEvent,
 } from 'react'
-import { Info, List, Clock, LayoutGrid, ChevronDown } from 'lucide-react'
+import { Info, List, Clock, LayoutGrid, ChevronDown, Network } from 'lucide-react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useSearch, useNavigate, createFileRoute } from '@tanstack/react-router'
 import { useDebounce } from 'use-debounce'
@@ -21,12 +21,18 @@ import type { Article } from '../server/db/schema'
 import { z } from 'zod'
 import { LoadingSpinner } from '../components/LoadingSpinner'
 import type { TranslationKey } from '../context/LanguageContext'
+import { SearchNetworkView } from '../components/SearchNetworkView'
+
+const viewModes = ['list', 'timeline', 'heatmap', 'network'] as const;
+
+const viewModeSchema = z.enum(viewModes);
+type ViewMode = z.infer<typeof viewModeSchema>;
 
 const searchSchema = z.object({
   q: z.string().optional().catch(''),
-  category: z.string().optional().catch('All'),
+  category: z.string().optional().catch(undefined),
   fulltext: z.boolean().optional().catch(false),
-  view: z.enum(['list', 'timeline', 'heatmap']).optional().catch('list'),
+  view: viewModeSchema.optional().catch('list'),
 })
 
 export const Route = createFileRoute('/search')({
@@ -37,7 +43,7 @@ export const Route = createFileRoute('/search')({
 interface SearchResultsProps {
   parsedFilters: ParsedSearchQuery;
   sortBy: 'newest' | 'oldest';
-  viewMode: 'list' | 'timeline' | 'heatmap';
+  viewMode: ViewMode;
   heatmapScaleMode: 'absolute' | 'relative';
   language: Language;  
   t: (key: TranslationKey, params?: Record<string, string | number>) => string;
@@ -104,6 +110,16 @@ function SearchResults({
     )
   }
 
+  if (viewMode === 'network') {
+    return (
+      <SearchNetworkView
+        parsedFilters={parsedFilters}
+        language={language}
+        onNodeClick={(topicId) => onRowClick(topicId)}
+      />
+    )
+  }
+
   return (
     <SearchListView
       articles={filteredArticles}
@@ -118,18 +134,18 @@ function Search() {
   const navigate = useNavigate({ from: '/search' })
 
   const [localQuery, setLocalQuery] = useState(searchParams.q || '')
-  const [viewMode, setViewMode] = useState<'list' | 'timeline' | 'heatmap'>(searchParams.view || 'list')
+  const [viewMode, setViewMode] = useState<ViewMode>(searchParams.view || 'list')
   const [sortBy, setSortBy] = useState<'newest' | 'oldest'>('newest')
   const [heatmapScaleMode, setHeatmapScaleMode] = useState<'absolute' | 'relative'>('absolute')
   const [debouncedQuery] = useDebounce(localQuery, 400)
 
-  const syncViewToUrl = useEffectEvent((newViewMode: 'list' | 'timeline' | 'heatmap') => {
+  const syncViewToUrl = useEffectEvent((newViewMode: ViewMode) => {
     if (searchParams.view !== newViewMode) {
       navigate({ search: (prev) => ({ ...prev, view: newViewMode }), replace: true })
     }
   })
 
-  const syncUrlToView = useEffectEvent((urlViewMode?: 'list' | 'timeline' | 'heatmap') => {
+  const syncUrlToView = useEffectEvent((urlViewMode?: ViewMode) => {
     if (urlViewMode && urlViewMode !== viewMode) {
       setViewMode(urlViewMode)
     }
@@ -187,7 +203,7 @@ function Search() {
           </div>
 
           <div className="flex bg-[#252525] p-0.5 text-xs select-none self-start sm:self-center">
-            {(['list', 'timeline', 'heatmap'] as const).map((mode) => (
+            {viewModes.map((mode) => (
               <button 
                 key={mode}
                 onClick={() => setViewMode(mode)}
@@ -196,6 +212,7 @@ function Search() {
                 {mode === 'list' && <List className="w-3.5 h-3.5" />}
                 {mode === 'timeline' && <Clock className="w-3.5 h-3.5" />}
                 {mode === 'heatmap' && <LayoutGrid className="w-3.5 h-3.5" />}
+                {mode === 'network' && <Network className="w-3.5 h-3.5" />}
                 {t(`${mode}View`) || mode}
               </button>
             ))}
@@ -238,7 +255,7 @@ function Search() {
         </div>
       </div>
 
-      <div className="flex-grow overflow-auto relative bg-[#121212]">
+      <div className="grow overflow-auto relative bg-[#121212]">
         <Suspense fallback={
           <div className="h-full flex items-center justify-center text-gray-400">
             <LoadingSpinner text={viewMode === 'heatmap' ? 'Calculating Heatmap...' : viewMode === 'timeline' ? 'Loading Timeline...' : 'Searching...'} />

@@ -190,6 +190,121 @@ export const appRouter = createTRPCRouter({
       query.orderBy(sort === 'newest' ? desc(articles.date) : asc(articles.date))
       return query.all()
     }),
+
+  // Add this below searchArticles
+  getTopicNetwork: publicProcedure
+    .input(
+      z.object({
+        q: z.string().optional(),
+        category: z.string().optional(),
+        includeFullText: z.boolean().optional(),
+        before: z.string().optional(),
+        after: z.string().optional(),
+        topic: z.string().optional(),
+        language: z.enum(['en', 'de']).default('en'),
+      })
+    )
+    .query(async ({ input }) => {
+      const q = input.q?.replace(/([a-zA-Z0-9_-]+):$/, '').trim() || ''
+      const category = input.category
+      const includeFullText = input.includeFullText !== false
+      const { before, after, topic, language } = input
+
+      const conditions: any[] = []
+
+      // 1. Build the same filter conditions as searchArticles
+      if (category !== undefined) conditions.push(eq(articles.category, category))
+      if (before && before.trim()) conditions.push(sql`${articles.date} <= ${before.trim()}`)
+      if (after && after.trim()) conditions.push(sql`${articles.date} >= ${after.trim()}`)
+      
+      if (topic && topic.trim()) {
+        const matchingTopicIds = await getMatchingTopicIdsForQuery(db, topic)
+        if (matchingTopicIds.length > 0) {
+          const topicList = matchingTopicIds.map((id: string) => `'${id.replace(/'/g, "''")}'`).join(',')
+          conditions.push(sql`${articles.id} IN (SELECT article_id FROM article_topic_matches WHERE topic_id IN (${sql.raw(topicList)}))`)
+        } else {
+          conditions.push(sql`1=0`)
+        }
+      }
+
+      if (q) {
+        const ftsQuery = formatFtsQuery(q)
+        const matchClause = includeFullText ? ftsQuery : `{title description} : ${ftsQuery}`
+        conditions.push(sql`${articles.id} IN (SELECT id FROM articles_fts WHERE articles_fts MATCH ${matchClause})`)
+      }
+
+      // 2. Fetch all matching articles and JOIN their topics
+      let query: any = db.select({
+        articleId: articles.id,
+        topicId: topics.id,
+        topicName: language === 'de' ? topics.nameDe : topics.nameEn
+      })
+      .from(articles)
+      .innerJoin(articleTopicMatches, eq(articles.id, articleTopicMatches.articleId))
+      .innerJoin(topics, eq(articleTopicMatches.topicId, topics.id))
+
+      if (conditions.length > 0) {
+        query = query.where(and(...conditions))
+      }
+
+      const rows = await query.all()
+
+      // 3. Process into Nodes and Links
+      const nodeMap = new Map<string, { id: string; name: string; val: number }>()
+      const linkMap = new Map<string, { source: string; target: string; weight: number }>()
+      
+      // Group topics by article to calculate co-occurrences
+      const articlesMap = new Map<string, Array<{id: string, name: string}>>()
+
+      for (const row of rows) {
+        // Tally node frequencies
+        if (!nodeMap.has(row.topicId)) {
+          nodeMap.set(row.topicId, { id: row.topicId, name: row.topicName, val: 0 })
+        }
+        nodeMap.get(row.topicId)!.val += 1
+
+        // Group by article
+        if (!articlesMap.has(row.articleId)) {
+          articlesMap.set(row.articleId, [])
+        }
+        articlesMap.get(row.articleId)!.push({ id: row.topicId, name: row.topicName })
+      }
+
+      // Tally link weights (co-occurrences)
+      for (const [_, articleTopics] of articlesMap.entries()) {
+        for (let i = 0; i < articleTopics.length; i++) {
+          for (let j = i + 1; j < articleTopics.length; j++) {
+            const t1 = articleTopics[i].id
+            const t2 = articleTopics[j].id
+            const linkId = [t1, t2].sort().join('::')
+            
+            if (!linkMap.has(linkId)) {
+              linkMap.set(linkId, { source: t1, target: t2, weight: 0 })
+            }
+            linkMap.get(linkId)!.weight += 1
+          }
+        }
+      }
+
+      // --- NEW: PRUNING LOGIC --- //
+      
+      // Filter out weak connections (e.g., they only appeared together once)
+      const strongLinks = Array.from(linkMap.values()).filter(link => link.weight > 1);
+
+      // Optional: Only keep nodes that have at least one strong connection
+      const connectedNodeIds = new Set(
+        strongLinks.flatMap(l => [l.source, l.target])
+      );
+      
+      const relevantNodes = Array.from(nodeMap.values()).filter(node => 
+        connectedNodeIds.has(node.id) || node.val > 2 // Keep highly frequent isolated nodes too
+      );
+
+      return {
+        nodes: relevantNodes,
+        links: strongLinks
+      }
+    }),
 })
 
 export type TRPCRouter = typeof appRouter

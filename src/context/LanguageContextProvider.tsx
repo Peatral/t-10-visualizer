@@ -58,7 +58,8 @@ const translations = {
     modifierAfterDesc: "Show articles published after date (YYYY-MM-DD)",
     modifierBeforeDesc: "Show articles published before date (YYYY-MM-DD)",
     modifierSortDesc: "Sort order (newest, oldest)",
-    viewingArticle: "Viewing Article: {id}"
+    viewingArticle: "Viewing Article: {id}",
+    networkView: "Network",
   },
   de: {
     dashboardTitle: "T-10 Analyse-Dashboard",
@@ -113,6 +114,7 @@ const translations = {
     modifierSortDesc: "Sortierreihenfolge (newest, oldest)",
     viewingArticle: "Artikel anzeigen: {id}",
     heatmapView: "Heatmap",
+    networkView: "Netzwerk",
   }
 }
 
