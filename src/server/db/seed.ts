@@ -6,7 +6,22 @@ import { articles, topics, topicKeywords, articleTopicMatches, categories } from
 import { getYearHalf } from '../../utils/matching'
 import { TOPICS_LIST } from './topicData'
 
+// 1. Infer Insert Types directly from your Drizzle schema
 type NewArticle = typeof articles.$inferInsert
+type NewTopic = typeof topics.$inferInsert
+type NewTopicKeyword = typeof topicKeywords.$inferInsert
+type NewArticleTopicMatch = typeof articleTopicMatches.$inferInsert
+type NewCategory = typeof categories.$inferInsert
+
+// 2. Define the shape of your incoming JSON data
+interface RawArticle {
+  id: string
+  category: string
+  title: string
+  description: string
+  date: string
+  link: string
+}
 
 function getSafeFilename(url: string): string {
   let hash = 0
@@ -50,82 +65,29 @@ function detectArticleLanguage(link: string, title: string, bodyText: string): '
 }
 
 async function seed() {
-  console.log('Starting SQLite seeding with topics-based schemas...')
+  console.log('Starting strictly typed Drizzle seeding...')
 
   const publicDir = path.resolve(process.cwd(), 'public')
   const articlesJsonPath = path.join(publicDir, 'articles.json')
   const articlesDir = path.join(publicDir, 'articles')
 
-  // Create tables and FTS5 virtual table
+  console.log('Clearing existing data...')
+  await db.delete(articleTopicMatches).run()
+  await db.delete(topicKeywords).run()
+  await db.delete(articles).run()
+  await db.delete(categories).run()
+  await db.delete(topics).run()
+
+  console.log('Setting up FTS5 virtual tables and triggers...')
   const dbPath = path.resolve(process.cwd(), 'sqlite.db')
   const sqlite = new Database(dbPath)
   
-  console.log('Creating tables, triggers, and FTS5 virtual tables...')
   sqlite.exec(`
-    DROP TABLE IF EXISTS article_topic_matches;
-    DROP TABLE IF EXISTS topics_to_categories;
-    DROP TABLE IF EXISTS topic_keywords;
-    DROP TABLE IF EXISTS topics;
-    DROP TABLE IF EXISTS article_keyword_matches;
-    DROP TABLE IF EXISTS themenwolke;
-    DROP TABLE IF EXISTS translations;
     DROP TRIGGER IF EXISTS articles_ai;
     DROP TRIGGER IF EXISTS articles_ad;
     DROP TRIGGER IF EXISTS articles_au;
     DROP TABLE IF EXISTS articles_fts;
-    DROP TABLE IF EXISTS articles;
-    DROP TABLE IF EXISTS categories;
 
-    CREATE TABLE categories (
-      id TEXT PRIMARY KEY,
-      name TEXT NOT NULL
-    );
-
-    CREATE TABLE articles (
-      id TEXT PRIMARY KEY,
-      title TEXT NOT NULL,
-      description TEXT NOT NULL,
-      date TEXT NOT NULL,
-      link TEXT NOT NULL,
-      category_id TEXT,
-      category TEXT NOT NULL,
-      body_text TEXT NOT NULL,
-      language TEXT NOT NULL DEFAULT 'en',
-      FOREIGN KEY(category_id) REFERENCES categories(id)
-    );
-
-    CREATE TABLE topics (
-      id TEXT PRIMARY KEY,
-      name_de TEXT NOT NULL,
-      name_en TEXT NOT NULL
-    );
-
-    CREATE TABLE topic_keywords (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      topic_id TEXT NOT NULL,
-      keyword TEXT NOT NULL,
-      language TEXT NOT NULL,
-      FOREIGN KEY(topic_id) REFERENCES topics(id)
-    );
-
-    CREATE TABLE article_topic_matches (
-      article_id TEXT NOT NULL,
-      category TEXT NOT NULL,
-      date TEXT NOT NULL,
-      bucket TEXT NOT NULL,
-      sort_val INTEGER NOT NULL,
-      topic_id TEXT NOT NULL,
-      FOREIGN KEY(topic_id) REFERENCES topics(id),
-      FOREIGN KEY(article_id) REFERENCES articles(id)
-    );
-    
-    CREATE INDEX idx_category_id ON articles(category_id);
-    CREATE INDEX idx_date ON articles(date);
-    CREATE INDEX idx_keywords_topic ON topic_keywords(topic_id);
-    CREATE INDEX idx_matches_category ON article_topic_matches(category);
-    CREATE INDEX idx_matches_topic ON article_topic_matches(topic_id);
-
-    -- FTS5 Virtual Table for full-text search
     CREATE VIRTUAL TABLE articles_fts USING fts5(
       id UNINDEXED,
       title,
@@ -133,7 +95,6 @@ async function seed() {
       body_text
     );
 
-    -- Triggers to keep FTS5 virtual table in sync with articles
     CREATE TRIGGER articles_ai AFTER INSERT ON articles BEGIN
       INSERT INTO articles_fts(id, title, description, body_text)
       VALUES (new.id, new.title, new.description, new.body_text);
@@ -150,21 +111,27 @@ async function seed() {
     END;
   `)
 
-  // 1. Seed categories first to satisfy Foreign Key constraints for topics_to_categories junction
-  let rawArticles: any[] = []
+  let rawArticles: RawArticle[] = []
+  
   if (fs.existsSync(articlesJsonPath)) {
     console.log('Seeding categories...')
-    rawArticles = JSON.parse(fs.readFileSync(articlesJsonPath, 'utf8'))
-    const uniqueCategoryNames: string[] = Array.from(new Set(rawArticles.map((art: any) => art.category)))
-    const categoryEntries = uniqueCategoryNames.map(name => ({
+    rawArticles = JSON.parse(fs.readFileSync(articlesJsonPath, 'utf8')) as RawArticle[]
+    
+    // TypeScript now knows `art` is of type `RawArticle`
+    const uniqueCategoryNames: string[] = Array.from(new Set(rawArticles.map((art) => art.category)))
+    
+    const categoryEntries: NewCategory[] = uniqueCategoryNames.map(name => ({
       id: getSlug(name),
       name: name
     }))
-    await db.insert(categories).values(categoryEntries).run()
-    console.log(`Seeded ${categoryEntries.length} unique categories.`)
+    
+    if (categoryEntries.length > 0) {
+      await db.insert(categories).values(categoryEntries).run()
+      console.log(`Seeded ${categoryEntries.length} unique categories.`)
+    }
   }
 
-  // 2. Seed topics from TOPICS_LIST
+  console.log('Seeding topics and keywords...')
   const topicsMap = new Map<string, { 
     id: string, 
     nameDe: string, 
@@ -185,8 +152,9 @@ async function seed() {
     })
   }
 
-  const topicsEntries: any[] = []
-  const keywordsEntries: any[] = []
+  // Type arrays with Drizzle's inferred insert types
+  const topicsEntries: NewTopic[] = []
+  const keywordsEntries: NewTopicKeyword[] = []
 
   for (const topic of TOPICS_LIST) {
     topicsEntries.push({
@@ -196,19 +164,11 @@ async function seed() {
     })
 
     for (const kw of topic.keywordsDe) {
-      keywordsEntries.push({
-        topicId: topic.id,
-        keyword: kw,
-        language: 'de',
-      })
+      keywordsEntries.push({ topicId: topic.id, keyword: kw, language: 'de' })
     }
 
     for (const kw of topic.keywordsEn) {
-      keywordsEntries.push({
-        topicId: topic.id,
-        keyword: kw,
-        language: 'en',
-      })
+      keywordsEntries.push({ topicId: topic.id, keyword: kw, language: 'en' })
     }
   }
 
@@ -220,12 +180,11 @@ async function seed() {
   }
   console.log(`Seeded ${topicsEntries.length} topics and ${keywordsEntries.length} topic keywords.`)
 
-  // 3. Seed articles
   if (rawArticles.length > 0) {
     console.log('Seeding articles...')
     let count = 0
     const batchSize = 100
-    let currentBatch: Array<NewArticle> = []
+    let currentBatch: NewArticle[] = []
 
     for (const art of rawArticles) {
       const filename = `${getSafeFilename(art.id)}.json`
@@ -234,7 +193,7 @@ async function seed() {
       
       if (fs.existsSync(detailPath)) {
         try {
-          const detail = JSON.parse(fs.readFileSync(detailPath, 'utf8'))
+          const detail = JSON.parse(fs.readFileSync(detailPath, 'utf8')) as { bodyText?: string }
           bodyText = detail.bodyText || ''
         } catch {
           console.warn(`Failed to parse article detail for ${art.id}`)
@@ -267,7 +226,7 @@ async function seed() {
       count += currentBatch.length
     }
 
-    console.log('Matching articles with topics using exact word boundaries and language mapping...')
+    console.log('Matching articles with topics...')
     
     const dbArticles = await db.select({
       id: articles.id,
@@ -291,7 +250,8 @@ async function seed() {
       return regex.test(text)
     }
 
-    const matchEntries: any[] = []
+    // Type the matches array
+    const matchEntries: NewArticleTopicMatch[] = []
 
     for (const art of dbArticles) {
       const { bucket, sortVal } = getYearHalf(art.date)
@@ -299,7 +259,6 @@ async function seed() {
 
       for (const topic of topicsMap.values()) {
         let isMatch = false
-        // Only check keywords that match the language of the article!
         const targetKeywords = art.language === 'de' ? topic.keywordsDe : topic.keywordsEn
         
         for (const kw of targetKeywords) {
