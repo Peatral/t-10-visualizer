@@ -26,12 +26,13 @@ export interface TrendmapCalculationResult {
 }
 
 export function formatFtsQuery(q: string): string {
-  return q
-    .trim()
-    .replace(/:/g, ' ') 
-    .split(/\s+/)
+  if (!q) return ''
+
+  const words = q.match(/[\p{L}\p{N}_]+/gu) || []
+
+  return words
     .filter(word => word.length > 0)
-    .map(word => `${word.replace(/[*"']/g, '')}*`)
+    .map(word => `"${word}"*`) 
     .join(' AND ')
 }
 
