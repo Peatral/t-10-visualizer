@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import Database from 'better-sqlite3'
+import { createClient } from '@libsql/client'
 import { db } from './index'
 import { articles, topics, topicKeywords, articleTopicMatches, categories } from './schema'
 import { getYearHalf } from '../../utils/matching'
@@ -80,9 +80,12 @@ async function seed() {
 
   console.log('Setting up FTS5 virtual tables and triggers...')
   const dbPath = path.resolve(process.cwd(), 'sqlite.db')
-  const sqlite = new Database(dbPath)
-  
-  sqlite.exec(`
+
+  // Initialize the local libsql client
+  const client = createClient({ url: `file:${dbPath}` })
+
+  // Use executeMultiple for a string containing multiple SQL statements separated by semicolons
+  await client.executeMultiple(`
     DROP TRIGGER IF EXISTS articles_ai;
     DROP TRIGGER IF EXISTS articles_ad;
     DROP TRIGGER IF EXISTS articles_au;
