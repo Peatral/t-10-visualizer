@@ -61,6 +61,7 @@ const translations = {
     viewingArticle: "Viewing Article: {id}",
     networkView: "Network",
     minConnectionWeight: "Min Connection Weight",
+    relevant: "Most Relevant First"
   },
   de: {
     dashboardTitle: "T-10 Analyse-Dashboard",
@@ -117,6 +118,7 @@ const translations = {
     heatmapView: "Heatmap",
     networkView: "Netzwerk",
     minConnectionWeight: "Min. Verbindungsgewicht",
+    relevant: "Relevanteste zuerst"
   }
 }
 

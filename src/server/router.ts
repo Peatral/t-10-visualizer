@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { db } from './db'
-import { articles, topics, articleTopicMatches, type Article } from './db/schema'
+import { articles, topics, articleTopicMatches, articlesFts } from './db/schema'
 import { eq, desc, asc, and, sql, count } from 'drizzle-orm'
 import { calculateTrendmapGrid, formatFtsQuery, getMatchingTopicIdsForQuery, type TrendmapCalculationResult } from '../utils/trendmapCalc'
 import { createTRPCRouter, publicProcedure } from '../integrations/trpc/init'
@@ -122,36 +122,28 @@ export const appRouter = createTRPCRouter({
       z.object({
         q: z.string().optional(),
         category: z.string().optional(),
-        sort: z.enum(['newest', 'oldest']).optional(),
+        sort: z.enum(['newest', 'oldest', 'relevant']).optional(),
         includeFullText: z.boolean().optional(),
         before: z.string().optional(),
         after: z.string().optional(),
         topic: z.string().optional(),
+        markFoundWords: z.boolean().optional().default(false),
       })
     )
-    .query(async ({ input }): Promise<Article[]> => {
+    .query(async ({ input }): Promise<any[]> => {
       const q = input.q?.replace(/([a-zA-Z0-9_-]+):$/, '').trim() || ''
       const category = input.category
-      const sort = input.sort || 'newest'
-      const includeFullText = input.includeFullText !== false // default to true
+      const includeFullText = input.includeFullText !== false
       const { before, after, topic } = input
+      
+      const sort = input.sort || (q ? 'relevant' : 'newest')
 
       const conditions: any[] = []
 
-      // Category filter
-      if (category !== undefined) {
-        conditions.push(eq(articles.category, category))
-      }
+      if (category !== undefined) conditions.push(eq(articles.category, category))
+      if (before && before.trim()) conditions.push(sql`${articles.date} <= ${before.trim()}`)
+      if (after && after.trim()) conditions.push(sql`${articles.date} >= ${after.trim()}`)
 
-      // Date range filters
-      if (before && before.trim()) {
-        conditions.push(sql`${articles.date} <= ${before.trim()}`)
-      }
-      if (after && after.trim()) {
-        conditions.push(sql`${articles.date} >= ${after.trim()}`)
-      }
-
-      // Topic filter
       if (topic && topic.trim()) {
         const matchingTopicIds = await getMatchingTopicIdsForQuery(db, topic)
         if (matchingTopicIds.length > 0) {
@@ -164,30 +156,41 @@ export const appRouter = createTRPCRouter({
         }
       }
 
-      // FTS5 search query
-      if (q) {
-        const ftsQuery = formatFtsQuery(q)
-        const matchClause = includeFullText ? ftsQuery : `{title description} : ${ftsQuery}`
-        conditions.push(
-          sql`${articles.id} IN (SELECT id FROM articles_fts WHERE articles_fts MATCH ${matchClause})`
-        )
-      }
-
       let query: any = db.select({
         id: articles.id,
-        title: articles.title,
-        description: articles.description,
+        title: q && input.markFoundWords
+          ? sql<string>`snippet(articles_fts, 1, '<mark>', '</mark>', '...', 64)` 
+          : articles.title,
+        description: q && input.markFoundWords
+          ? sql<string>`snippet(articles_fts, 2, '<mark>', '</mark>', '...', 64)` 
+          : articles.description,
         date: articles.date,
         link: articles.link,
         category: articles.category,
-      })
-      .from(articles)
+      }).from(articles)
+
+      if (q) {
+        const ftsQuery = formatFtsQuery(q)
+        const matchClause = includeFullText ? ftsQuery : `{title description} : ${ftsQuery}`
+
+        query = query.innerJoin(
+          articlesFts, 
+          sql`${articlesFts.id} = ${articles.id} AND articles_fts MATCH ${matchClause}`
+        )
+      }
 
       if (conditions.length > 0) {
         query = query.where(and(...conditions))
       }
 
-      query.orderBy(sort === 'newest' ? desc(articles.date) : asc(articles.date))
+      if (sort === 'relevant' && q) {
+        query.orderBy(sql`articles_fts.rank ASC`)
+      } else if (sort === 'oldest') {
+        query.orderBy(asc(articles.date))
+      } else {
+        query.orderBy(desc(articles.date))
+      }
+
       return query.all()
     }),
 

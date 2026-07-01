@@ -1,14 +1,15 @@
 import React, { createContext, useContext, useState } from 'react';
 
+export type SortMode = 'newest' | 'oldest' | 'relevant';
 interface ListState {
-  sortBy: 'newest' | 'oldest';
-  setSortBy: (sort: 'newest' | 'oldest') => void;
+  sortBy: SortMode;
+  setSortBy: (sort: SortMode) => void;
 }
 
 const ListContext = createContext<ListState | undefined>(undefined);
 
 export const ListStateProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [sortBy, setSortBy] = useState<'newest' | 'oldest'>('newest');
+  const [sortBy, setSortBy] = useState<SortMode>('newest');
   return (
     <ListContext.Provider value={{ sortBy, setSortBy }}>
       {children}

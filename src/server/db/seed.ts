@@ -6,14 +6,12 @@ import { articles, topics, topicKeywords, articleTopicMatches, categories } from
 import { getYearHalf } from '../../utils/matching'
 import { TOPICS_LIST } from './topicData'
 
-// 1. Infer Insert Types directly from your Drizzle schema
 type NewArticle = typeof articles.$inferInsert
 type NewTopic = typeof topics.$inferInsert
 type NewTopicKeyword = typeof topicKeywords.$inferInsert
 type NewArticleTopicMatch = typeof articleTopicMatches.$inferInsert
 type NewCategory = typeof categories.$inferInsert
 
-// 2. Define the shape of your incoming JSON data
 interface RawArticle {
   id: string
   category: string
@@ -78,13 +76,11 @@ async function seed() {
   await db.delete(categories).run()
   await db.delete(topics).run()
 
-  console.log('Setting up FTS5 virtual tables and triggers...')
-  const dbPath = path.resolve(process.cwd(), 'sqlite.db')
+  console.log('Setting up SQLite FTS5 virtual tables and triggers...')
 
-  // Initialize the local libsql client
+  const dbPath = path.resolve(process.cwd(), 'sqlite.db')
   const client = createClient({ url: `file:${dbPath}` })
 
-  // Use executeMultiple for a string containing multiple SQL statements separated by semicolons
   await client.executeMultiple(`
     DROP TRIGGER IF EXISTS articles_ai;
     DROP TRIGGER IF EXISTS articles_ad;
@@ -113,14 +109,12 @@ async function seed() {
       VALUES (new.id, new.title, new.description, new.body_text);
     END;
   `)
-
   let rawArticles: RawArticle[] = []
   
   if (fs.existsSync(articlesJsonPath)) {
     console.log('Seeding categories...')
     rawArticles = JSON.parse(fs.readFileSync(articlesJsonPath, 'utf8')) as RawArticle[]
-    
-    // TypeScript now knows `art` is of type `RawArticle`
+
     const uniqueCategoryNames: string[] = Array.from(new Set(rawArticles.map((art) => art.category)))
     
     const categoryEntries: NewCategory[] = uniqueCategoryNames.map(name => ({
@@ -135,13 +129,13 @@ async function seed() {
   }
 
   console.log('Seeding topics and keywords...')
-  const topicsMap = new Map<string, { 
-    id: string, 
-    nameDe: string, 
-    nameEn: string, 
-    categories: Set<string>, 
-    keywordsDe: Set<string>, 
-    keywordsEn: Set<string> 
+  const topicsMap = new Map<string, {
+    id: string,
+    nameDe: string,
+    nameEn: string,
+    categories: Set<string>,
+    keywordsDe: Set<string>,
+    keywordsEn: Set<string>,
   }>()
 
   for (const topic of TOPICS_LIST) {
@@ -155,7 +149,6 @@ async function seed() {
     })
   }
 
-  // Type arrays with Drizzle's inferred insert types
   const topicsEntries: NewTopic[] = []
   const keywordsEntries: NewTopicKeyword[] = []
 

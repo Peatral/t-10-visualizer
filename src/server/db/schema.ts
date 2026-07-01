@@ -85,3 +85,10 @@ export const articleTopicMatchesRelations = relations(articleTopicMatches, ({ on
 }))
 
 export type Article = typeof articles.$inferSelect;
+
+export const articlesFts = sqliteTable('articles_fts', {
+  id: text('id'), // unindexed
+  title: text('title'),
+  description: text('description'),
+  bodyText: text('body_text'),
+})
